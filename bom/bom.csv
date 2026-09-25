@@ -1,7 +1,18 @@
 item,qty,spec,supplier,unit_cost_usd,make_buy,notes
-Centrifugal concentrator bowl with riffle rings,,,,,,
-Drive: pedal crank or 250 W motor via MotionCore,,,,,,
-Water supply and flow control,,,,,,
-Small shaking table deck,,,,,,
-Frame and splash guard,,,,,,
-Concentrate collection tray,,,,,,
+1 Base frame,1,"30 x 30 x 2 mm mild steel square tube, about 11 m, welded; 900 x 600 x 700 mm with cross members",Local steel stockist and welder,40.00,make,Indicative price
+2 Feed hopper with screen,1,"Sheet steel or cut plastic cone 340 mm top, 2 mm punched stainless screen 360 mm diameter, 32 mm feed pipe",Local metal shop,18.00,make,Indicative price
+3 Centrifugal bowl with riffle rings,1,"220 mm lip, 130 mm base, 180 mm deep; four riffle rings with 0.8 to 1.2 mm fluidization holes; cast polyurethane liner Shore 80 to 90A in a 3D-printed mold on a fibreglass shell",Self (resin from a chemical supplier),45.00,make,Indicative price; casting route proposed (awaiting Amish)
+4 Fluidization jacket and rotary union,1,"Sealed fibreglass jacket around the bowl; 1/2 in rotary union at the spindle foot; 8 to 15 L/min",Industrial supplier,45.00,buy,Indicative price; fluidized bowl proposed (awaiting Amish)
+5 Spindle bearings and pulley,1,"25 mm stainless shaft, two UCF205-class flanged bearing units, 100 mm A-section pulley",Bearing and power transmission shop,35.00,buy,Indicative price
+6 Splash tub and tailings launder,1,"Cut HDPE drum about 430 mm diameter, 75 mm tailings outlet, launder to settling pond",Local market,12.00,make,Indicative price
+7 Bowl lid guard,1,"10 mm HDPE disc 446 mm diameter, 60 mm feed hole, two clamps",Plastics supplier,10.00,make,Indicative price
+8 Pedal station,1,"Used bicycle bottom bracket, crank, 48T chainring, pedals, seat and post on a bolted steel outrigger",Bicycle repair shop,25.00,buy,Indicative price; used parts
+9 Jackshaft gearbox chains and pulleys,1,"20 mm shaft on two bearings, 12T freewheel, 1:1 right-angle bevel gearbox, 300 mm drive pulley, motor sprocket, table take-off pulley, two chains",Power transmission shop,60.00,buy,Indicative price; gearbox source open
+10 Drive belts,2,"A-section V-belts: bowl belt and table belt",Power transmission shop,5.00,buy,Indicative price
+11 Belt and chain guards,1,"1.2 mm perforated steel sheet covers over belts, pulleys and chain",Local metal shop,15.00,make,Indicative price
+12 MotionCore module and 250 W motor (reference),1,"MotionCore reference drive: 250 W geared motor, open controller, safety supervisor, e-stop, speed limit; 24 to 48 V pack",MotionCore project,0.00,make,NOT INCLUDED in the GravitySort total; about $325 per the MotionCore README; battery not included
+13 Water header tank valve and flow meter,1,"60 L HDPE drum on a 1.25 m post, 3/4 in ball valve, 2 to 20 L/min rotameter, hoses",Local market and irrigation supplier,35.00,buy,Indicative price
+14 Shaking table deck,1,"1000 x 450 mm, 18 mm marine plywood faced with HDPE, tapered riffles, feed box",Timber yard and self,30.00,make,Indicative price
+15 Table stand and head motion,1,"Four flexure legs (spring steel strip or plywood), eccentric head, pitman arm, toggle or spring return, 10 to 20 mm stroke",Local metal shop,30.00,make,Indicative price
+16 Concentrate launder and lockable tray,1,"Sheet steel launder along the table front, lockable concentrate tray with padlock hasp",Local metal shop,12.00,make,Indicative price
+17 Hardware hoses and sealant,1,"Fasteners, hose clamps, 25 mm tailings hose, sealant, paint",Hardware store,15.00,buy,Indicative price; not modelled

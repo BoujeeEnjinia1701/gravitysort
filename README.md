@@ -6,13 +6,21 @@
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
+![GravitySort concept](media/hero.png)
+
+[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [Review note](docs/REVIEW.md)
+
 ## Concept rationale
 
-If a local workshop can build a concentrator that matches mercury on recovery and cost, miners have an economic reason to stop using mercury, not only a legal one.
+Miners use mercury because it catches fine gold cheaply, not because they want to. If a local workshop can build a machine that catches as much gold as mercury, or more, at a price a small group can pay back in weeks, miners gain an economic reason to stop, not only a legal one. GravitySort pairs the two gravity methods that each solve half the problem: a fluidized centrifugal bowl holds fine gold from a steady stream of milled ore, and a small shaking table cleans the bowl's concentrate down to a few tens of grams that can be smelted directly with borax. One pedal or motor drive runs both.
+
+It is open and garage-buildable because commercial centrifuges and tables are imported, costly and hard to repair at a mine site. The frame is welded tube, the drive is bicycle parts and V-belts, the tub and tank are HDPE drums, and the bowl liner is cast in a printed mold, so a welder in a mining town can build, repair and adapt it, and anyone can check how it works.
 
 ## Burning platform
 
-Artisanal gold mining is the largest source of mercury pollution worldwide, and the Minamata Convention asks countries to reduce and where possible eliminate its use.
+Artisanal and small-scale gold mining is the largest human source of mercury emissions to air: about 838 t in 2015, 37.7 % of the global total ([US EPA summary of the UNEP Global Mercury Assessment 2018](https://www.epa.gov/international-cooperation/mercury-emissions-global-context)). UNEP estimates that 10 to 15 million people work in the sector, including 4 to 5 million women and children, and that it produces about 12 to 15 % of the world's gold ([UNEP Global Mercury Partnership](https://www.unep.org/globalmercurypartnership/what-we-do/artisanal-and-small-scale-gold-mining-asgm)).
+
+The pressure is rising. Gold averaged a record US$3,431/oz in 2025, up 44 % on the year ([World Gold Council](https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-full-year-2025)), which raises the incentive to mine and the value of every gram lost. Yet whole-ore amalgamation in Colombian processing centers typically recovers only about 30 % of the gold ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)), so better gravity equipment can pay for itself as well as remove mercury.
 
 ## Where it could be used
 
@@ -20,42 +28,55 @@ Artisanal gold mining is the largest source of mercury pollution worldwide, and 
 
 | Industry | Use |
 | --- | --- |
-| _To be developed_ | |
+| Artisanal and small-scale gold mining | Mercury-free primary concentration and clean-up for groups processing about 1 to 2 t of ore per day |
+| Ore processing centers (entables) | Replace whole-ore amalgamation with a concentrate step, as national action plans require |
+| Responsible gold supply chains | Refiners, traders and jewelers sourcing traceable mercury-free gold from certified small mines |
+| Development and extension programmes | Demonstration unit for NGOs, cooperatives and government extension officers |
+| Mining education | Teaching gravity separation in technical colleges and mining schools |
+| Mineral exploration | Concentrating heavy minerals from stream sediment and trench samples in the field |
 
 ### By country or region
 
 | Country or region | Why it matters there |
 | --- | --- |
-| _To be developed_ | |
+| Ghana | Illegal small-scale mining (galamsey) has silted rivers; Ghana Water reported raw water turbidity of about 14,000 NTU at one plant designed for 2,000 NTU ([GBC Ghana](https://www.gbcghanaonline.com/general-news/gwcl-attributes-water-supply-challenges-to-galamsey-activities/2024/)) |
+| Peru | Gold mining cleared 95,751 ha of forest in the southeastern Peruvian Amazon from 1985 to 2017 ([Caballero Espejo et al., *Remote Sensing*, 2018](https://www.mdpi.com/2072-4292/10/12/1903)); Madre de Dios miners rely on mercury |
+| Colombia | Mercury use in mining has been banned since July 2018 under Law 1658 of 2013 ([Mongabay](https://news.mongabay.com/2018/08/colombia-bans-the-use-of-mercury-in-mining/)), so miners need working alternatives |
+| Philippines | In Benguet, the regional miners' federation reports all 15,000 members smelt gravity concentrates with borax instead of mercury ([Pure Earth](https://www.pureearth.org/filipino-gold-miners-borax-revolution/)), a model GravitySort's clean concentrate is designed to feed |
+| European Union | Mercury exports and amalgamation in small-scale gold mining are prohibited ([Regulation (EU) 2017/852](https://eur-lex.europa.eu/eli/reg/2017/852/oj/eng)); EU buyers and programmes need mercury-free equipment to support abroad |
 
 ## What sparked the idea
 
-It came out of a September 2026 review of Design Molecule's applied research areas against the open projects already in the lab. Mining is a Design Molecule research area with no open project yet, and mercury in small-scale gold mining is its most urgent human problem.
+It came out of a September 2026 review of Design Molecule's applied research areas against the open projects already in the lab. Mining is a Design Molecule research area with no open project yet, and mercury in small-scale gold mining is its most urgent human problem. The real-world trigger was the gold price: 53 new all-time highs in 2025 ([World Gold Council](https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-full-year-2025)) raise both the pull into small-scale mining and the payback on any machine that recovers more gold without mercury.
 
 ## Problem
 
-Artisanal and small-scale gold mining uses mercury to capture fine gold because it is cheap and works, poisoning miners, families and rivers. Mercury-free equipment exists but is costly and often recovers less fine gold.
+Artisanal and small-scale gold mining uses mercury to capture fine gold because it is cheap and works, poisoning miners, families and rivers. Mercury-free equipment exists but is costly and often recovers less fine gold. Design with, not for: requirements must come from co-design sessions and field trials with the intended users through a local partner.
+
+Problem statement: [docs/01-problem.md](docs/01-problem.md)
 
 ## Concept
 
-A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
+A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5 kg of bowl concentrate down to about 100 g for direct smelting with borax. First-order estimates give about 45 W of input power, about 1.2 m3/h of mostly recirculated water and about 60 % overall recovery on free-gold ore, compared with about 30 % for whole-ore amalgamation. The parts cost is estimated at about $437, over the $350 budget. All figures are estimates, not measurements.
 
-Full design precis: [docs/02-concept.md](docs/02-concept.md)
+Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [docs/03-requirements.md](docs/03-requirements.md)
 
 ## Key components
 
-- Centrifugal concentrator bowl with riffle rings
-- Drive: pedal crank or 250 W motor via MotionCore
-- Water supply and flow control
-- Small shaking table deck
-- Frame and splash guard
-- Concentrate collection tray
+- Welded steel base frame
+- Feed hopper with 2 mm screen
+- Centrifugal bowl with riffle rings and a cast polyurethane liner
+- Fluidization water jacket and rotary union
+- Spindle, bearings, splash tub and lid guard
+- Drive: pedal crank, or a 250 W motor via MotionCore, through a jackshaft, bevel gearbox and V-belts, with guards
+- Water header tank, valve and flow meter
+- Small shaking table with head motion and a lockable concentrate tray
 
 The working bill of materials is in [bom/bom.csv](bom/bom.csv).
 
 ## Safety
 
-> Rotating machinery and water: guard the bowl drive, limit speed and keep hands clear when running.
+> Rotating machinery and water: the bowl spins at up to 850 rpm. Never run without the lid guard and belt and chain guards, keep hands, hair and loose clothing clear, and wait for the bowl to stop before opening it. Never use GravitySort with mercury or on untested mercury-contaminated tailings. Fence settling ponds. Concentrates can contain arsenic and lead minerals; wash hands after handling. Smelting, done outside this machine, reaches over 1,000 °C and needs a proper furnace and protective equipment. The motor option adds lithium cells; follow the MotionCore safety section. See [docs/02-concept.md](docs/02-concept.md#safety).
 
 ## Repository layout
 
