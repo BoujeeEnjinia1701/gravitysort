@@ -1,0 +1,17 @@
+# Card metadata consumed by https://designmolecule.com
+name: GravitySort
+slug: gravitysort
+area: Mining
+status: concept          # concept | design | prototype | tested | released
+shortlisted: false
+pitch: >-
+  A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
+problem: >-
+  Artisanal and small-scale gold mining uses mercury to capture fine gold because it is cheap and works, poisoning miners, families and rivers. Mercury-free equipment exists but is costly and often recovers less fine gold.
+budget_usd: 350
+difficulty: 4  # 1 easiest, 5 hardest
+hero_image: media/hero.png
+licenses:
+  hardware: CERN-OHL-S-2.0
+  software: MIT
+tags: [mining, open-hardware, cern-ohl-s]
