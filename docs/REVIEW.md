@@ -1,5 +1,78 @@
 # Review note: GravitySort
 
+## Session 2026-09-25: TRL 3
+
+### What was done
+
+- `docs/decisions/0001-trl2-review-decisions.md` (GVS-DDR-001 v0.1): TRL 2 items 2 to 7 and the partner screening criterion (item 8a) adopted as recommended for TRL 3 under Amish's 2026-09-25 instruction, open for his review; the budget, the partner itself and six new TRL 3 items listed as open.
+- `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.1) with `docs/04-calcs/sizing.py` and `results.csv`: speed and G, throughput with flush stops, water, settling in the bowl, fluidization jacket pressure and supply, power, mass balance, table drive, rotor inertia, burst, spindle, coast-down and brake, transport mass, cost and the gold balance. The script reads `cad/src/model.py` and `bom/bom.csv` and prints every quoted number.
+- `cad/src/model.py`: parametric build123d model (frame, hopper, bowl with liner, shell and riffle rings, rotating jacket and rotary union, spindle with bearing units, brake disc and caliper, tub, lid, pedal station, jackshaft and gearbox, belts, guards, MotionCore module and hub motor, tank, table deck, stand and head, tray, speed display). Exports `cad/step/` and `cad/stl/` `gravitysort-assembly`, `gravitysort-bowl` and `gravitysort-table-deck`.
+- `cad/src/sheets.py` and `cad/drawings/GVS-DWG-001.svg`, `.pdf`, `.png`: general arrangement, Rev P1, "CONCEPT, NOT FOR FABRICATION" and "PRELIMINARY, NOT FOR FABRICATION" (the concept sheet keeps GVS-DWG-010).
+- `bom/bom.csv`: 19 lines, all priced with suppliers or supplier types; new items 18 (brake and lid interlock) and 19 (speed display); `bom/bom-notes.md` totals against $350 and $450.
+- `cad/src/concept_media.py` now builds from the model; every image in `media/` regenerated and checked by eye; temporary `media/_views*` folders deleted.
+- Docs updated to v0.3 with revision entries dated 2026-09-25: GVS-PRB-001, GVS-PRC-001, GVS-REQ-001. `project.yaml`: `trl: 3`, `trl_target: 3`, evidence listed; pitch and problem unchanged (no rewording was recommended). `README.md`: TRL 3, concept numbers from GVS-CAL-001, links to the drawing, sizing note and DDR, brake in the components and safety text.
+
+### Requirements (GVS-CAL-001)
+
+Six of fourteen met on paper; three not met; three at risk; two not verifiable at TRL 3.
+
+| ID | Status | Value |
+| --- | --- | --- |
+| R9 | **Not met** | $465 against $350, and against the $450 recommended at TRL 2 (awaiting Amish) |
+| R11 | **Not met** | 88.3 kg in six loads against 80 kg; every load under 30 kg (heaviest 25.8 kg) |
+| R12 | **Not met as written** | Gearing cannot cap the pedal drive (900 rpm at a 75 rpm cadence); guards, lid interlock and brake (0.6 s stop, about 20 s coasting) are designed; motor capped by a 1.2:1 step-up and the MotionCore limit |
+| R2 | At risk | 1.55 t per shift after three flush stops; 1.6 t needs 206 kg/h |
+| R5 | At risk | Bowl pull 0.33 % is met; 5.3 kg per day needs 53:1 on the table, likely two passes |
+| R6 | At risk | 48.2 W at 60 G is met; 62.8 W at 80 G is not; union seal drag assumed |
+| R4 | Not verifiable at TRL 3 | Settling check passes (ratio 36 or more for 20 µm flakes); bed behaviour needs testing |
+| R14 | Not verifiable at TRL 3 | No wear data |
+| R1, R10 | Met (design review) | No mercury; no lathe (set-screw inserts, taper bush, printed mold) |
+| R3, R7, R8, R13 | Met (paper) | 40 to 81 G over 600 to 850 rpm with a speed display; motor margin 5.2 times; 1.19 m3/h; toolless clamps |
+
+Other key numbers: 165 J stored at 730 rpm (447 J at 1,200 rpm); burst safety factors at 1,200 rpm of 17 (jacket), 30 (shell) and 51 (ring lips); spindle first critical speed about 4,820 rpm; about 89 fluidization holes of 1.0 mm; 3.7 kPa at the rotary union with a 3/4 in hose; 0.55 kWh per shift on the motor.
+
+TRL 2 numbers corrected: pedal power 45 to 48.2 W; stored energy 150 to 165 J; mass 75 to 88 kg; cost $437 to $465; motor energy 0.5 to 0.55 kWh; MotionCore $325 to $335; 1.6 to 1.55 t per shift.
+
+### Decisions recorded (GVS-DDR-001)
+
+Adopted as recommended for TRL 3 under Amish's 2026-09-25 instruction, open for his review: two stages (item 2); fluidized bowl with rotary union, non-fluidized variant documented (3); cast PU liner in a printed mold (4); pedal baseline with the MotionCore option and one time-shared drive (5); battery left to the user (6); direct smelting with borax as the downstream step (7); partner screening criterion (8a). The budget recommendation ($450) was not applied; `budget_usd` stays at $350.
+
+### Still awaiting Amish
+
+1. **Budget (item 1).** Recommended $450 at TRL 2; the BOM is now $465, over both. Cost-down options: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $72 deferred).
+2. **First co-design partner (item 8b).** Not named.
+3. **R12 pedal speed cap (item 9).** Recommendation: reword R12 for the pedal case to rely on the structural margin at 1,200 rpm plus the speed display; alternative is a slip clutch.
+4. **R11 mass (item 10).** Recommendation: 25 x 25 x 1.5 mm frame tube (about 7.7 kg less) and a lighter table stand, then re-estimate; alternative is relaxing R11 to 90 kg.
+5. **Fluidization supply (item 11).** 3/4 in hose (in the BOM), graded holes, and a 1.7 m post or a small pump for an even 10 kPa at every ring.
+6. **Water pumping without power (item 12).** No recommendation yet.
+7. **R2 and R5 margins (item 13).** Raise the design feed to about 210 kg/h or restate R2.
+8. **Engineering proposals (item 14).** Disc brake with parking latch and lid pin; bicycle computer display; 1.2:1 motor step-up; MotionCore lid switch on a brake input.
+
+### Cross-repo notes (not changed in other repos)
+
+- **MotionCore:** consistent with MTC-DDR-001 and MTC-CAL-001: $265 kit plus $70 reference motor ($335, excluded from the GravitySort total), 20 to 58 V packs, stop category 0 (GravitySort therefore keeps its own mechanical brake), brake inputs used for the lid switch, speed sensor on the spindle. Two assumptions MotionCore does not state: the reference hub motor's no-load speed (assumed 250 rpm at full pack voltage) and mounting a sprocket on its disc mount for a stationary chain drive. The MotionCore speed limit is set in wheel-speed terms, so a GravitySort setting that maps to 900 rpm at the spindle is needed. No conflict found; these are questions for MotionCore, not changes.
+- No other shared component (FieldNode, CellGuard, ThermaCart, TwinKit, CalRig) is used. SwapCell is not named (item 6).
+
+### Safety concerns
+
+- The bowl coasts for about 20 s after the drive stops; the brake and lid interlock are paper designs, and the lid pin must not be removable in normal use.
+- A rider can reach about 1,200 rpm (447 J). Burst margins are large on paper but assume sound lamination and a bonded liner; containment of a 61 J liner fragment by the 6 mm HDPE tub and 10 mm lid is not verified.
+- Mercury cross-contamination, arsenic and lead in concentrates, drowning risk at settling ponds and smelting heat are unchanged from TRL 2.
+- The motor option brings a lithium pack to a wet, dusty site; MotionCore's stop does not brake.
+- Concentrate theft and operator security remain a social risk for the partner.
+
+### Other notes
+
+- No TRL 4 material exists in the repo: no test plans or reports, build procedures, cut lists or purchasing lists. `build-log/README.md` is the scaffold stub and was not touched.
+- Citations: the TRL 2 note lists no unchecked citations, so none were fetched; WebSearch was not used.
+- The kit's cutaway cuts at the mean Y of the parts, which passes through the bowl axis; the model is not shifted. The water tank, water line, guards and speed display are left out of the section.
+- build123d gives a shape only one parent compound, so `assemblies()` copies the parts for the bowl and deck sub-assemblies; without the copies the bowl and deck dropped out of the assembly STEP and the drawing views.
+- `render.py --check` and `render.py` pass; PDFs are in `docs/pdf/`.
+
+### Recommended next step
+
+Review GVS-DDR-001, in particular the budget (item 1), R12 (item 9) and R11 (item 10), and decide how water is pumped at pedal-only sites (item 12). TRL 4 is on hold by Amish's instruction. For reference only, TRL 4 would need: a bench build of the bowl, jacket, spindle and brake; a lab test report (TST, `environment: lab`) covering liner casting and bond, spin-up with the lid and tub as containment, coast-down and brake stop time, union seal drag and pedal power, fluidization flow per ring, and recovery with tungsten or magnetite tracers; and build-log entries. None of this has been started.
+
 ## Session 2026-09-25: /populate to a strong TRL 2
 
 ### What was done

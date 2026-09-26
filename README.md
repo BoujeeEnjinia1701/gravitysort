@@ -1,14 +1,14 @@
 # GravitySort
 
-![TRL 2](https://img.shields.io/badge/TRL-2%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
+![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
 
-**Area:** Mining · **TRL:** 2 of 9 (concept formulated) · **Prototype budget:** about $350 USD · **Difficulty:** 4 of 5
+**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $350 USD · **Difficulty:** 4 of 5
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
 ![GravitySort concept](media/hero.png)
 
-[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [Review note](docs/REVIEW.md)
+[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 
@@ -57,7 +57,9 @@ Problem statement: [docs/01-problem.md](docs/01-problem.md)
 
 ## Concept
 
-A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5 kg of bowl concentrate down to about 100 g for direct smelting with borax. First-order estimates give about 45 W of input power, about 1.2 m3/h of mostly recirculated water and about 60 % overall recovery on free-gold ore, compared with about 30 % for whole-ore amalgamation. The parts cost is estimated at about $437, over the $350 budget. All figures are estimates, not measurements.
+A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The parts cost is $465, over the $350 budget, and the machine weighs about 88 kg, over the 80 kg target. All figures are estimates, not measurements.
+
+Sizing note: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Decisions: [GVS-DDR-001](docs/decisions/0001-trl2-review-decisions.md) · Drawing: [GVS-DWG-001](cad/drawings/GVS-DWG-001.pdf) · Model: [cad/src/model.py](cad/src/model.py)
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [docs/03-requirements.md](docs/03-requirements.md)
 
@@ -68,6 +70,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 - Centrifugal bowl with riffle rings and a cast polyurethane liner
 - Fluidization water jacket and rotary union
 - Spindle, bearings, splash tub and lid guard
+- Bicycle disc brake with a parking latch and lid interlock, and a bicycle computer as the bowl speed display
 - Drive: pedal crank, or a 250 W motor via MotionCore, through a jackshaft, bevel gearbox and V-belts, with guards
 - Water header tank, valve and flow meter
 - Small shaking table with head motion and a lockable concentrate tray
@@ -76,7 +79,7 @@ The working bill of materials is in [bom/bom.csv](bom/bom.csv).
 
 ## Safety
 
-> Rotating machinery and water: the bowl spins at up to 850 rpm. Never run without the lid guard and belt and chain guards, keep hands, hair and loose clothing clear, and wait for the bowl to stop before opening it. Never use GravitySort with mercury or on untested mercury-contaminated tailings. Fence settling ponds. Concentrates can contain arsenic and lead minerals; wash hands after handling. Smelting, done outside this machine, reaches over 1,000 °C and needs a proper furnace and protective equipment. The motor option adds lithium cells; follow the MotionCore safety section. See [docs/02-concept.md](docs/02-concept.md#safety).
+> Rotating machinery and water: the bowl spins at up to 850 rpm and coasts for about 20 s after the drive stops. Never run without the lid guard and belt and chain guards, keep hands, hair and loose clothing clear, and apply and park the brake before opening the lid. A rider can push the bowl past its 900 rpm limit, so watch the speed display. Never use GravitySort with mercury or on untested mercury-contaminated tailings. Fence settling ponds. Concentrates can contain arsenic and lead minerals; wash hands after handling. Smelting, done outside this machine, reaches over 1,000 °C and needs a proper furnace and protective equipment. The motor option adds lithium cells; follow the MotionCore safety section. See [docs/02-concept.md](docs/02-concept.md#safety).
 
 ## Repository layout
 
