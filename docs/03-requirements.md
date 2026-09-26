@@ -3,9 +3,9 @@ doc_id: GVS-REQ-001
 title: GravitySort requirements
 project: GravitySort
 doc_type: Requirements
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,11 +25,15 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002). R9 target $450; R12 restated for the pedal drive; R11 met with the lighter frame tube; status from GVS-CAL-001 v0.2
+- version: "0.5"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish
 ---
 
 # GravitySort requirements
 
-These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.2, after the decisions Amish accepted on 2026-09-25 (GVS-DDR-002): one is not met (R9, $5 over the new $450 budget), three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and eight are met on paper. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
+These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.3, after the decisions Amish accepted on 2026-09-25 (GVS-DDR-002) and the $455 budget he approved on 2026-09-26: none is not met, three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and nine are met on paper (R9 with no margin). Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
 
 Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 
@@ -43,7 +47,7 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 | R6 | Run on pedal power | Full throughput at 60 W or less at the pedals, at a cadence of 55 to 70 rpm | Power estimate from slurry, fluidization water and bearing losses | **At risk:** 48.2 W at 60 G is met; 62.8 W at 80 G is not; union seal drag assumed |
 | R7 | Run on a small motor | Full throughput from the MotionCore 250 W reference drive on any 20 to 58 V pack that MotionCore accepts, with at least 3 times power margin | Power estimate | Met on paper: 5.2 times at 60 G, 4.0 times at 80 G; 0.55 kWh per shift |
 | R8 | Use little water | 1.5 m3/h or less at 200 kg/h, and tolerate recirculated water with fine silt | Water balance calculation | Met on paper: 1.19 m3/h; a 3/4 in fluidization hose is needed (GVS-CAL-001 section 6) |
-| R9 | Stay within the concept budget | Parts $450 or less, excluding the MotionCore module and battery (was $350; GVS-DDR-002) | Priced BOM | **Not met:** $455, $5 over |
+| R9 | Stay within the concept budget | Parts $455 or less, excluding the MotionCore module and battery (was $350, then $450; GVS-DDR-002) | Priced BOM | Met on paper: $455, no margin |
 | R10 | Be built in a local workshop | Welding, drilling and hand tools only; no lathe; bowl liner cast in a printed mold | Design review of every part | Met (design review): set-screw bearing inserts and a taper bush avoid the lathe; bowl casting route unproven |
 | R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 80 kg or less; assembled with hand tools in 30 min or less | Mass estimate from the model | Met on paper: 77.3 kg in six loads (heaviest 18.1 kg) with 25 x 25 x 1.5 mm tube (GVS-DDR-002); assembly time not verified |
 | R12 | Guard every moving part | Bowl covered by a lid guard during running; belts, chains and the table head fully guarded; with the motor, bowl speed limited to 900 rpm or less by the drive ratio and the MotionCore speed limit; with the pedals, which gearing cannot cap, a burst safety factor of 10 or more for the bowl, jacket and rings at the highest reachable speed (1,200 rpm at a 100 rpm cadence) and the bowl speed shown to the rider; bowl stops within 15 s of stopping the drive (restated per GVS-DDR-002) | Design review, burst calculation and safety checklist | Met on paper: guards, lid interlock and a disc brake (0.6 s stop; about 20 s coasting); motor capped by its 1.2:1 step-up and the MotionCore limit; lowest pedal-case safety factor 17 at 1,200 rpm; speed display item 19. Containment of a liner fragment not verified |
@@ -56,7 +60,7 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 - Free, liberated gold in the 38 to 1,000 µm range. Gold locked in sulfides or finer than about 20 µm is lost to tailings by any gravity method, so R4 applies to free gold only.
 - Reference ore for the daily balance: 5 g/t, 1.6 t per day. Real grades vary widely (about 1 to 20 g/t).
 - Healthy adult pedalling at 60 W or less for sessions of about 1 h, with operators taking turns.
-- Budget: the $450 in `project.yaml` (raised from $350 by Amish's decision of 2026-09-25, GVS-DDR-002) covers GravitySort parts. The MotionCore kit and reference motor ($335: $265 kit plus $70 motor, per MTC-CAL-001) and a battery are shared lab components, budgeted with MotionCore.
+- Budget: the $455 in `project.yaml` (raised from $350 to $450 by Amish's decision of 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002) covers GravitySort parts. The MotionCore kit and reference motor ($335: $265 kit plus $70 motor, per MTC-CAL-001) and a battery are shared lab components, budgeted with MotionCore.
 - The pack for the motor option is left to the user (GVS-DDR-001 item 6).
 
 ## Changes decided on 2026-09-25
@@ -66,6 +70,10 @@ Amish accepted the recommendations on 2026-09-25 (GVS-DDR-002):
 - **R9:** target raised from $350 to $450 (item 1).
 - **R12:** for the pedal drive, "limited to 900 rpm or less by gearing" is replaced by a burst safety factor of 10 or more at the highest reachable speed (1,200 rpm at a 100 rpm cadence) plus the speed display (item 9).
 - **R11:** target unchanged at 80 kg; the frame, pedal outrigger and table stand move to 25 x 25 x 1.5 mm tube and the mass is re-estimated at 77.3 kg (item 10).
+
+## Change decided on 2026-09-26
+
+- **R9:** target raised from $450 to $455 to cover the priced BOM (budget approved by Amish, GVS-DDR-002). Not met to met on paper.
 
 ## Still proposed, awaiting Amish
 

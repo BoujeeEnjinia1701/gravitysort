@@ -2,7 +2,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
 
-**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $450 USD · **Difficulty:** 4 of 5
+**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $455 USD · **Difficulty:** 4 of 5
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
@@ -57,7 +57,7 @@ Problem statement: [docs/01-problem.md](docs/01-problem.md)
 
 ## Concept
 
-A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 77 kg in six loads. The parts cost is $455, $5 over the $450 budget. All figures are estimates, not measurements.
+A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 77 kg in six loads. The parts cost is $455, within the $455 budget. All figures are estimates, not measurements.
 
 Sizing note: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Decisions: [GVS-DDR-001](docs/decisions/0001-trl2-review-decisions.md), [GVS-DDR-002](docs/decisions/0002-recommendations-accepted.md) · Drawing: [GVS-DWG-001](cad/drawings/GVS-DWG-001.pdf) · Model: [cad/src/model.py](cad/src/model.py)
 
@@ -98,6 +98,12 @@ The working bill of materials is in [bom/bom.csv](bom/bom.csv).
 ## Documentation
 
 Controlled documents follow the portfolio [documentation standard](.kit/STANDARDS.md). Each carries a document ID (GVS-PRC-001 for the precis), a version and a revision history. Branded PDFs are built with `python .kit/render.py` and attached to GitHub Releases when a document is tagged, for example `GVS-PRC-001/v1.0`.
+
+## Credits
+
+Designed by Amish Chadha. See [CONTRIBUTORS.md](CONTRIBUTORS.md) for roles. To cite this design, use [CITATION.cff](CITATION.cff) (GitHub shows it as "Cite this repository").
+
+AI assistance (Claude) was used to accelerate concept renders, prototype documentation and first-pass sizing calculations. Design direction and all decisions are Amish Chadha's, recorded in this repository's decision records (`docs/decisions/`).
 
 ## Licenses
 

@@ -3,9 +3,9 @@ doc_id: GVS-PRB-001
 title: GravitySort problem statement
 project: GravitySort
 doc_type: Problem statement
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002). Budget $450; borax smelting step and partner screening criterion decided
+- version: "0.5"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($455)
 ---
 
 # GravitySort problem statement
@@ -64,7 +68,7 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 
 ## Constraints
 
-- Garage-buildable prototype, about $450 USD in parts (raised from $350 by Amish's decision of 2026-09-25, GVS-DDR-002). The TRL 3 BOM is $455, $5 over (GVS-CAL-001).
+- Garage-buildable prototype, about $455 USD in parts (raised from $350 to $450 by Amish's decision of 2026-09-25, and to $455 on 2026-09-26 to cover the priced BOM, GVS-DDR-002). The TRL 3 BOM is $455 (GVS-CAL-001).
 - No mercury in any step, and no chemicals beyond water and, at the smelting step outside this machine, borax flux.
 - Built with welding, drilling and hand tools; parts that normally need a lathe (bowl, spindle) must have a no-lathe route.
 - Runs without grid power: pedal drive as the baseline, with an optional motor through MotionCore on a pack of the user's choice. The water supply (about 1.19 m3/h from the settling pond) still needs a pump, which the design does not yet provide (GVS-DDR-001 item 12).

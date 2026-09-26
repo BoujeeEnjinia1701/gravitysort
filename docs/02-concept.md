@@ -3,9 +3,9 @@ doc_id: GVS-PRC-001
 title: GravitySort design precis
 project: GravitySort
 doc_type: Design precis
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,13 +25,17 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002). Frame, pedal outrigger and table stand in 25 x 25 x 1.5 mm tube (77.3 kg); budget $450, parts $455; R12 restated for the pedal drive
+- version: "0.5"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($455)
 ---
 
 # GravitySort design precis
 
 ## Summary
 
-GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.7 m long, about 77 kg in six loads, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). The parts cost is $455, $5 over the $450 budget Amish set on 2026-09-25, so R9 is the one requirement not met; R2, R5 and R6 are at risk. All figures are estimates for review, not measurements.
+GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.7 m long, about 77 kg in six loads, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). The parts cost is $455, covered by the $455 budget Amish approved on 2026-09-26, so R9 is met with no margin and no requirement is not met; R2, R5 and R6 are at risk. All figures are estimates for review, not measurements.
 
 ![Hero render](../media/hero.png)
 
@@ -115,7 +119,7 @@ Table 2. Main numbers from GVS-CAL-001.
 | Burst safety factor at 1,200 rpm | 17 (jacket wall), 30 (bowl shell), 51 (ring lips) | Assumes sound lamination and a bonded liner |
 | Stop time from 850 rpm | 0.6 s with the brake; about 20 s coasting | R12 asks for 15 s or less |
 | Size and mass | 2.72 x 0.78 x 1.65 m; 77.3 kg in six loads, heaviest 18.1 kg | R11 met: 80 kg or less (was 88.3 kg with 30 x 30 x 2 mm tube) |
-| Parts cost | $455 | `bom/bom.csv`; MotionCore ($335) and battery excluded; budget $450 |
+| Parts cost | $455 | `bom/bom.csv`; MotionCore ($335) and battery excluded; budget $455 |
 
 The daily motor energy of 0.55 kWh is a little more than the energy of a SwapCell reference pack (about 468 Wh nominal); a larger pack or a 150 to 200 W solar panel would cover a shift. The pack stays the user's choice.
 

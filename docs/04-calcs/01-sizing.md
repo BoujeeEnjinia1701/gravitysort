@@ -3,9 +3,9 @@ doc_id: GVS-CAL-001
 title: GravitySort sizing calculations
 project: GravitySort
 doc_type: Calculation note
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,11 +17,15 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002). Budget $450; R12 reworded; frame, pedal outrigger and table stand in 25 x 25 x 1.5 mm tube with a frame member check; mass, cost and results updated
+- version: "0.3"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($455); R9 from not met to met on paper
 ---
 
 # GravitySort sizing calculations
 
-On paper, GravitySort meets eight of its fourteen requirements, by calculation or design review. **One is not met:** R9 (parts cost $455 against the $450 budget Amish set on 2026-09-25, $5 over). R2 (throughput per shift), R5 (table ratio) and R6 (pedal power at 80 G) are at risk. R4 (recovery) and R14 (liner life) cannot be verified before testing. Version 0.2 applies the decisions in GVS-DDR-002: the budget is $450; R12 is reworded so the pedal drive relies on a burst safety factor of 10 or more at the highest reachable speed plus the speed display, which the design meets (17 at 1,200 rpm); and the frame, pedal outrigger and table stand move to 25 x 25 x 1.5 mm tube, which brings the machine from 88.3 kg to 77.3 kg and meets R11. The bowl, jacket and spindle have large structural margins at 1,200 rpm, and a bicycle disc brake stops the bowl well inside 15 s. Two findings from v0.1 stand: the fluidization supply only works with a 3/4 in hose from the 1.25 m header post, and the machine needs a water pump that is not in the design.
+On paper, GravitySort meets nine of its fourteen requirements, by calculation or design review, and misses none. R9 (parts cost) is met with no margin: the BOM is $455 and Amish approved a $455 budget on 2026-09-26 to cover it (GVS-DDR-002; it was $450, $5 short). R2 (throughput per shift), R5 (table ratio) and R6 (pedal power at 80 G) are at risk. R4 (recovery) and R14 (liner life) cannot be verified before testing. Version 0.2 applies the decisions in GVS-DDR-002: the budget is $450; R12 is reworded so the pedal drive relies on a burst safety factor of 10 or more at the highest reachable speed plus the speed display, which the design meets (17 at 1,200 rpm); and the frame, pedal outrigger and table stand move to 25 x 25 x 1.5 mm tube, which brings the machine from 88.3 kg to 77.3 kg and meets R11. The bowl, jacket and spindle have large structural margins at 1,200 rpm, and a bicycle disc brake stops the bowl well inside 15 s. Two findings from v0.1 stand: the fluidization supply only works with a 3/4 in hose from the 1.25 m header post, and the machine needs a water pump that is not in the design.
 
 Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the geometry from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates for a paper design; nothing is measured.
 
@@ -45,7 +49,7 @@ Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo roo
 | Brake | Bicycle mechanical disc, 160 mm rotor, pad radius 70 mm, friction 0.4, 150 N per pad with a light pull | Typical values |
 | Gold balance | 5 g/t reference ore; oversize loss 5 %, bowl 71 %, table 93 %, smelting 96 % | GVS-PRC-001 Figure 2; assumptions, not calculations |
 | Frame tube | 25 x 25 x 1.5 mm mild steel square tube, 1.11 kg/m, yield 235 MPa, E = 200 GPa (was 30 x 30 x 2 mm, 1.76 kg/m) | GVS-DDR-002 (item 10) |
-| Budget | `budget_usd` $450 (was $350) | `project.yaml`, GVS-DDR-002 (item 1) |
+| Budget | `budget_usd` $455 (was $450, and $350 before that) | `project.yaml`, GVS-DDR-002 (item 1; $455 approved by Amish on 2026-09-26) |
 
 ## 2. Speed and G (R3)
 
@@ -157,7 +161,7 @@ Moving the frame, the pedal outrigger and the table stretchers and head post fro
 
 ## 12. Cost (R9)
 
-The BOM totals **$455**, excluding the MotionCore kit and reference motor ($335 per MTC-CAL-001) and the battery. Amish set the budget at $450 on 2026-09-25 (GVS-DDR-002, item 1), so the total is $5 (1.1 %) over; it was $465 in v0.1 and the lighter tube saves $8 on the frame and $2 on the table stand. **R9 is not met.** The cost-down options in GVS-DDR-001 item 1 (a quarter-turn belt instead of the bevel gearbox, about $25; the non-fluidized variant, about $45; the table later, about $72 deferred) carry no recommendation and remain open for Amish.
+The BOM totals **$455**, excluding the MotionCore kit and reference motor ($335 per MTC-CAL-001) and the battery. Amish set the budget at $450 on 2026-09-25 (GVS-DDR-002, item 1), $5 short of the total, and on 2026-09-26 approved $455 to cover the priced BOM. The total was $465 in v0.1; the lighter tube saves $8 on the frame and $2 on the table stand. **R9 is met on paper, with no margin.** The cost-down options in GVS-DDR-001 item 1 (a quarter-turn belt instead of the bevel gearbox, about $25; the non-fluidized variant, about $45; the table later, about $72 deferred) are no longer needed to meet R9 and stay on record as options.
 
 ## 13. Gold balance
 
@@ -169,7 +173,6 @@ On the 5 g/t reference ore, 8.0 g of gold enters per shift at 200 kg/h for 8 h; 
 
 | ID | Requirement | Value | Target | Status |
 | --- | --- | --- | --- | --- |
-| R9 | Parts cost | $455 | $450 or less | **Not met** ($5 over) |
 | R2 | Ore per shift | 200 kg/h; 1.55 t with 3 flush stops | 200 kg/h, 1.6 t per 8 h | At risk (needs 206 kg/h) |
 | R5 | Concentrate for smelting | Bowl pull 0.33 %; 5.3 kg/day needs 53:1 on the table | 0.5 % or less; 100 g or less | At risk (two table passes) |
 | R6 | Pedal power | 48.2 W at 60 G; 62.8 W at 80 G | 60 W or less | At risk (met at 60 G, not at 80 G) |
@@ -183,6 +186,7 @@ On the 5 g/t reference ore, 8.0 g of gold enters per shift at 200 kg/h for 8 h; 
 | R8 | Water use | 1.19 m3/h | 1.5 m3/h or less | Met (paper) |
 | R10 | Local workshop build | Welding, drill press, printed mold; set-screw inserts and taper bush | No lathe | Met (design review); casting route unproven |
 | R13 | Quick, secure clean-up | Toolless lid clamps; lockable container and tray | 5 min, no tools | Met (paper); time not verified |
+| R9 | Parts cost | $455 | $455 or less | Met (paper); no margin |
 
 ## 15. Corrections to TRL 2 figures
 

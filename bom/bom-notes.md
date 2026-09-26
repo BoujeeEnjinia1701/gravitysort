@@ -15,6 +15,6 @@ Prices are indicative TRL 3 estimates with a supplier or supplier type on every 
 | **GravitySort total, MotionCore excluded** | 1 to 11, 13 to 19 | **$455** |
 | Motor option (MotionCore kit and reference motor, battery excluded) | 12 | $335 |
 
-The total of $455 is $5 (1.1 %) over the $450 in `project.yaml` and requirement R9, set by Amish on 2026-09-25 (GVS-DDR-002; it was $350). The lighter tube saved $10 against the v0.1 total of $465. Cost-down options, none recommended and all still awaiting Amish: a quarter-turn belt instead of the bevel gearbox (about $25 less), the non-fluidized bowl variant (about $45 less, lower fine-gold recovery), or building the table later (about $70 deferred).
+The total of $455 equals the $455 in `project.yaml` and requirement R9, approved by Amish on 2026-09-26 to cover the priced BOM (GVS-DDR-002; it was $350, then $450). R9 is met with no margin. The lighter tube saved $10 against the v0.1 total of $465. Cost-down options, kept on record but no longer needed to meet R9: a quarter-turn belt instead of the bevel gearbox (about $25 less), the non-fluidized bowl variant (about $45 less, lower fine-gold recovery), or building the table later (about $70 deferred).
 
 A water pump from the settling pond to the header tank is needed on site (GVS-CAL-001 section 4) and is not in this BOM.

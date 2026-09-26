@@ -3,9 +3,9 @@ doc_id: GVS-DDR-002
 title: GravitySort recommendations accepted
 project: GravitySort
 doc_type: Design decision record
-version: "0.1"
+version: "0.2"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -13,6 +13,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Record Amish's acceptance of the recommendations in GVS-DDR-001 and docs/REVIEW.md, what changed in the repo, and the items still open
+- version: "0.2"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($455)
 ---
 
 # 0002: Recommendations accepted
@@ -64,6 +68,14 @@ Nothing decided here needs TRL 4 work to be recorded. The checks the decisions p
 ## Consequences
 
 - GVS-PRB-001, GVS-PRC-001 and GVS-REQ-001 move to v0.4, GVS-CAL-001 to v0.2 and GVS-DDR-001 to v0.2, each with a revision entry for this record.
-- Requirements now stand at one not met (R9, $455 against $450), three at risk (R2, R5, R6), two not verifiable before testing (R4, R14) and eight met on paper (R1, R3, R7, R8, R10, R11, R12, R13).
+- Requirements then stood at one not met (R9, $455 against $450), three at risk (R2, R5, R6), two not verifiable before testing (R4, R14) and eight met on paper (R1, R3, R7, R8, R10, R11, R12, R13).
 - The pedal drive is still not speed-capped; the restated R12 makes the structural margin and the speed display carry that risk, and the tub and lid are not yet shown to contain a liner fragment.
 - `trl` and `trl_target` stay at 3.
+
+## Budget approved, 2026-09-26
+
+On 2026-09-26 Amish wrote, in chat: "i approve all the budget items."
+
+- Budget set to $455 to cover the priced BOM: decided by Amish, 2026-09-26. This closes the $5 gap left by item 1. The BOM is $455 (MotionCore and battery excluded), so R9 moves from not met to met on paper, with no margin. The cost-down options in GVS-DDR-001 item 1 stay on record but are no longer needed.
+- Requirements now stand at none not met, three at risk (R2, R5, R6), two not verifiable before testing (R4, R14) and nine met on paper (R1, R3, R7, R8, R9, R10, R11, R12, R13).
+- Files changed: `project.yaml` (`budget_usd` 450 to 455); GVS-REQ-001 v0.5; GVS-CAL-001 v0.3, `docs/04-calcs/sizing.py` (hard-coded budget 450 to 455) and `results.csv`; GVS-PRB-001 v0.5 and GVS-PRC-001 v0.5 (budget figure); `README.md`; `bom/bom-notes.md`; `docs/REVIEW.md`.

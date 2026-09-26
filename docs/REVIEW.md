@@ -1,5 +1,14 @@
 # Review note: GravitySort
 
+## Session 2026-09-26: budget approved
+
+Amish wrote, in chat on 2026-09-26: "i approve all the budget items." The open budget item (the $5 gap on R9) is decided: budget set to $455 to cover the priced BOM (GVS-DDR-002 v0.2).
+
+- `project.yaml` `budget_usd` $450 to $455; README budget and cost lines updated.
+- R9 target $450 to $455; status **not met to met on paper**, with no margin ($455 BOM, MotionCore and battery excluded).
+- Requirement counts (GVS-CAL-001 v0.3): none not met, three at risk, two not verifiable, nine met on paper.
+- Documents: GVS-PRB-001 v0.5, GVS-PRC-001 v0.5, GVS-REQ-001 v0.5, GVS-CAL-001 v0.3 (`sizing.py` budget constant 450 to 455, script re-run, `results.csv` regenerated), GVS-DDR-002 v0.2; `bom/bom-notes.md`; PDFs rebuilt. No media shows the budget, so none was regenerated.
+
 ## Session 2026-09-25: recommendations accepted
 
 Amish wrote on 2026-09-25: "i accept all your recommendations, go with them across all repos." Every item with a recommendation is now **Decided by Amish, 2026-09-25: go with recommendation**, recorded in `docs/decisions/0002-recommendations-accepted.md` (GVS-DDR-002 v0.1). GVS-DDR-001 moves to v0.2 with its statuses updated.
@@ -37,7 +46,7 @@ Summary: one not met, three at risk, two not verifiable, eight met on paper (was
 
 ### Still awaiting Amish (no recommendation was made)
 
-1. Cost-down options to close the $5 gap on R9: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $70 deferred).
+1. Cost-down options to close the $5 gap on R9: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $70 deferred). **Decided by Amish, 2026-09-26: budget set to $455 to cover the priced BOM, which closes the gap; see "Session 2026-09-26: budget approved".**
 2. The first co-design partner (item 8b).
 3. Head for the fluidization supply: a 1.7 m post or a small pump (item 11b).
 4. Water pumping from the settling pond at pedal-only sites (item 12).

@@ -7,7 +7,7 @@ R5,Concentrate for direct smelting,bowl pull 0.33 %; 5.3 kg/day needs 53:1 on th
 R6,Pedal power at full throughput,48.2 W at 60 G; 62.8 W at 80 G,60 W or less at 55 to 70 rpm,"At risk (met at 60 G, not at 80 G)"
 R7,Motor power margin,5.2 x at 60 G (4.0 x at 80 G),3 x or more,Met (paper)
 R8,Water use at 200 kg/h,1.19 m3/h,1.5 m3/h or less,Met (paper)
-R9,Parts cost,$455,$450 or less,Not met ($5 over)
+R9,Parts cost,$455,$455 or less,Met (paper)
 R10,Local workshop build,"welding, drill press, printed mold; set-screw inserts and taper bush, no lathe",no lathe,Met (design review); casting route unproven
 R11,Transport mass,"77 kg total in 6 loads, heaviest 18 kg",80 kg or less; loads 30 kg or less,Met (paper)
 R12,"Guards, speed limit, stop time","brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal: SF 17 at 1200 rpm, speed display",guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s,Met (paper); containment not verified

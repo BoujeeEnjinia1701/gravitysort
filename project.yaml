@@ -25,7 +25,7 @@ pitch: >-
   A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 problem: >-
   Artisanal and small-scale gold mining uses mercury to capture fine gold because it is cheap and works, poisoning miners, families and rivers. Mercury-free equipment exists but is costly and often recovers less fine gold.
-budget_usd: 450
+budget_usd: 455
 difficulty: 4  # 1 easiest, 5 hardest
 hero_image: media/hero.png
 licenses:

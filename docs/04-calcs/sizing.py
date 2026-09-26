@@ -65,7 +65,7 @@ A = {
     # gold balance (reference ore)
     "grade_g_t": 5.0, "oversize_loss": 0.05, "bowl_rec": 0.71, "table_rec": 0.93, "smelt_rec": 0.96,
     # budget
-    "budget_usd": 450.0, "budget_previous_usd": 350.0,     # raised by Amish, GVS-DDR-002
+    "budget_usd": 455.0, "budget_previous_usd": 450.0,     # 350 to 450 (GVS-DDR-002, 2026-09-25); 455 approved by Amish 2026-09-26
     "sf_min_sprint": 10.0,       # R12 as reworded: minimum burst safety factor at the sprint speed
     "steel_E_GPa": 200.0, "steel_yield_MPa": 235.0,
 }
