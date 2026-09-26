@@ -1,5 +1,56 @@
 # Review note: GravitySort
 
+## Session 2026-09-25: recommendations accepted
+
+Amish wrote on 2026-09-25: "i accept all your recommendations, go with them across all repos." Every item with a recommendation is now **Decided by Amish, 2026-09-25: go with recommendation**, recorded in `docs/decisions/0002-recommendations-accepted.md` (GVS-DDR-002 v0.1). GVS-DDR-001 moves to v0.2 with its statuses updated.
+
+### Decisions applied and what changed
+
+| Item | Decision | Before | After |
+| --- | --- | --- | --- |
+| 1 | Budget | `budget_usd` $350 | `budget_usd` $450; R9 target $450; BOM $465 to $455 |
+| 9 | R12 restated for the pedal drive: burst safety factor 10 or more at 1,200 rpm plus the speed display, instead of a gearing cap | R12 not met as written | R12 met on paper (lowest factor 17) |
+| 10 | Frame, pedal outrigger, table stretchers and head post in 25 x 25 x 1.5 mm tube, then re-estimate | 30 x 30 x 2 mm; 88.3 kg, heaviest load 25.8 kg | 77.3 kg, heaviest load 18.1 kg; R11 met on paper. New frame member check: 61 MPa, safety factor 3.9, 0.73 mm deflection |
+| 11a | 3/4 in fluidization hose and about 89 graded 1.0 mm holes | Engineering proposal | Decided; no geometry change |
+| 14 | Disc brake with parking latch and lid pin, bicycle computer display, 1.2:1 motor step-up, MotionCore lid switch | Engineering proposals | Decided; no geometry change |
+| 2 to 7, 8a | Two stages; fluidized bowl; cast PU liner; pedal baseline with MotionCore option; battery left to the user; borax smelting; partner screening criterion | Adopted for TRL 3, open for review | Decided; wording only |
+
+Files changed: `project.yaml` (budget, DDR-002 in the evidence list); `README.md` (budget, concept numbers, DDR-002 link, safety line, new "What sparked the idea"); `cad/src/model.py` (`tube` 25, `tube_wall` 1.5; cross members and table stretchers follow the tube size) with STEP and STL re-exported; `cad/src/sheets.py` and GVS-DWG-001 Rev P1 to **P2**; `cad/src/concept_media.py` key figure (77 kg) and all of `media/` regenerated; `bom/bom.csv` items 1 ($40 to $32) and 15 ($30 to $28); `bom/bom-notes.md`; `docs/04-calcs/sizing.py` and `results.csv`; GVS-CAL-001 v0.1 to v0.2; GVS-REQ-001, GVS-PRC-001 and GVS-PRB-001 v0.3 to v0.4; GVS-DDR-001 v0.1 to v0.2. The pitch and problem in `project.yaml` are unchanged (no rewording was recommended). `docs/01-problem.md` did not attribute the idea to any ideation session.
+
+The README "What sparked the idea" section now traces the design to the Minamata Convention's call to eliminate whole-ore amalgamation (NRDC summary cited). All drawings, media and PDFs were regenerated with designmolecule.com; superseded PDFs in `docs/pdf/` were removed where they still carried the old domain.
+
+### Requirement status (GVS-CAL-001 v0.2)
+
+| ID | Status | Value |
+| --- | --- | --- |
+| R9 | **Not met** | $455 against $450 ($5, 1.1 % over) |
+| R2 | At risk | 1.55 t per shift after three flush stops; 1.6 t needs 206 kg/h |
+| R5 | At risk | Bowl pull 0.33 % met; 5.3 kg per day needs 53:1 on the table, likely two passes |
+| R6 | At risk | 48.2 W at 60 G met; 62.8 W at 80 G not met |
+| R4 | Not verifiable at TRL 3 | Settling ratio 36 or more for 20 µm flakes; bed behaviour needs testing |
+| R14 | Not verifiable at TRL 3 | No wear data |
+| R11 | Met (paper) | 77.3 kg in six loads, heaviest 18.1 kg; assembly time not verified |
+| R12 | Met (paper) | Brake stop 0.6 s; motor capped; pedal-case burst factor 17 at 1,200 rpm with display; containment not verified |
+| R1, R3, R7, R8, R10, R13 | Met (paper or design review) | Unchanged from v0.1 |
+
+Summary: one not met, three at risk, two not verifiable, eight met on paper (was three not met and six met).
+
+### Still awaiting Amish (no recommendation was made)
+
+1. Cost-down options to close the $5 gap on R9: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $70 deferred).
+2. The first co-design partner (item 8b).
+3. Head for the fluidization supply: a 1.7 m post or a small pump (item 11b).
+4. Water pumping from the settling pond at pedal-only sites (item 12).
+5. R2 and R5 margins: raise the design feed to about 210 kg/h, or restate R2 as 200 kg/h of feed time (item 13).
+
+### Cross-repo actions (not changed in other repos)
+
+- **MotionCore** (item 14 decided): raise with MotionCore (a) the reference hub motor's no-load speed, assumed 250 rpm at full pack voltage, which sets GravitySort's 1.2:1 step-up; (b) mounting a sprocket on the hub motor's disc mount for a stationary chain drive; (c) a speed-limit setting that maps to 900 rpm at the GravitySort spindle, since MotionCore sets its limit in wheel-speed terms; (d) use of a MotionCore brake input for the GravitySort lid switch.
+
+### TRL 4
+
+TRL 4 remains on hold by Amish's instruction. No build, test, purchasing, PCB or firmware work was done. The checks these decisions point at (bearing alignment on a 25 mm frame, spin-up with the tub and lid as containment, brake stop time) are TRL 4 work and are listed for later only. `trl: 3`, `trl_target: 3`.
+
 ## Session 2026-09-25: TRL 3
 
 ### What was done

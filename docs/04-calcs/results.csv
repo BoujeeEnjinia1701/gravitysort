@@ -7,9 +7,9 @@ R5,Concentrate for direct smelting,bowl pull 0.33 %; 5.3 kg/day needs 53:1 on th
 R6,Pedal power at full throughput,48.2 W at 60 G; 62.8 W at 80 G,60 W or less at 55 to 70 rpm,"At risk (met at 60 G, not at 80 G)"
 R7,Motor power margin,5.2 x at 60 G (4.0 x at 80 G),3 x or more,Met (paper)
 R8,Water use at 200 kg/h,1.19 m3/h,1.5 m3/h or less,Met (paper)
-R9,Parts cost,$465,"$350 or less (recommended $450, awaiting Amish)",Not met (over both)
+R9,Parts cost,$455,$450 or less,Not met ($5 over)
 R10,Local workshop build,"welding, drill press, printed mold; set-screw inserts and taper bush, no lathe",no lathe,Met (design review); casting route unproven
-R11,Transport mass,"88 kg total in 6 loads, heaviest 26 kg",80 kg or less; loads 30 kg or less,Not met
-R12,"Guards, speed limit, stop time",brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal reaches 900 rpm at 75 rpm cadence,guarded; 900 rpm or less; stop within 15 s,Not met as written (pedal speed not capped)
+R11,Transport mass,"77 kg total in 6 loads, heaviest 18 kg",80 kg or less; loads 30 kg or less,Met (paper)
+R12,"Guards, speed limit, stop time","brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal: SF 17 at 1200 rpm, speed display",guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s,Met (paper); containment not verified
 R13,"Quick, secure clean-up",toolless lid clamps; flush into lockable container; lockable tray,"5 min, no tools",Met (paper); time not verified
 R14,Liner life,no wear data for this PU on quartz,500 h; replace in 30 min,Not verifiable at TRL 3

@@ -1,4 +1,4 @@
-"""GravitySort sizing calculations, GVS-CAL-001 v0.1 (TRL 3).
+"""GravitySort sizing calculations, GVS-CAL-001 v0.2 (TRL 3, decisions of GVS-DDR-002 applied).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
@@ -65,7 +65,9 @@ A = {
     # gold balance (reference ore)
     "grade_g_t": 5.0, "oversize_loss": 0.05, "bowl_rec": 0.71, "table_rec": 0.93, "smelt_rec": 0.96,
     # budget
-    "budget_usd": 350.0, "budget_recommended_usd": 450.0,
+    "budget_usd": 450.0, "budget_previous_usd": 350.0,     # raised by Amish, GVS-DDR-002
+    "sf_min_sprint": 10.0,       # R12 as reworded: minimum burst safety factor at the sprint speed
+    "steel_E_GPa": 200.0, "steel_yield_MPa": 235.0,
 }
 
 rows = []   # results table (id, quantity, value, target, status)
@@ -370,14 +372,19 @@ say(f"  coast from 850 rpm: {t_coast:.0f} s with fluidization water running, {t_
 say(f"  disc brake at {A['brake_pad_N']:.0f} N pad force: {T_brake_max:.1f} N m, stop in {t_brake:.1f} s; "
     f"a 15 s stop needs only {max(T_15, 0):.2f} N m; rotor warms {dT:.1f} K per stop")
 say(f"  pedal speed: 900 rpm at a cadence of {A['rpm_limit'] / ratio:.0f} rpm; gearing does not cap the pedal speed")
+sf_min = min(sf[n_sprint])
+say(f"  R12 as reworded (GVS-DDR-002): lowest burst safety factor at {n_sprint:.0f} rpm is {sf_min:.0f} "
+    f"(required {A['sf_min_sprint']:.0f}); speed display fitted; brake stop {t_brake:.1f} s")
+ok12 = sf_min >= A["sf_min_sprint"] and t_brake <= 15
 rows.append(("R12", "Guards, speed limit, stop time", f"brake stop {t_brake:.1f} s (coast {t_coast:.0f} s); motor capped by ratio and MotionCore; "
-             f"pedal reaches 900 rpm at {A['rpm_limit'] / ratio:.0f} rpm cadence", "guarded; 900 rpm or less; stop within 15 s",
-             "Not met as written (pedal speed not capped)"))
+             f"pedal: SF {sf_min:.0f} at {n_sprint:.0f} rpm, speed display", "guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s",
+             "Met (paper); containment not verified" if ok12 else "Not met"))
 
 # ---------------------------------------------------------------- 10. mass and size (R11)
 say("\n10. Mass and size (R11)")
 tube_m = sum(l for _, l in frame_members()) / 1000
-kg_m = (P["tube"] ** 2 - (P["tube"] - 4) ** 2) * 1e-6 * A["rho_steel"]
+kg_m = (P["tube"] ** 2 - (P["tube"] - 2 * P["tube_wall"]) ** 2) * 1e-6 * A["rho_steel"]
+kg_m_old = (30 ** 2 - 26 ** 2) * 1e-6 * A["rho_steel"]      # TRL 3 v0.1: 30 x 30 x 2 mm
 tub_kg = 950 * P["tub_t"] / 1000 * (math.pi * P["tub_d"] / 1000 * (P["tub_z"][1] - P["tub_z"][0]) / 1000 + math.pi * (P["tub_d"] / 2000) ** 2)
 lid_kg = 950 * P["lid_t"] / 1000 * math.pi * (P["tub_d"] / 2000 + 0.008) ** 2
 bowl_dry = m_rot - parts_i["jacket water"][0] - parts_i["concentrate"][0]
@@ -390,7 +397,7 @@ loads = {
     "3 Bowl, jacket, tub, lid, hopper": {"bowl and jacket (dry)": bowl_dry, "splash tub": tub_kg, "lid guard": lid_kg,
                                          "hopper, screen, feed pipe": 2.5, "launder": 0.5},
     "4 Table deck": {"plywood": 1.0 * 0.45 * 0.018 * 600, "HDPE facing": 1.0 * 0.45 * 0.003 * 950, "riffles and feed box": 1.1},
-    "5 Table stand, head, tray": {"legs and stretchers": 5.6 * 0.8 + 2 * 0.95 * kg_m, "head box and post": 3.0,
+    "5 Table stand, head, tray": {"legs and stretchers": 5.6 * 0.8 + 2 * 0.95 * kg_m, "head box": 1.87, "head post": 0.64 * kg_m,
                                   "eccentric, pulley, pitman": 2.0, "launder and tray": 4.5},
     "6 Water tank and hoses": {"60 L drum": 3.0, "valve, rotameter, hoses": 2.0},
 }
@@ -400,8 +407,21 @@ for name, items in loads.items():
     say(f"  load {name}: {m:.1f} kg")
 tot += 2.0
 say(f"  hardware 2.0 kg; total {tot:.1f} kg; heaviest load {heaviest:.1f} kg; frame tube {tube_m:.2f} m at {kg_m:.2f} kg/m")
-kg_m_light = (25 ** 2 - 22 ** 2) * 1e-6 * A["rho_steel"]
-say(f"  25 x 25 x 1.5 mm tube ({kg_m_light:.2f} kg/m) would save {tube_m * (kg_m - kg_m_light):.1f} kg")
+tube_other = 2.7 + 2 * 0.95 + 0.64          # pedal outrigger, table stretchers, table head post (m)
+saved = (tube_m + tube_other) * (kg_m_old - kg_m)
+say(f"  25 x 25 x 1.5 mm tube at {kg_m:.2f} kg/m against 30 x 30 x 2 mm at {kg_m_old:.2f} kg/m saves {saved:.1f} kg "
+    f"({tube_m:.2f} m frame, {tube_other:.2f} m pedal outrigger, table stretchers and head post); total was {tot + saved:.1f} kg")
+# frame member check: spindle bearing member, 600 mm span, carries belt pull and the rotating group
+S_t, t_w = P["tube"], P["tube_wall"]
+I_t = (S_t ** 4 - (S_t - 2 * t_w) ** 4) / 12          # mm4
+Z_t = I_t / (S_t / 2)
+span = 2 * P["frame_y"]
+F_mem = 300.0 + (m_rot + 3.0) * G + 29.0             # belt pull, rotor and spindle weight, unbalance
+M_mem = F_mem * span / 4                              # N mm, central point load, simply supported
+s_mem = M_mem / Z_t
+d_mem = F_mem * span ** 3 / (48 * A["steel_E_GPa"] * 1e3 * I_t)
+say(f"  spindle bearing member {S_t:.0f} x {S_t:.0f} x {t_w} mm over {span:.0f} mm: {F_mem:.0f} N central load, "
+    f"{s_mem:.0f} MPa bending (SF {A['steel_yield_MPa'] / s_mem:.1f} on {A['steel_yield_MPa']:.0f} MPa), deflection {d_mem:.2f} mm (pinned ends, upper bound)")
 try:
     from model import assemblies
     bb = assemblies()["gravitysort-assembly"].bounding_box()
@@ -422,9 +442,10 @@ with open(ROOT / "bom/bom.csv", newline="") as f:
         if r["unit_cost_usd"] in ("", None):
             raise SystemExit("unpriced BOM line")
 say(f"  BOM total ${total:.0f} (MotionCore $335 and battery excluded)")
-say(f"  against ${A['budget_usd']:.0f}: {total - A['budget_usd']:+.0f} ({(total / A['budget_usd'] - 1) * 100:+.0f} %); "
-    f"against the recommended ${A['budget_recommended_usd']:.0f}: {total - A['budget_recommended_usd']:+.0f} ({(total / A['budget_recommended_usd'] - 1) * 100:+.1f} %)")
-rows.append(("R9", "Parts cost", f"${total:.0f}", "$350 or less (recommended $450, awaiting Amish)", "Not met (over both)"))
+say(f"  against ${A['budget_usd']:.0f}: {total - A['budget_usd']:+.0f} ({(total / A['budget_usd'] - 1) * 100:+.1f} %); "
+    f"against the former ${A['budget_previous_usd']:.0f}: {total - A['budget_previous_usd']:+.0f}")
+rows.append(("R9", "Parts cost", f"${total:.0f}", f"${A['budget_usd']:.0f} or less", "Met (paper)" if total <= A["budget_usd"] else
+             f"Not met (${total - A['budget_usd']:.0f} over)"))
 
 # ---------------------------------------------------------------- 12. gold balance
 say("\n12. Gold balance (reference ore, estimates)")

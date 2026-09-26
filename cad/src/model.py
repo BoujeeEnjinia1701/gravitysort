@@ -1,4 +1,4 @@
-"""GravitySort parametric model (build123d), TRL 3.
+"""GravitySort parametric model (build123d), TRL 3 (frame in 25 x 25 x 1.5 mm tube per GVS-DDR-002).
 
 Run from the repo root:  python cad/src/model.py
 Exports STEP and STL into cad/step and cad/stl, and prints the main envelopes.
@@ -17,8 +17,8 @@ from pathlib import Path
 
 # Top-level parameters (mm). Edit these, not the geometry below.
 PARAMS = {
-    # Base frame (item 1): 30 x 30 x 2 mm mild steel square tube
-    "frame_x0": -450.0, "frame_x1": 450.0, "frame_y": 300.0, "rail_z": 700.0, "tube": 30.0,
+    # Base frame (item 1): 25 x 25 x 1.5 mm mild steel square tube (GVS-DDR-002, was 30 x 30 x 2)
+    "frame_x0": -450.0, "frame_x1": 450.0, "frame_y": 300.0, "rail_z": 700.0, "tube": 25.0, "tube_wall": 1.5,
     # Centrifuge axis and bowl (item 3): cast PU liner on a GFRP shell
     "bowl_x": 100.0,
     "bowl_lip_d": 220.0, "bowl_base_d": 130.0, "bowl_depth": 180.0,   # inner (liner) surface
@@ -83,7 +83,7 @@ def riffle_rings(p=PARAMS):
 
 
 def frame_members(p=PARAMS):
-    """(name, length mm) of every 30 x 30 tube in the base frame, including the tank post."""
+    """(name, length mm) of every frame tube in the base frame, including the tank post."""
     lx = p["frame_x1"] - p["frame_x0"]; ly = 2 * p["frame_y"]
     m = [("leg", p["rail_z"])] * 4 + [("top rail X", lx)] * 2 + [("top rail Y", ly)] * 2
     m += [("low stretcher", lx)] * 2
@@ -109,14 +109,15 @@ def build_parts(p=PARAMS):
             frame = leg if frame is None else frame + leg
     frame += b(FX0, FX1, -FY, -FY + S, RZ - S, RZ) + b(FX0, FX1, FY - S, FY, RZ - S, RZ)
     frame += b(FX0, FX0 + S, -FY, FY, RZ - S, RZ) + b(FX1 - S, FX1, -FY, FY, RZ - S, RZ)
-    frame += b(FX0, FX1, -FY, -FY + S, 90, 120) + b(FX0, FX1, FY - S, FY, 90, 120)
+    frame += b(FX0, FX1, -FY, -FY + S, 90, 90 + S) + b(FX0, FX1, FY - S, FY, 90, 90 + S)
     tz0 = p["tub_z"][0]
     for x in (CX - 165, CX + 135):
         frame += b(x, x + S, -FY, FY, tz0 - S, tz0)
-    frame += b(CX - 15, CX + 15, -FY, FY, 250, 280)
-    frame += b(JX - 15, JX + 15, -FY, FY, 250, 280)
-    frame += b(-115, -85, -FY, FY, 235, 265)
-    frame += b(-345, -315, -FY, FY, RZ - S, RZ)
+    h = S / 2
+    frame += b(CX - h, CX + h, -FY, FY, 280 - S, 280)
+    frame += b(JX - h, JX + h, -FY, FY, 280 - S, 280)
+    frame += b(-100 - h, -100 + h, -FY, FY, 265 - S, 265)
+    frame += b(-330 - h, -330 + h, -FY, FY, RZ - S, RZ)
 
     # 2 Feed hopper, screen and feed pipe
     hz0, hz1 = p["hopper_z"]; hr = p["hopper_top_d"] / 2
@@ -226,10 +227,11 @@ def build_parts(p=PARAMS):
             top = TZ - 18 + (y + 15) * tan_t - 3      # stop short of the deck underside (flexure mount)
             leg = b(x, x + 30, y, y + 30, 0, top)
             tstand = leg if tstand is None else tstand + leg
-    tstand += b(TBX0 + 60, TBX1 - 50, -TBW / 2 + 20, -TBW / 2 + 50, 150, 180)
-    tstand += b(TBX0 + 60, TBX1 - 50, TBW / 2 - 50, TBW / 2 - 20, 150, 180)
+    # stretchers in the frame tube (25 x 25 x 1.5, GVS-DDR-002)
+    tstand += b(TBX0 + 60, TBX1 - 50, -TBW / 2 + 20, -TBW / 2 + 20 + S, 150, 150 + S)
+    tstand += b(TBX0 + 60, TBX1 - 50, TBW / 2 - 20 - S, TBW / 2 - 20, 150, 150 + S)
     tstand += b(FX1 + 20, TBX0 + 40, -90, 90, 640, 780) + b(TBX0 - 10, TBX0 + 60, -15, 15, 760, 800)
-    tstand += b(FX1 + 60, FX1 + 90, -80, 80, 0, 640) + b(FX1 + 30, FX1 + 120, -120, 120, 0, 20)
+    tstand += b(FX1 + 60, FX1 + 60 + S, -80, 80, 0, 640) + b(FX1 + 30, FX1 + 120, -120, 120, 0, 20)
     tstand += Pos(HX, -170, HZ) * Rot(90, 0, 0) * Cylinder(12, 160)
     tstand += Pos(HX, -250, HZ) * Rot(90, 0, 0) * Cylinder(p["head_pulley_d"] / 2, 20)
 

@@ -25,7 +25,7 @@ render_all(
                  "Disc brake; lid opens only with the brake set",
                  "Table 1000 x 450 mm cleans bowl concentrate",
                  "No mercury anywhere in the flowsheet",
-                 "2.72 x 0.78 x 1.65 m, about 88 kg (est.)"],
+                 "2.72 x 0.78 x 1.65 m, about 77 kg (est.)"],
     cut_exclude=("Water header tank, valve, flow meter", "Water line", "Belt and chain guards", "Speed display"),
     flow={"title": "gold balance for one 8 h shift, 1.6 t of ore at 5 g/t (all values are estimates, GVS-CAL-001)",
           "unit": "g Au",

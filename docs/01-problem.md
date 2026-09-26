@@ -3,7 +3,7 @@ doc_id: GVS-PRB-001
 title: GravitySort problem statement
 project: GravitySort
 doc_type: Problem statement
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-09-25'
 author: Amish Chadha
@@ -21,6 +21,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: TRL 3 update. Cost and power constraints from GVS-CAL-001; water pumping gap; partner screening criterion and borax smelting step adopted for TRL 3 under Amish's 2026-09-25 instruction (GVS-DDR-001), open for his review
+- version: "0.4"
+  date: '2026-09-25'
+  author: Amish Chadha
+  change: Recommendations accepted by Amish (DDR-002). Budget $450; borax smelting step and partner screening criterion decided
 ---
 
 # GravitySort problem statement
@@ -60,7 +64,7 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 
 ## Constraints
 
-- Garage-buildable prototype, about $350 USD in parts. The TRL 3 BOM is $465, over this and over the $450 recommended at TRL 2, which is awaiting Amish (GVS-CAL-001, GVS-DDR-001).
+- Garage-buildable prototype, about $450 USD in parts (raised from $350 by Amish's decision of 2026-09-25, GVS-DDR-002). The TRL 3 BOM is $455, $5 over (GVS-CAL-001).
 - No mercury in any step, and no chemicals beyond water and, at the smelting step outside this machine, borax flux.
 - Built with welding, drilling and hand tools; parts that normally need a lathe (bowl, spindle) must have a no-lathe route.
 - Runs without grid power: pedal drive as the baseline, with an optional motor through MotionCore on a pack of the user's choice. The water supply (about 1.19 m3/h from the settling pond) still needs a pump, which the design does not yet provide (GVS-DDR-001 item 12).
@@ -70,7 +74,7 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 
 - Milling and crushing (a separate machine; GravitySort starts from milled ore).
 - Cyanide leaching, flotation and any chemical processing.
-- Smelting equipment. Direct smelting with borax is the recommended final step (adopted for TRL 3 under Amish's 2026-09-25 instruction, open for his review) and the concentrate is sized for it, but the furnace is not part of this design.
+- Smelting equipment. Direct smelting with borax is the recommended final step (decided by Amish, 2026-09-25: go with recommendation; GVS-DDR-002) and the concentrate is sized for it, but the furnace is not part of this design.
 - Tailings dams and water treatment beyond a settling pond.
 - Legal status, licensing and the gold trade. These decide whether any equipment is adopted and must be covered by the partner organization.
 
@@ -89,7 +93,7 @@ The gap GravitySort targets is an open design that combines the fine-gold captur
 - [ ] What gold particle size distribution do partner sites actually have, and how much of the gold is locked in sulfides that no gravity method will recover?
 - [ ] Is pedal power acceptable for a full shift, or will users treat the motor as the default?
 - [ ] How much water is available per site, and is recirculation practical?
-- [ ] Which country's national action plan and partner offers the best first field site? The screening criterion adopted for TRL 3 (GVS-DDR-001 item 8a) is a country with a mercury ban in force, such as Colombia, or a Minamata action plan with a planetGOLD programme; the partner itself is proposed, awaiting Amish.
+- [ ] Which country's national action plan and partner offers the best first field site? The screening criterion (GVS-DDR-001 item 8a; decided by Amish, 2026-09-25: go with recommendation) is a country with a mercury ban in force, such as Colombia, or a Minamata action plan with a planetGOLD programme; the partner itself is proposed, awaiting Amish.
 - [ ] How do sites without power pump about 1.2 m3/h of water from the settling pond to the header tank?
 
 ## User research and co-design
