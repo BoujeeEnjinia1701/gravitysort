@@ -6,9 +6,9 @@
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
-![GravitySort concept](media/hero.png)
+![GravitySort: mercury-free gold concentrator with centrifugal bowl and shaking table, product render](media/render-hero.png)
 
-[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
+[Exploded render](media/render-exploded.png) · [Detail render](media/render-detail.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 

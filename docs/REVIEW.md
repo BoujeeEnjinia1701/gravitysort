@@ -194,3 +194,46 @@ Requirements not met or at risk: **R9** (budget) is not met. **R4** (recovery) c
 ### Recommended next step
 
 Review this note and the media. If approved, run `/advance-trl3` to size the bowl, fluidization flow and drive by calculation, check the liner and bowl for burst at 1.2 times maximum speed, design the bowl brake and guard interlock, settle the gearbox source, price the BOM with named suppliers, and produce the parametric model and drawing sheet.
+
+## Session 2026-09-26: product appearance model and photoreal renders
+
+Amish chose this repo for the first batch of product renders on 2026-09-26.
+
+### What was added
+
+`cad/src/product_model.py` exposes `product_parts()` (94 parts: 60 shell, 24 internal, 7 accessory, 3 context), `TITLE` and `RENDER_VIEWS` (hero with the operator, exploded, and a detail view of the bowl, spindle and drive without the frame, guards, tub or operator). It imports PARAMS and riffle_rings() from `cad/src/model.py`; every main dimension and interface is as model.py. It adds:
+
+- Frame, pedal outrigger and table stand in 25 mm tube with rounded edges, rubber feet and outrigger bolts; the tank post with a cradle plate and gussets.
+- Galvanized feed hopper with a rolled rim, spigot collar, support arm and clamp band; the screen frame with a mesh texture.
+- Bowl split into the amber cast PU liner with its four riffle rings and the GFRP shell with a lip flange, hub and bolts; the fluidization jacket; a brass rotary union with its side port.
+- Spindle with two UCF205-style flanged bearing units and bolts, a grooved driven pulley, the speed sensor and magnet; a drilled 160 mm brake rotor, caliper, bracket and cable.
+- Blue HDPE splash tub with rolling hoops and a teal band; galvanized tailings launder.
+- White HDPE lid guard with a clear polycarbonate sight window over the bowl, window screws, a handle, two teal over-centre clamps and the red interlock pin.
+- Pedal station with a padded seat, crank arms, treaded pedals and a toothed 48T chainring.
+- Jackshaft with two pillow block bearings, 12T freewheel, motor sprocket, filleted bevel gearbox with cover screws, a 300 mm drive pulley with lightening holes, the table take-off pulley, closed chain and V-belt loops.
+- Perforated teal belt and chain guards, with the name raised on the belt guard.
+- MotionCore module with a label, glands and a lit status light; the reference hub motor with face grooves and its torque plate.
+- Water header tank (natural HDPE drum with hoops, teal bung caps, label), ball valve with a red lever, clear rotameter with float and scale, the 3/4 in hose and clips.
+- Shaking table: plywood deck with an HDPE face, tapered riffles, teal feed box and a wash water trough; flexure strips, eccentric head housing, pitman arm, eccentric shaft and head pulley; galvanized concentrate launder with a teal box lid, hasp and brass padlock.
+- Bicycle speed display with screen and readout.
+- Context: a compact patch of compacted earth, the tailings hose, and the shared clay mannequin (1.70 m, sit pose) on the seat with its feet solved onto the pedals and hands on its thighs.
+
+`README.md` now shows `media/render-hero.png` and links `media/render-exploded.png`; the orchestrator produces both files. Matplotlib self-check previews (clear parts left out) are in `/tmp/gravitysort-prod/`.
+
+### Differences from model.py (Proposed, awaiting Amish)
+
+1. **Crank angle.** model.py draws the cranks vertical. The appearance model turns them to 100 degrees from top dead centre so the seated operator reads as pedalling. No dimension changes. Proposed, awaiting Amish. Recommendation: accept as a render pose only.
+2. **Water hose route.** In model.py the water line drops straight down at x = -330 mm, y = -10 mm, which passes through the bowl belt guard, the 300 mm drive pulley and the tank post member. The appearance model runs the hose from the rotameter forward to y = -215 mm, down outside the guard, then under the guard to a side port on the rotary union. Proposed, awaiting Amish. Recommendation: adopt this route in model.py and GVS-DWG-001 at the next revision.
+3. **Tank post and cradle.** `frame_members()` counts a 550 mm tank post, but `build_parts()` does not draw it, so the tank appears to sit on the water line. The appearance model draws the post plus a 240 mm cradle plate and two gussets. Proposed, awaiting Amish. Recommendation: add the post and cradle to model.py; the cradle is a small addition to BOM line 1 whose cost was not estimated.
+4. **Lid sight window.** BOM line 7 is a plain 10 mm HDPE disc. The appearance model cuts a sector from the lid and bolts a 3 mm clear polycarbonate pane over it so the bowl and riffle rings show. The lid is a guard over a bowl storing about 165 J, so a window must not weaken containment. Proposed, awaiting Amish. Options: (a) keep the plain lid and treat the window as render only; (b) adopt a window of at least 6 mm polycarbonate after a containment check. Recommendation: (a) for now, (b) only after the check.
+5. **Hub motor and motor chain.** In model.py the hub motor body (y = 190 to 250 mm) encloses the motor chain plane (y = 216 to 224 mm), so the chain runs into the motor. The appearance model keeps the model.py positions. Proposed, awaiting Amish. Recommendation: at the next model revision, move the motor along Y so its disc-mount sprocket lies in the jackshaft sprocket plane.
+6. **Details not in model.py.** The lid handle, wash water trough along the back edge of the table, concentrate box lid, hasp and padlock, pillow block bearings (BOM line 9 already has "two bearings"), rubber feet, clips and bolts (BOM line 17) are appearance detail. The lid handle and wash water trough are not in any BOM line. Proposed, awaiting Amish. Recommendation: add the trough to BOM line 14 if the table's cross-flow of water needs a distributor; treat the rest as covered by lines 7, 16 and 17.
+7. **Mannequin fit.** The mannequin's feet land about 27 mm inboard of the pedal centres (its hip width is fixed); the 830 mm seat of model.py is kept. No change proposed.
+
+### Safety note
+
+The inclined table belt and its take-off and head pulleys have no guard in model.py, and the renders show them exposed. Proposed, awaiting Amish: add a table belt guard to BOM line 11 at the next revision. Recommendation: yes.
+
+### Status
+
+This is an appearance model only: no tolerances, no fabrication detail, nothing past TRL 3. `trl: 3` and `trl_target: 3` are unchanged, and TRL 4 remains on hold. model.py, the BOM and the other documents were not edited.
