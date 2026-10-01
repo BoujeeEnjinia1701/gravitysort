@@ -1,5 +1,63 @@
 # Review note: GravitySort
 
+## Session 2026-10-01: prototype build plan and design for construction (kit 1.7.0)
+
+Kit 1.7.0 installed (`.kit/`, `.claude/commands/`, root `CLAUDE.md` from `.kit/CLAUDE.md`). The design was made constructable under Amish's 2026-09-30 instruction ("If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations."), and the illustrated build plan and the design decisions register were written. Every change is in `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003, Draft, open for Amish's review).
+
+### Design changes made for construction
+
+1. Frame: the low stretchers become lower side rails (255 mm up); the gearbox and spindle members lie in pairs on top of them, either side of each vertical shaft (the concept's members floated, and two were crossed by the spindle and the gearbox shaft); tub members hang on four drop posts; end post, low end member and head member added. 14.5 m of tube (was 11.75 m).
+2. Bearings: 150 x 130 x 6 mm plates welded under the spindle pair and the tub pair; the flanged bearings hang under them (centres 255 and 420 mm, 165 mm apart).
+3. Spindle: 25 x 2 mm stainless tube carrying the fluidization water, with a 1/2 in BSP nipple welded in its foot (was a solid shaft); first critical speed 2,710 rpm (2.3 times the sprint speed).
+4. Bowl fixing: pinned 25 mm bore flange hub, four M6 bolts with 12 mm spacers into nuts cast in the liner; bonded closing ring at the jacket top (the jacket was open).
+5. Liner core printed in six segments round a key (the riffle rings are undercuts).
+6. Tub: 63 mm standpipe in a rubber grommet over the upper bearing; 75 mm tailings pipe through a rubber grommet in the back wall (the launder box ran through an uncut wall and into the frame); four M8 floor bolts.
+7. Feed pipe stops 15 mm above the lid, so the lid lifts off; hopper bottom opened; hopper sits in a ring on a support post bolted to the front top rail.
+8. Pedal drive: bottom bracket at 438 mm, 100 mm above the jackshaft (338 mm, on pillow blocks on the gearbox pair), so the chain clears the frame; outrigger detailed and bolted to the frame end by two plates; saddle about 910 to 960 mm.
+9. Gearbox stands across the gearbox pair; its output shaft goes down between them.
+10. Table belt plane moved outside the frame front (the take-off pulley hit the members and the belt looped round a frame rail).
+11. Motor option on a bolt-on cradle behind the frame (the hub motor enclosed its chain).
+12. Guards: bowl belt guard on hangers, chain case seated on the gearbox member, table belt guard added (safety note of 2026-09-26).
+13. Water: tank post and cradle drawn; valve on the back of the drum; rotameter on a bracket on the back top rail; hose down the back of the frame to the union (it ran through the drive pulley).
+14. Table: plywood flexure legs on a welded base; head plate and shelf bolted to the frame end with pillow blocks, eccentric (15 mm stroke) and pitman; latched belt tensioner as the clutch; tailings launder under the front edge; lockable concentrate box under the far end; wash water pipe.
+15. Speed display and brake lever moved to the pedal-end top rail facing the rider; caliper on an L bracket on the spindle member; disc on a flange welded to a shaft collar.
+
+`cad/src/model.py` now models every component and runs 102 constructability checks (`python cad/src/model.py --check`); all pass.
+
+### Files
+
+- `cad/src/model.py` (rewritten: `build_components()`, `checks()`), `cad/src/build_plan_media.py` (new), `cad/src/sheets.py` (GVS-DWG-001 Rev P2 to **P3**), `cad/src/concept_media.py` (key figures, blueprint GVS-DWG-010 P2); STEP and STL re-exported; `media/` concept media regenerated.
+- `docs/05-build-plan.md` (GVS-BLD-001 v0.1) with pictures in `docs/05-build-plan/` (overview, frame cut list, 14 joints, 19 steps) and making sketches `cad/drawings/GVS-DWG-101` to `120` (20 sheets).
+- `docs/06-design-decisions.md` (GVS-DEC-001 v0.1): 12 open decisions, 10 items to confirm when parts are bought, a Value engineering section, 7 decisions made.
+- `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003 v0.1, Draft).
+- GVS-CAL-001 v0.4 and `docs/04-calcs/sizing.py` (hollow spindle, new masses, cost against the value-engineering target; `results.csv` regenerated); GVS-REQ-001 v0.6; GVS-PRC-001 v0.6; GVS-PRB-001 v0.6 (budget wording); `bom/bom.csv` (lines 1 to 4, 6, 8, 10, 11, 13 to 19 updated, line 20 added) and `bom/bom-notes.md`; `project.yaml` (`design_state: constructable`, three documents added to `trl_evidence`; `budget_usd` unchanged); `README.md` (links line, budget line, concept figures, "Building the prototype" section).
+
+### Key results
+
+- **R11 not met:** 95.7 kg in six loads against 80 kg (16 kg over); every load is under 30 kg, heaviest 25.2 kg. The concept's 77.3 kg left out several parts and joints.
+- **Cost:** Value-engineering target: USD 455. Estimated cost of the constructable design: USD 558 (USD 103 over the target).
+- Requirements (GVS-CAL-001 v0.4): one not met (R11), three at risk (R2, R5, R6), two not verifiable at TRL 3 (R4, R14), seven met on paper or by design review; R9 reported against the value-engineering target.
+- Unchanged: bowl speed and G, drive ratio, power, water, settling, fluidization supply, burst factors, brake stop time, gold balance.
+
+### Proposed, awaiting Amish
+
+All open items are in the design decisions register (GVS-DEC-001). New this session: accept GVS-DDR-003 (open decision 1); R11 total mass (2: recommend restating the total as 100 kg, keeping loads of 30 kg or less); how to make the table stroke asymmetric (3: recommend an adjustable bump stop); pedal position for different riders (4). Carried over: fluidization head, water pumping, R2 margin, first partner, liner fragment containment, lid window, concentrate security, render crank pose.
+
+### Safety
+
+- The table belt now has a guard; every belt, chain and pulley is guarded in the model.
+- The standpipe keeps spilt slurry off the upper bearing.
+- Containment of a liner fragment by the tub and lid is still not checked (register item 9); the build plan's safety stop S4 requires it before any spin above hand speed.
+- The pedal drive is still not speed-capped; the speed display and the burst margin carry that risk (R12 as restated).
+
+### Stale media (made on Amish's Mac; not regenerated here)
+
+The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept: the old frame and outrigger, the table head on a post, the hose route, the motor inside the frame and the display on the front rail. The design changed visibly, so all of them are stale and need regenerating on the Mac.
+
+### Recommended next step
+
+Amish to review GVS-DDR-003 and the open decisions in GVS-DEC-001, in particular R11 (2) and the table stroke (3). Then regenerate the product renders on the Mac. TRL 4 (building to the plan) stays on hold.
+
 ## Session 2026-09-26: budget approved
 
 Amish wrote, in chat on 2026-09-26: "i approve all the budget items." The open budget item (the $5 gap on R9) is decided: budget set to $455 to cover the priced BOM (GVS-DDR-002 v0.2).

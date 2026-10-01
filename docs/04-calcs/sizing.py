@@ -1,4 +1,4 @@
-"""GravitySort sizing calculations, GVS-CAL-001 v0.2 (TRL 3, decisions of GVS-DDR-002 applied).
+"""GravitySort sizing calculations, GVS-CAL-001 v0.4 (TRL 3, constructable design of GVS-DDR-003).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "cad/src"))
-from model import PARAMS as P, riffle_rings, frame_members, bowl_radius  # noqa: E402
+from model import PARAMS as P, riffle_rings, frame_members, outrigger_members, stand_members, plate_list, bowl_radius  # noqa: E402
 
 G = 9.81
 RHO_W, MU_W = 1000.0, 1.0e-3          # water at about 20 °C
@@ -343,17 +343,18 @@ say(f"  quarter of liner and shell {frag:.2f} kg at {v_frag:.1f} m/s: {0.5 * fra
 
 # spindle bending and critical speed
 d_sp = P["spindle_d"] / 1000
+d_in = d_sp - 2 * P["spindle_wall"] / 1000       # 25 x 2 mm tube: water runs up the bore (GVS-DDR-003)
 belt_pull = 300.0
 overhang = (P["bearing_z"][0] + P["bearing_h"] / 2 - (P["pulley_z"] + 20)) / 1000
 M = belt_pull * overhang
-s_sp = 32 * M / (math.pi * d_sp ** 3)
-I_sec = math.pi * d_sp ** 4 / 64
+I_sec = math.pi * (d_sp ** 4 - d_in ** 4) / 64
+s_sp = M * (d_sp / 2) / I_sec
 L_c = ((P["bowl_z0"] + P["bowl_depth"] / 2) - (P["bearing_z"][1] + P["bearing_h"])) / 1000
 m_over = m_rot + 1.0
 k_sp = 3 * 193e9 * I_sec / L_c ** 3
 n_crit = math.sqrt(k_sp / m_over) * 60 / (2 * math.pi)
 say(f"  spindle: belt pull {belt_pull:.0f} N at {overhang * 1000:.0f} mm overhang, {s_sp / 1e6:.0f} MPa bending; "
-    f"bowl {L_c * 1000:.0f} mm above the upper bearing, first critical about {n_crit:.0f} rpm ({n_crit / n_sprint:.1f} x the sprint speed)")
+    f"25 x 2 mm tube; bowl {L_c * 1000:.0f} mm above the upper bearing, first critical about {n_crit:.0f} rpm ({n_crit / n_sprint:.1f} x the sprint speed)")
 unb = 0.05 * 0.1 * rpm2w(A["rpm_ref"]) ** 2
 say(f"  50 g of uneven concentrate at 100 mm: {unb:.0f} N rotating load at 730 rpm")
 
@@ -385,33 +386,43 @@ say("\n10. Mass and size (R11)")
 tube_m = sum(l for _, l in frame_members()) / 1000
 kg_m = (P["tube"] ** 2 - (P["tube"] - 2 * P["tube_wall"]) ** 2) * 1e-6 * A["rho_steel"]
 kg_m_old = (30 ** 2 - 26 ** 2) * 1e-6 * A["rho_steel"]      # TRL 3 v0.1: 30 x 30 x 2 mm
+out_m = sum(l for _, l in outrigger_members()) / 1000
+stand_m = sum(l for _, l in stand_members()) / 1000
+plates = dict(plate_list())
+seat_tube_kg = 0.675 * math.pi * (0.032 ** 2 - 0.028 ** 2) / 4 * A["rho_steel"]
+spindle_kg = 0.372 * math.pi * (d_sp ** 2 - d_in ** 2) / 4 * 8000 + 0.05
 tub_kg = 950 * P["tub_t"] / 1000 * (math.pi * P["tub_d"] / 1000 * (P["tub_z"][1] - P["tub_z"][0]) / 1000 + math.pi * (P["tub_d"] / 2000) ** 2)
 lid_kg = 950 * P["lid_t"] / 1000 * math.pi * (P["tub_d"] / 2000 + 0.008) ** 2
 bowl_dry = m_rot - parts_i["jacket water"][0] - parts_i["concentrate"][0]
+flex_kg = 4 * 0.080 * 0.018 * 0.78 * 600                      # four 18 mm plywood legs
 loads = {
-    "1 Base frame with spindle, bearings, brake, union": {"frame tube": tube_m * kg_m, "spindle": 1.6, "bearing units": 2.0,
-                                                        "driven pulley": 0.4, "brake": 0.5, "rotary union": 0.5, "speed display": 0.1},
+    "1 Base frame with spindle, bearings, brake, union": {
+        "frame tube": tube_m * kg_m, "bearing plates": plates["Bearing plates (2)"], "tank cradle": plates["Tank cradle and gussets"],
+        "spindle": spindle_kg, "bearing units": 2.0, "driven pulley": 0.4, "brake disc, flange, bracket, caliper": 0.5 + plates["Caliper bracket and brake flange"],
+        "rotary union": 0.5, "speed display and brake lever": 0.3},
     "2 Drive and pedal station": {"jackshaft and bearings": 2.6, "bevel gearbox": 3.0, "drive pulley": A["drive_pulley_kg"],
-                                  "sprockets, chains, take-off pulley": 1.8, "belts": 0.4, "guards": 2.0,
-                                  "pedal station": 2.7 * kg_m + 2.5},
-    "3 Bowl, jacket, tub, lid, hopper": {"bowl and jacket (dry)": bowl_dry, "splash tub": tub_kg, "lid guard": lid_kg,
-                                         "hopper, screen, feed pipe": 2.5, "launder": 0.5},
-    "4 Table deck": {"plywood": 1.0 * 0.45 * 0.018 * 600, "HDPE facing": 1.0 * 0.45 * 0.003 * 950, "riffles and feed box": 1.1},
-    "5 Table stand, head, tray": {"legs and stretchers": 5.6 * 0.8 + 2 * 0.95 * kg_m, "head box": 1.87, "head post": 0.64 * kg_m,
-                                  "eccentric, pulley, pitman": 2.0, "launder and tray": 4.5},
-    "6 Water tank and hoses": {"60 L drum": 3.0, "valve, rotameter, hoses": 2.0},
+                                  "sprockets, chains, take-off pulley": 1.8, "belts": 0.4, "belt guard and chain case": 2.0,
+                                  "pedal outrigger": out_m * kg_m + seat_tube_kg + plates["Outrigger end plates"] + 2.5},
+    "3 Bowl, jacket, tub, lid, hopper": {"bowl and jacket (dry)": bowl_dry, "hub, bolts, spacers": 0.7, "splash tub": tub_kg,
+                                         "standpipe, tailings pipe, grommets": 0.9, "lid guard and clamps": lid_kg + 0.4,
+                                         "hopper, screen, feed pipe": 2.5, "hopper support": 0.47 * kg_m + plates["Hopper ring and post foot"]},
+    "4 Table deck": {"plywood": 1.0 * 0.45 * 0.018 * 600, "HDPE facing": 1.0 * 0.45 * 0.003 * 950, "riffles and feed box": 1.1,
+                     "wash pipe": 0.4},
+    "5 Table stand, head, belt, tray": {"base": stand_m * kg_m, "flexure legs": flex_kg, "cleats": 8 * 0.08 * 2.42,
+                                        "head plate and shelf": plates["Head plate, shelf and gussets"], "head bearings and shaft": 2.3,
+                                        "eccentric, pulley, pitman": 2.0, "tensioner and table belt guard": 2.0, "launder and box": 4.5},
+    "6 Water tank and hoses": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3},
 }
 tot = 0.0; heaviest = 0.0
 for name, items in loads.items():
     m = sum(items.values()); tot += m; heaviest = max(heaviest, m)
     say(f"  load {name}: {m:.1f} kg")
-tot += 2.0
-say(f"  hardware 2.0 kg; total {tot:.1f} kg; heaviest load {heaviest:.1f} kg; frame tube {tube_m:.2f} m at {kg_m:.2f} kg/m")
-tube_other = 2.7 + 2 * 0.95 + 0.64          # pedal outrigger, table stretchers, table head post (m)
-saved = (tube_m + tube_other) * (kg_m_old - kg_m)
-say(f"  25 x 25 x 1.5 mm tube at {kg_m:.2f} kg/m against 30 x 30 x 2 mm at {kg_m_old:.2f} kg/m saves {saved:.1f} kg "
-    f"({tube_m:.2f} m frame, {tube_other:.2f} m pedal outrigger, table stretchers and head post); total was {tot + saved:.1f} kg")
-# frame member check: spindle bearing member, 600 mm span, carries belt pull and the rotating group
+tot += 3.0
+say(f"  hardware 3.0 kg; total {tot:.1f} kg; heaviest load {heaviest:.1f} kg; frame tube {tube_m:.2f} m at {kg_m:.2f} kg/m")
+say(f"  steel plate: " + ", ".join(f"{k} {v:.2f} kg" for k, v in plates.items()))
+say(f"  motor option adds the cradle ({plates['Motor cradle (motor option)']:.1f} kg), not counted above, like the motor itself")
+say(f"  pedal outrigger {out_m:.2f} m of tube; table base {stand_m:.2f} m of tube")
+# frame member check: one spindle member, 600 mm span, taken as carrying the belt pull and the rotating group alone
 S_t, t_w = P["tube"], P["tube_wall"]
 I_t = (S_t ** 4 - (S_t - 2 * t_w) ** 4) / 12          # mm4
 Z_t = I_t / (S_t / 2)
@@ -420,7 +431,7 @@ F_mem = 300.0 + (m_rot + 3.0) * G + 29.0             # belt pull, rotor and spin
 M_mem = F_mem * span / 4                              # N mm, central point load, simply supported
 s_mem = M_mem / Z_t
 d_mem = F_mem * span ** 3 / (48 * A["steel_E_GPa"] * 1e3 * I_t)
-say(f"  spindle bearing member {S_t:.0f} x {S_t:.0f} x {t_w} mm over {span:.0f} mm: {F_mem:.0f} N central load, "
+say(f"  spindle member {S_t:.0f} x {S_t:.0f} x {t_w} mm over {span:.0f} mm (two share the load; one taken alone): {F_mem:.0f} N central load, "
     f"{s_mem:.0f} MPa bending (SF {A['steel_yield_MPa'] / s_mem:.1f} on {A['steel_yield_MPa']:.0f} MPa), deflection {d_mem:.2f} mm (pinned ends, upper bound)")
 try:
     from model import assemblies
@@ -429,7 +440,7 @@ try:
 except Exception as e:  # pragma: no cover
     size = f"(model not built: {e})"
 say(f"  overall size {size}")
-st = "Met (paper)" if tot <= 80 and heaviest <= 30 else ("Not met" if tot > 80 else "At risk")
+st = "Met (paper)" if tot <= 80 and heaviest <= 30 else (f"Not met ({tot - 80:.0f} kg over 80 kg; every load under 30 kg)" if heaviest <= 30 else "Not met")
 rows.append(("R11", "Transport mass", f"{tot:.0f} kg total in 6 loads, heaviest {heaviest:.0f} kg", "80 kg or less; loads 30 kg or less", st))
 
 # ---------------------------------------------------------------- 11. cost (R9)
@@ -442,10 +453,11 @@ with open(ROOT / "bom/bom.csv", newline="") as f:
         if r["unit_cost_usd"] in ("", None):
             raise SystemExit("unpriced BOM line")
 say(f"  BOM total ${total:.0f} (MotionCore $335 and battery excluded)")
-say(f"  against ${A['budget_usd']:.0f}: {total - A['budget_usd']:+.0f} ({(total / A['budget_usd'] - 1) * 100:+.1f} %); "
-    f"against the former ${A['budget_previous_usd']:.0f}: {total - A['budget_previous_usd']:+.0f}")
-rows.append(("R9", "Parts cost", f"${total:.0f}", f"${A['budget_usd']:.0f} or less", "Met (paper)" if total <= A["budget_usd"] else
-             f"Not met (${total - A['budget_usd']:.0f} over)"))
+say(f"  value-engineering target ${A['budget_usd']:.0f} (a hypothetical control target, not a limit): "
+    f"{total - A['budget_usd']:+.0f} ({(total / A['budget_usd'] - 1) * 100:+.1f} %)")
+rows.append(("R9", "Parts cost", f"${total:.0f}", f"value-engineering target ${A['budget_usd']:.0f}",
+             f"Under the value-engineering target by ${A['budget_usd'] - total:.0f}" if total <= A["budget_usd"] else
+             f"Over the value-engineering target by ${total - A['budget_usd']:.0f}"))
 
 # ---------------------------------------------------------------- 12. gold balance
 say("\n12. Gold balance (reference ore, estimates)")
@@ -457,7 +469,7 @@ say(f"  losses: oversize {au - s1:.1f}, bowl tailings {s1 - s2:.1f}, table taili
 # ---------------------------------------------------------------- design-review requirements
 rows += [
     ("R1", "No mercury", "no amalgamation step in the flowsheet", "no mercury at any step", "Met (design review)"),
-    ("R10", "Local workshop build", "welding, drill press, printed mold; set-screw inserts and taper bush, no lathe", "no lathe", "Met (design review); casting route unproven"),
+    ("R10", "Local workshop build", "welding, drill press, printed mold and segmented core; set-screw inserts, taper bush, welded nipple, no lathe", "no lathe", "Met (design review); casting route unproven"),
     ("R13", "Quick, secure clean-up", "toolless lid clamps; flush into lockable container; lockable tray", "5 min, no tools", "Met (paper); time not verified"),
     ("R14", "Liner life", "no wear data for this PU on quartz", "500 h; replace in 30 min", "Not verifiable at TRL 3"),
 ]

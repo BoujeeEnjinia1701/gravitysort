@@ -2,13 +2,13 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![DOI](https://zenodo.org/badge/1388476534.svg)](https://zenodo.org/badge/latestdoi/1388476534) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml) [![Archived in Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/BoujeeEnjinia1701/gravitysort/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/BoujeeEnjinia1701/gravitysort)
 
-**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $455 USD · **Difficulty:** 4 of 5
+**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 455 (estimated cost USD 558) · **Difficulty:** 4 of 5
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
 ![GravitySort: mercury-free gold concentrator with centrifugal bowl and shaking table, product render](media/render-hero.png)
 
-[Exploded render](media/render-exploded.png) · [Detail render](media/render-detail.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
+[Exploded render](media/render-exploded.png) · [Detail render](media/render-detail.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Prototype build plan](docs/05-build-plan.md) · [Design decisions register](docs/06-design-decisions.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 
@@ -57,9 +57,9 @@ Problem statement: [docs/01-problem.md](docs/01-problem.md)
 
 ## Concept
 
-A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 77 kg in six loads. The parts cost is $455, within the $455 budget. All figures are estimates, not measurements.
+A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank beside it. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 96 kg in six loads of 25 kg or less. Value-engineering target: USD 455. Estimated cost of the constructable design: USD 558 (USD 103 over the target). All figures are estimates, not measurements.
 
-Sizing note: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Decisions: [GVS-DDR-001](docs/decisions/0001-trl2-review-decisions.md), [GVS-DDR-002](docs/decisions/0002-recommendations-accepted.md) · Drawing: [GVS-DWG-001](cad/drawings/GVS-DWG-001.pdf) · Model: [cad/src/model.py](cad/src/model.py)
+Sizing note: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Decisions: [GVS-DDR-001](docs/decisions/0001-trl2-review-decisions.md), [GVS-DDR-002](docs/decisions/0002-recommendations-accepted.md), [GVS-DDR-003](docs/decisions/0003-design-for-construction.md) · Drawing: [GVS-DWG-001](cad/drawings/GVS-DWG-001.pdf) · Model: [cad/src/model.py](cad/src/model.py)
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [docs/03-requirements.md](docs/03-requirements.md)
 
@@ -73,9 +73,15 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 - Bicycle disc brake with a parking latch and lid interlock, and a bicycle computer as the bowl speed display
 - Drive: pedal crank, or a 250 W motor via MotionCore, through a jackshaft, bevel gearbox and V-belts, with guards
 - Water header tank, valve and flow meter
-- Small shaking table with head motion and a lockable concentrate tray
+- Small shaking table on flexure legs, with an eccentric head on the frame end, a belt tensioner as its clutch, and a lockable concentrate box
 
 The working bill of materials is in [bom/bom.csv](bom/bom.csv).
+
+## Building the prototype
+
+The prototype build plan, [GVS-BLD-001](docs/05-build-plan.md), shows how to make every component and put the machine together, with a making sketch for each made part, close-ups of the joints and a picture for every assembly step. Making the design buildable changed some details of the concept (a member pair either side of each shaft, a hollow spindle that carries the fluidization water, a lid that lifts clear of the feed pipe, a table head bolted to the frame); every change is in [GVS-DDR-003](docs/decisions/0003-design-for-construction.md), open for review. Decisions still to be made are in the [design decisions register](docs/06-design-decisions.md). The plan is not yet built; building and testing to it is TRL 4 work.
+
+![Every component of the GravitySort prototype, pulled apart and numbered in build order](docs/05-build-plan/overview.png)
 
 ## Safety
 

@@ -3,9 +3,9 @@ doc_id: GVS-PRC-001
 title: GravitySort design precis
 project: GravitySort
 doc_type: Design precis
-version: "0.5"
+version: "0.6"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-01'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -29,13 +29,17 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish ($455)
+- version: "0.6"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Constructable design (GVS-DDR-003); components, mass (95.7 kg) and cost ($558 against the $455 value-engineering target) updated; build plan GVS-BLD-001 and design decisions register GVS-DEC-001 added
 ---
 
 # GravitySort design precis
 
 ## Summary
 
-GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.7 m long, about 77 kg in six loads, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). The parts cost is $455, covered by the $455 budget Amish approved on 2026-09-26, so R9 is met with no margin and no requirement is not met; R2, R5 and R6 are at risk. All figures are estimates for review, not measurements.
+GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.8 m long, about 96 kg in six loads of 25 kg or less, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). Value-engineering target: USD 455. Estimated cost of the constructable design: USD 558 (USD 103 over the target). Making every part buildable (GVS-DDR-003) took the mass over R11's 80 kg total, the one requirement not met; R2, R5 and R6 are at risk. The prototype build plan is GVS-BLD-001 (`docs/05-build-plan.md`); open decisions are in GVS-DEC-001 (`docs/06-design-decisions.md`). All figures are estimates for review, not measurements.
 
 ![Hero render](../media/hero.png)
 
@@ -73,26 +77,27 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 4.
 
 | # | Component | Choice at TRL 3 | Notes |
 | --- | --- | --- | --- |
-| 1 | Base frame | 25 x 25 x 1.5 mm mild steel square tube, welded, 900 x 600 x 700 mm, with cross members for tub, spindle, jackshaft, motor and tank post | Painted; bolts to the pedal outrigger and table head. Lighter tube per GVS-DDR-002 (was 30 x 30 x 2 mm); spindle member safety factor 3.9 (GVS-CAL-001) |
-| 2 | Feed hopper | Sheet steel or cut plastic cone, 2 mm punched stainless screen on top, 32 mm feed pipe to the bowl centre | Screen removable for cleaning |
+| 1 | Base frame | 25 x 25 x 1.5 mm mild steel square tube, welded, 900 x 600 x 700 mm: lower rails carrying the gearbox and spindle member pairs, tub members on drop posts, bearing plates, tank post and cradle (GVS-DDR-003) | Painted; the pedal outrigger and table head bolt to its ends. 14.5 m of tube; spindle member safety factor 3.9 (GVS-CAL-001) |
+| 2 | Feed hopper | Sheet steel cone in a support ring on a post from the front top rail, 2 mm punched stainless screen on top, 44 mm feed pipe ending 15 mm above the lid over the bowl centre | Screen removable for cleaning; the lid lifts off past the pipe |
 | 3 | Centrifugal bowl | 220 mm lip, 130 mm base, 180 mm deep; four riffle rings 6 mm thick and 12 mm deep at a 38 mm pitch; about 89 fluidization holes of 1.0 mm, graded toward the lower rings; 8 mm cast polyurethane liner (Shore 80 to 90A) in a 3D-printed mold on a 4 mm GFRP shell | No lathe needed; liner replaceable. Decided by Amish, 2026-09-25: go with recommendation (GVS-DDR-001 item 4, GVS-DDR-002) |
-| 4 | Fluidization jacket and rotary union | Sealed 4 mm GFRP jacket with a 12 mm gap, rotating with the bowl, fed through a 1/2 in rotary union at the spindle foot by a 3/4 in hose, 8 to 15 L/min | Decided by Amish, 2026-09-25: go with recommendation (GVS-DDR-001 items 3 and 11, GVS-DDR-002); a 1/2 in hose starves the jacket (GVS-CAL-001 section 6) |
-| 5 | Spindle and bearings | 25 mm stainless shaft, two UCF205 flanged insert bearing units with set screws, 100 mm driven pulley on a taper bush | Upper bearing shielded under the tub floor; first critical speed about 4,820 rpm |
-| 6 | Splash tub and launder | Cut HDPE drum, 430 mm diameter, 75 mm tailings outlet and launder to the settling pond | |
+| 4 | Fluidization jacket and rotary union | Sealed 4 mm GFRP jacket with a 12 mm gap and a bonded closing ring, rotating with the bowl on a pinned flange hub, fed up the hollow spindle from a 1/2 in rotary union at its foot by a 3/4 in hose, 8 to 15 L/min | Decided by Amish, 2026-09-25: go with recommendation (GVS-DDR-001 items 3 and 11, GVS-DDR-002); a 1/2 in hose starves the jacket (GVS-CAL-001 section 6) |
+| 5 | Spindle and bearings | 25 x 2 mm stainless tube, two UCF205 flanged insert bearing units hung under welded plates, 100 mm driven pulley on a taper bush | Upper bearing shielded by a standpipe through the tub floor; first critical speed about 2,710 rpm |
+| 6 | Splash tub and launder | Cut HDPE drum, 430 mm diameter, bolted on the tub members; 75 mm tailings pipe through a rubber grommet to the settling pond | |
 | 7 | Bowl lid guard | 10 mm HDPE disc, two toolless over-centre clamps to the tub, 60 mm feed hole | One clamp is locked by the brake interlock pin |
-| 8 | Pedal station | Used bicycle bottom bracket, crank, 48T chainring, pedals and seat on a bolted outrigger | Adjustable seat |
+| 8 | Pedal station | Used bicycle bottom bracket, crank, 48T chainring, pedals and seat on a welded outrigger bolted to the frame end | Adjustable seat |
 | 9 | Jackshaft and gearbox | 20 mm shaft on two bearings, 12T freewheel, 1:1 right-angle bevel gearbox, 300 mm drive pulley, motor sprocket, 140 mm table take-off pulley | Bevel box from a used agricultural or garden machine is an option; a quarter-turn belt is a cost-down option awaiting Amish |
 | 10 | Drive belts | A-section V-belts: bowl (horizontal) and table (inclined, clutch by tensioner) | |
 | 11 | Guards | Perforated sheet covers over belts, pulleys and chain | Must be fitted before running |
 | 12 | MotionCore kit and reference motor | MotionCore module, e-stop, brake inputs and speed sensor, with the 250 W geared hub motor | Shared component; $335 ($265 kit plus $70 motor, MTC-CAL-001), not in the GravitySort cost |
 | 13 | Water header tank | 60 L HDPE drum on a post 1.25 m above ground, ball valve, 2 to 20 L/min rotameter, hoses | Filled by the user's pump from the settling pond |
 | 14 | Shaking table deck | 1,000 x 450 mm, 18 mm marine plywood faced with HDPE, tapered riffles, feed box, 2 to 4 degrees cross tilt | Adjustable tilt |
-| 15 | Table stand and head motion | Flexure legs (spring steel strip or plywood), stretchers and head post in 25 x 25 x 1.5 mm tube, eccentric head with a 125 mm pulley and pitman arm, 10 to 20 mm stroke at 240 to 300 strokes/min | Asymmetric stroke from a toggle or spring return; about 15 W at the pedals |
-| 16 | Concentrate tray | Launder along the table front, lockable concentrate tray at the gold end | Security for the operator |
+| 15 | Table stand and head motion | Plywood flexure legs on a welded base; head plate and shelf bolted to the frame's table end, eccentric head shaft with a 125 mm pulley and pitman arm, 15 mm stroke at 240 to 300 strokes/min; belt tensioner as the table clutch | How to make the stroke asymmetric is open (GVS-DEC-001); about 15 W at the pedals |
+| 16 | Concentrate tray | Tailings launder under the table's front edge, lockable concentrate box under its far (gold) end | Security for the operator |
 | 18 | Bowl brake and lid interlock | 160 mm bicycle disc rotor on a flange and collar on the spindle, mechanical caliper, lever with parking latch; lid interlock pin on the same cable | New at TRL 3 (R12) |
 | 19 | Bowl speed display | Wired bicycle computer, magnet on the spindle pulley, wheel size 1,667 mm so it reads rpm divided by 10 | New at TRL 3 (R3) |
+| 20 | Motor cradle | 6 mm cradle with two dropouts bolted on the back lower rail; motor chain guard | Motor option only (GVS-DDR-003) |
 
-Item 17 (hardware, hoses and sealant) is in the BOM but not modelled.
+Item 17 (hardware, hoses and sealant) is in the BOM and only partly modelled.
 
 ![Exploded view](../media/exploded.png)
 
@@ -118,8 +123,8 @@ Table 2. Main numbers from GVS-CAL-001.
 | Rotating group | 6.47 kg, 0.0566 kg m2 with the drive; 165 J at 730 rpm | 447 J at 1,200 rpm |
 | Burst safety factor at 1,200 rpm | 17 (jacket wall), 30 (bowl shell), 51 (ring lips) | Assumes sound lamination and a bonded liner |
 | Stop time from 850 rpm | 0.6 s with the brake; about 20 s coasting | R12 asks for 15 s or less |
-| Size and mass | 2.72 x 0.78 x 1.65 m; 77.3 kg in six loads, heaviest 18.1 kg | R11 met: 80 kg or less (was 88.3 kg with 30 x 30 x 2 mm tube) |
-| Parts cost | $455 | `bom/bom.csv`; MotionCore ($335) and battery excluded; budget $455 |
+| Size and mass | 2.78 x 0.79 x 1.65 m; 95.7 kg in six loads, heaviest 25.2 kg | R11 not met: 80 kg or less in all (77.3 kg for the concept; GVS-DDR-003); every load under 30 kg |
+| Parts cost | $558 | `bom/bom.csv`; MotionCore ($335) and battery excluded; USD 103 over the $455 value-engineering target |
 
 The daily motor energy of 0.55 kWh is a little more than the energy of a SwapCell reference pack (about 468 Wh nominal); a larger pack or a 150 to 200 W solar panel would cover a shift. The pack stays the user's choice.
 

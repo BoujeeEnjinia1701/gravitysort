@@ -3,9 +3,9 @@ doc_id: GVS-REQ-001
 title: GravitySort requirements
 project: GravitySort
 doc_type: Requirements
-version: "0.5"
+version: "0.6"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-01'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -29,11 +29,15 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish
+- version: "0.6"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Status from GVS-CAL-001 v0.4 for the constructable design (GVS-DDR-003); R11 not met (95.7 kg, every load under 30 kg); R9 reported against the value-engineering target
 ---
 
 # GravitySort requirements
 
-These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.3, after the decisions Amish accepted on 2026-09-25 (GVS-DDR-002) and the $455 budget he approved on 2026-09-26: none is not met, three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and nine are met on paper (R9 with no margin). Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
+These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.4, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): one is not met (R11, mass), three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and seven are met on paper or by design review. R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
 
 Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 
@@ -47,11 +51,11 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 | R6 | Run on pedal power | Full throughput at 60 W or less at the pedals, at a cadence of 55 to 70 rpm | Power estimate from slurry, fluidization water and bearing losses | **At risk:** 48.2 W at 60 G is met; 62.8 W at 80 G is not; union seal drag assumed |
 | R7 | Run on a small motor | Full throughput from the MotionCore 250 W reference drive on any 20 to 58 V pack that MotionCore accepts, with at least 3 times power margin | Power estimate | Met on paper: 5.2 times at 60 G, 4.0 times at 80 G; 0.55 kWh per shift |
 | R8 | Use little water | 1.5 m3/h or less at 200 kg/h, and tolerate recirculated water with fine silt | Water balance calculation | Met on paper: 1.19 m3/h; a 3/4 in fluidization hose is needed (GVS-CAL-001 section 6) |
-| R9 | Stay within the concept budget | Parts $455 or less, excluding the MotionCore module and battery (was $350, then $450; GVS-DDR-002) | Priced BOM | Met on paper: $455, no margin |
-| R10 | Be built in a local workshop | Welding, drilling and hand tools only; no lathe; bowl liner cast in a printed mold | Design review of every part | Met (design review): set-screw bearing inserts and a taper bush avoid the lathe; bowl casting route unproven |
-| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 80 kg or less; assembled with hand tools in 30 min or less | Mass estimate from the model | Met on paper: 77.3 kg in six loads (heaviest 18.1 kg) with 25 x 25 x 1.5 mm tube (GVS-DDR-002); assembly time not verified |
+| R9 | Keep parts cost near the value-engineering target | Value-engineering target $455 for parts, excluding the MotionCore module and battery: a hypothetical control target, not a limit (Amish, 2026-10-01; was $350, then $450; GVS-DDR-002) | Priced BOM | Estimated cost of the constructable design $558: **over the value-engineering target by USD 103** |
+| R10 | Be built in a local workshop | Welding, drilling and hand tools only; no lathe; bowl liner cast in a printed mold | Design review of every part | Met (design review): set-screw bearing inserts, a taper bush and a welded nipple on a tube spindle avoid the lathe; liner cast on a six-segment printed core (GVS-DDR-003); casting route unproven |
+| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 80 kg or less; assembled with hand tools in 30 min or less | Mass estimate from the model | **Not met:** 95.7 kg in six loads, 16 kg over 80 kg, for the constructable design (GVS-DDR-003); every load is under 30 kg (heaviest 25.2 kg); assembly time not verified |
 | R12 | Guard every moving part | Bowl covered by a lid guard during running; belts, chains and the table head fully guarded; with the motor, bowl speed limited to 900 rpm or less by the drive ratio and the MotionCore speed limit; with the pedals, which gearing cannot cap, a burst safety factor of 10 or more for the bowl, jacket and rings at the highest reachable speed (1,200 rpm at a 100 rpm cadence) and the bowl speed shown to the rider; bowl stops within 15 s of stopping the drive (restated per GVS-DDR-002) | Design review, burst calculation and safety checklist | Met on paper: guards, lid interlock and a disc brake (0.6 s stop; about 20 s coasting); motor capped by its 1.2:1 step-up and the MotionCore limit; lowest pedal-case safety factor 17 at 1,200 rpm; speed display item 19. Containment of a liner fragment not verified |
-| R13 | Clean up quickly and securely | Bowl concentrate flushed into a lockable container in 5 min or less without tools; table concentrate drops into a lockable tray | Design review; later timed trial | Met on paper: toolless lid clamps; time not verified |
+| R13 | Clean up quickly and securely | Bowl concentrate flushed into a lockable container in 5 min or less without tools; table concentrate drops into a lockable tray | Design review; later timed trial | Met on paper: toolless lid clamps, lid lifts clear of the feed pipe; lockable concentrate box under the table's far end; time not verified |
 | R14 | Last in abrasive service | Bowl liner and riffles replaceable in 30 min; liner life 500 h or more (estimate to be checked) | Wear data for cast polyurethane; later test | Not verifiable at TRL 3 |
 
 ## Assumptions
@@ -60,7 +64,7 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 - Free, liberated gold in the 38 to 1,000 µm range. Gold locked in sulfides or finer than about 20 µm is lost to tailings by any gravity method, so R4 applies to free gold only.
 - Reference ore for the daily balance: 5 g/t, 1.6 t per day. Real grades vary widely (about 1 to 20 g/t).
 - Healthy adult pedalling at 60 W or less for sessions of about 1 h, with operators taking turns.
-- Budget: the $455 in `project.yaml` (raised from $350 to $450 by Amish's decision of 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002) covers GravitySort parts. The MotionCore kit and reference motor ($335: $265 kit plus $70 motor, per MTC-CAL-001) and a battery are shared lab components, budgeted with MotionCore.
+- Budget: the $455 in `project.yaml` is a value-engineering target, a hypothetical control target and not a limit (Amish, 2026-10-01) (raised from $350 to $450 by Amish's decision of 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002) covers GravitySort parts. The MotionCore kit and reference motor ($335: $265 kit plus $70 motor, per MTC-CAL-001) and a battery are shared lab components, budgeted with MotionCore.
 - The pack for the motor option is left to the user (GVS-DDR-001 item 6).
 
 ## Changes decided on 2026-09-25
@@ -77,4 +81,7 @@ Amish accepted the recommendations on 2026-09-25 (GVS-DDR-002):
 
 ## Still proposed, awaiting Amish
 
+These are tracked in the design decisions register, GVS-DEC-001 (`docs/06-design-decisions.md`).
+
 - **R2:** restate the target as 200 kg/h of feed time, or raise the design feed to about 210 kg/h (GVS-DDR-001 item 13). No option was recommended.
+- **R11:** restate the total as 100 kg or less, keeping loads of 30 kg or less, or look for about 16 kg of savings (GVS-DDR-003, A1). Recommendation: restate the total.
