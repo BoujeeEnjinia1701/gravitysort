@@ -3,7 +3,7 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: Register opened with the build plan; open decisions from the review notes, the decision records and the design for construction
+  - version: "0.2"
+    date: '2026-10-01'
+    author: Amish Chadha
+    change: Amish accepted the recommendations of open items 1 to 4, 9, 10 and 12 (GVS-DDR-003 accepted; R11 restated); moved to decisions made; open items renumbered 1 to 5
 ---
 
 # GravitySort design decisions register
@@ -23,18 +27,11 @@ Every design decision still to be made, and every decision made, in one place. E
 
 | # | Decision needed | Options | Recommendation | Affects in the build | Source |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Accept the design for construction | Accept the changes P1 to P15 as made; accept with changes; return to the concept layout | Accept: every change keeps what the machine does and all 102 model checks pass | The whole build plan | GVS-DDR-003, Table 1 |
-| 2 | R11 total mass: the constructable design is 95.7 kg against 80 kg, with every load under 30 kg (heaviest 25.2 kg) | (a) restate R11's total as 100 kg or less, keeping loads of 30 kg or less; (b) look for about 16 kg of savings, then re-estimate; (c) keep 80 kg, R11 not met | (a), because the per-load limit decides whether two people can carry it; try the savings in (b) at TRL 4 | None now; (b) would change plates, hopper, guards and table base | GVS-DDR-003, A1; GVS-CAL-001 v0.4 section 11 |
-| 3 | How the table gets its asymmetric stroke | (a) adjustable rubber bump stop at the return end; (b) toggle head; (c) spring return with a cam | (a) for the prototype; (b) if the first test shows it is not enough | Table head and the frame's table end (section 3.16 and step 16 of the plan) | GVS-DDR-003, A2; GVS-PRC-001 item 15 |
-| 4 | Pedal position for riders of different sizes | (a) keep the bicycle-style seat, about 910 to 960 mm up, seat post adjustable; (b) a recumbent seat further back | (a); check with two riders at TRL 4 | Pedal outrigger (section 3.2) | GVS-DDR-003, A3 |
-| 5 | Head for the fluidization supply | (a) a 1.7 m tank post (8.1 kPa at the union); (b) keep the 1.25 m post and add a small pump | None yet | Tank post height or a pump on the water line | GVS-DDR-001, item 11b |
-| 6 | Water from the settling pond at pedal-only sites (about 1.19 m3/h, 5.5 W hydraulic) | Hand pump; a second rider on a pump; gravity supply from upstream | None yet | Not part of the machine; the header tank is filled by it | GVS-DDR-001, item 12 |
-| 7 | R2 throughput margin (1.55 t per shift after flush stops) | Raise the design feed to about 210 kg/h; restate R2 as 200 kg/h of feed time | None yet | None (operating figure) | GVS-DDR-001, item 13 |
-| 8 | First co-design partner and country | A partner in a country with a mercury ban in force (Colombia) or with a Minamata action plan and a planetGOLD programme | None yet (the screening criterion is decided) | None until a field trial | GVS-DDR-001, item 8b |
-| 9 | Containment of a liner fragment by the tub and lid (61 J at 1,200 rpm) | (a) check by calculation before any spin test; (b) add a steel band round the tub at the bowl lip height | (a), then (b) only if the check fails | Splash tub and lid | GVS-CAL-001 section 10; review note 2026-09-25 |
-| 10 | A sight window in the lid | (a) keep the plain 10 mm HDPE lid; (b) a window of 6 mm polycarbonate or more after the containment check | (a) | Lid guard (section 3.11) | Review note 2026-09-26, item 4 |
-| 11 | Concentrate security in practice | Padlock on the box and container; sealed container; a two-person rule | Decide with the partner | Concentrate box and flush container | GVS-PRC-001, open questions |
-| 12 | Renders: the cranks turned 100 degrees from top dead centre so the seated figure reads as pedalling | Accept as a render pose only; render with the model's crank angle | Accept as a render pose only | Renders only | Review note 2026-09-26, item 1 |
+| 1 | Head for the fluidization supply | (a) a 1.7 m tank post (8.1 kPa at the union); (b) keep the 1.25 m post and add a small pump | None yet | Tank post height or a pump on the water line | GVS-DDR-001, item 11b |
+| 2 | Water from the settling pond at pedal-only sites (about 1.19 m3/h, 5.5 W hydraulic) | Hand pump; a second rider on a pump; gravity supply from upstream | None yet | Not part of the machine; the header tank is filled by it | GVS-DDR-001, item 12 |
+| 3 | R2 throughput margin (1.55 t per shift after flush stops) | Raise the design feed to about 210 kg/h; restate R2 as 200 kg/h of feed time | None yet | None (operating figure) | GVS-DDR-001, item 13 |
+| 4 | First co-design partner and country | A partner in a country with a mercury ban in force (Colombia) or with a Minamata action plan and a planetGOLD programme | None yet (the screening criterion is decided) | None until a field trial | GVS-DDR-001, item 8b |
+| 5 | Concentrate security in practice | Padlock on the box and container; sealed container; a two-person rule | Decide with the partner | Concentrate box and flush container | GVS-PRC-001, open questions |
 
 ## To confirm when parts are bought
 
@@ -71,6 +68,13 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-09-25 | Budget from $350 to $450; R12 restated for the pedal drive; frame in 25 x 25 x 1.5 mm tube; 3/4 in fluidization hose and graded holes; disc brake with parking latch and lid interlock pin, speed display, 1.2:1 motor step-up, MotionCore lid switch | Amish, same instruction | GVS-DDR-002, items 1, 9, 10, 11a and 14 |
 | 2026-09-26 | Budget set to $455 to cover the priced BOM | Amish: "i approve all the budget items." | GVS-DDR-002 v0.2 |
 | 2026-09-26 | GravitySort chosen for the first batch of product renders | Amish | `docs/REVIEW.md`, session of 2026-09-26 |
-| 2026-09-30 | Make the design physically buildable while drawing the build plan; the changes are recorded in GVS-DDR-003 and are open for review (open decision 1) | Amish: "If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations." | GVS-DDR-003 |
+| 2026-09-30 | Make the design physically buildable while drawing the build plan; the changes are recorded in GVS-DDR-003 and were accepted on 2026-10-01 (below) | Amish: "If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations." | GVS-DDR-003 |
 | 2026-09-30 | Open decisions are kept out of the build plan, in this register | Amish: "don't log outstanding decisions in this build plan - that is not the place for it. that should be in a separate design document logged and named as such" | `.kit/STANDARDS.md` section 18 |
 | 2026-10-01 | The budget is a value-engineering target, not a limit; cost is reported against it | Amish: "the budgets are a hypothethical control target to ensure we are thinking along a value engineering lens. its ok to ensure wording reflects that the hypothesis budget was x - the real cost being accrued is y" | `.kit/STANDARDS.md` section 18 |
+| 2026-10-01 | Design for construction accepted: the changes P1 to P15 and their knock-on changes, as made | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, Tables 1 and 2 |
+| 2026-10-01 | R11 restated: total 100 kg or less, every load 30 kg or less (was 80 kg in all); the 95.7 kg design meets it on paper. Follow-up: try the savings of about 16 kg (option b) at TRL 4 | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A1; GVS-REQ-001 v0.7 |
+| 2026-10-01 | Asymmetric table stroke: an adjustable rubber bump stop at the return end of the stroke for the prototype. Follow-up: a toggle head (option b) only if the first test shows the stop is not enough; the stop is still to be added to the model, drawings and build plan | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A2 |
+| 2026-10-01 | Pedal position: keep the bicycle-style seat, about 910 to 960 mm up, seat post adjustable. Follow-up: check with two riders at TRL 4 | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A3 |
+| 2026-10-01 | Containment of a liner fragment: check by calculation before any spin test; add a steel band round the tub at the bowl lip height only if the check fails | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-CAL-001 section 10; review note 2026-09-25 |
+| 2026-10-01 | Lid: keep the plain 10 mm HDPE lid, no sight window | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 4 |
+| 2026-10-01 | Renders: the cranks turned 100 degrees from top dead centre is a render pose only; the model keeps its crank angle | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 1 |

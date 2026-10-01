@@ -3,7 +3,7 @@ doc_id: GVS-CAL-001
 title: GravitySort sizing calculations
 project: GravitySort
 doc_type: Calculation note
-version: "0.4"
+version: "0.5"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -25,11 +25,15 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Constructable design (GVS-DDR-003). Hollow spindle and new bearing positions; mass 95.7 kg (R11 not met, every load under 30 kg); cost $558 reported against the $455 value-engineering target
+- version: "0.5"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: R11 restated by Amish (total 100 kg or less, loads 30 kg or less; GVS-DDR-003, A1); R11 met on paper at 95.7 kg
 ---
 
 # GravitySort sizing calculations
 
-On paper, GravitySort meets seven of its fourteen requirements, by calculation or design review, and misses one. Version 0.4 follows the constructable design of GVS-DDR-003, in which every part of the model can be made and fixed to the parts next to it. That design is heavier and dearer than the concept: **R11 is not met**, at 95.7 kg in six loads against 80 kg, although every load stays under 30 kg (the heaviest is 25.2 kg); and the parts cost is $558 against a value-engineering target of $455, USD 103 over (the budget is a hypothetical control target, not a limit; Amish, 2026-10-01). R2 (throughput per shift), R5 (table ratio) and R6 (pedal power at 80 G) are at risk. R4 (recovery) and R14 (liner life) cannot be verified before testing. The bowl, jacket and drive did not change, so speed, G, power, water, settling and burst figures are as in v0.3. The spindle is now a 25 x 2 mm tube that carries the fluidization water; its first critical speed falls to about 2,710 rpm, still 2.3 times the sprint speed. Two findings from v0.1 stand: the fluidization supply only works with a 3/4 in hose from the 1.25 m header post, and the machine needs a water pump that is not in the design.
+On paper, GravitySort meets eight of its fourteen requirements, by calculation or design review, and misses none. Since version 0.4 the note follows the constructable design of GVS-DDR-003, in which every part of the model can be made and fixed to the parts next to it. That design is heavier and dearer than the concept: it weighs 95.7 kg in six loads, with every load under 30 kg (the heaviest is 25.2 kg), which meets R11 as restated by Amish on 2026-10-01 (100 kg or less in all; it was 80 kg, which the design missed by 16 kg); and the parts cost is $558 against a value-engineering target of $455, USD 103 over (the budget is a hypothetical control target, not a limit; Amish, 2026-10-01). R2 (throughput per shift), R5 (table ratio) and R6 (pedal power at 80 G) are at risk. R4 (recovery) and R14 (liner life) cannot be verified before testing. The bowl, jacket and drive did not change, so speed, G, power, water, settling and burst figures are as in v0.3. The spindle is now a 25 x 2 mm tube that carries the fluidization water; its first critical speed falls to about 2,710 rpm, still 2.3 times the sprint speed. Two findings from v0.1 stand: the fluidization supply only works with a 3/4 in hose from the 1.25 m header post, and the machine needs a water pump that is not in the design.
 
 Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the geometry from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates for a paper design; nothing is measured.
 
@@ -159,7 +163,7 @@ The margins are large because the bowl is small and slow. They do not cover poor
 | Hardware | 3.0 kg (2.0 kg) |
 | **Total** | **95.7 kg** (77.3 kg) |
 
-The constructable design adds 2.7 m of frame tube (lower rails, member pairs either side of the shafts, drop posts, end post), about 10 kg of plate (bearing plates 1.4 kg, tank cradle 3.1 kg, head plate and shelf 3.9 kg, outrigger end plates, caliper bracket, hopper ring) and parts the concept left out (hopper support, standpipe and pipes, tensioner, table belt guard, launder and box legs). The motor cradle (1.3 kg) goes with the motor option and is not counted. The heaviest load is 25.2 kg, so every load is under 30 kg, but the total is 15.7 kg over 80 kg: **R11 is not met**. Whether to restate R11's total or look for 16 kg of savings is open in the design decisions register (GVS-DEC-001). The 30 min assembly time is not verified. The overall size from the model is 2.78 x 0.79 x 1.65 m.
+The constructable design adds 2.7 m of frame tube (lower rails, member pairs either side of the shafts, drop posts, end post), about 10 kg of plate (bearing plates 1.4 kg, tank cradle 3.1 kg, head plate and shelf 3.9 kg, outrigger end plates, caliper bracket, hopper ring) and parts the concept left out (hopper support, standpipe and pipes, tensioner, table belt guard, launder and box legs). The motor cradle (1.3 kg) goes with the motor option and is not counted. The heaviest load is 25.2 kg, so every load is under 30 kg, and the total is 4.3 kg under the 100 kg of R11 as restated by Amish on 2026-10-01 (GVS-DDR-003, A1; it was 80 kg, 15.7 kg below the design): **R11 is met on paper**. The savings of about 16 kg listed in GVS-DDR-003 (A1, option b) are to be tried at TRL 4. The 30 min assembly time is not verified. The overall size from the model is 2.78 x 0.79 x 1.65 m.
 
 **Frame member check.** The most loaded members are the two spindle members, 600 mm long, which carry the lower bearing plate between them; the check takes one member alone. Taking the 300 N belt pull, the weight of the rotating group and spindle (about 93 N) and the 29 N unbalance load together as one central load of 422 N on a pinned span (an upper bound), the 25 x 25 x 1.5 mm tube sees 61 MPa of bending, a safety factor of 3.9 on 235 MPa, and deflects at most 0.73 mm. That is adequate on paper; bearing alignment under the belt pull should be checked on the first frame (TRL 4, on hold).
 
@@ -177,7 +181,6 @@ On the 5 g/t reference ore, 8.0 g of gold enters per shift at 200 kg/h for 8 h; 
 
 | ID | Requirement | Value | Target | Status |
 | --- | --- | --- | --- | --- |
-| R11 | Transport mass | 96 kg in 6 loads, heaviest 25 kg | 80 kg or less; loads 30 kg or less | **Not met** (16 kg over 80 kg; every load under 30 kg) |
 | R2 | Ore per shift | 200 kg/h; 1.55 t with 3 flush stops | 200 kg/h, 1.6 t per 8 h | At risk (needs 206 kg/h) |
 | R5 | Concentrate for smelting | Bowl pull 0.33 %; 5.3 kg/day needs 53:1 on the table | 0.5 % or less; 100 g or less | At risk (two table passes) |
 | R6 | Pedal power | 48.2 W at 60 G; 62.8 W at 80 G | 60 W or less | At risk (met at 60 G, not at 80 G) |
@@ -189,6 +192,7 @@ On the 5 g/t reference ore, 8.0 g of gold enters per shift at 200 kg/h for 8 h; 
 | R7 | Motor margin | 5.2 times at 60 G (4.0 at 80 G) | 3 times or more | Met (paper) |
 | R8 | Water use | 1.19 m3/h | 1.5 m3/h or less | Met (paper) |
 | R10 | Local workshop build | Welding, drill press, printed mold and six-segment core; set-screw inserts, taper bush, welded nipple | No lathe | Met (design review); casting route unproven |
+| R11 | Transport mass | 96 kg in 6 loads, heaviest 25 kg | 100 kg or less; loads 30 kg or less (restated 2026-10-01) | Met (paper) |
 | R13 | Quick, secure clean-up | Toolless lid clamps; lockable container and tray | 5 min, no tools | Met (paper); time not verified |
 | R9 | Parts cost | $558 | Value-engineering target $455 | Over the value-engineering target by USD 103 |
 

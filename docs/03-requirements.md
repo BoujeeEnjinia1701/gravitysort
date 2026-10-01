@@ -3,7 +3,7 @@ doc_id: GVS-REQ-001
 title: GravitySort requirements
 project: GravitySort
 doc_type: Requirements
-version: "0.6"
+version: "0.7"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -33,11 +33,15 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Status from GVS-CAL-001 v0.4 for the constructable design (GVS-DDR-003); R11 not met (95.7 kg, every load under 30 kg); R9 reported against the value-engineering target
+- version: "0.7"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: R11 restated by Amish (total 100 kg or less, loads 30 kg or less; GVS-DDR-003, A1); R11 met on paper
 ---
 
 # GravitySort requirements
 
-These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.4, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): one is not met (R11, mass), three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and seven are met on paper or by design review. R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
+These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.5, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): none is unmet, three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and eight are met on paper or by design review. R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
 
 Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 
@@ -53,7 +57,7 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 | R8 | Use little water | 1.5 m3/h or less at 200 kg/h, and tolerate recirculated water with fine silt | Water balance calculation | Met on paper: 1.19 m3/h; a 3/4 in fluidization hose is needed (GVS-CAL-001 section 6) |
 | R9 | Keep parts cost near the value-engineering target | Value-engineering target $455 for parts, excluding the MotionCore module and battery: a hypothetical control target, not a limit (Amish, 2026-10-01; was $350, then $450; GVS-DDR-002) | Priced BOM | Estimated cost of the constructable design $558: **over the value-engineering target by USD 103** |
 | R10 | Be built in a local workshop | Welding, drilling and hand tools only; no lathe; bowl liner cast in a printed mold | Design review of every part | Met (design review): set-screw bearing inserts, a taper bush and a welded nipple on a tube spindle avoid the lathe; liner cast on a six-segment printed core (GVS-DDR-003); casting route unproven |
-| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 80 kg or less; assembled with hand tools in 30 min or less | Mass estimate from the model | **Not met:** 95.7 kg in six loads, 16 kg over 80 kg, for the constructable design (GVS-DDR-003); every load is under 30 kg (heaviest 25.2 kg); assembly time not verified |
+| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 100 kg or less (restated from 80 kg by Amish, 2026-10-01; GVS-DDR-003, A1); assembled with hand tools in 30 min or less | Mass estimate from the model | Met on paper: 95.7 kg in six loads for the constructable design (GVS-DDR-003), every load under 30 kg (heaviest 25.2 kg); assembly time not verified |
 | R12 | Guard every moving part | Bowl covered by a lid guard during running; belts, chains and the table head fully guarded; with the motor, bowl speed limited to 900 rpm or less by the drive ratio and the MotionCore speed limit; with the pedals, which gearing cannot cap, a burst safety factor of 10 or more for the bowl, jacket and rings at the highest reachable speed (1,200 rpm at a 100 rpm cadence) and the bowl speed shown to the rider; bowl stops within 15 s of stopping the drive (restated per GVS-DDR-002) | Design review, burst calculation and safety checklist | Met on paper: guards, lid interlock and a disc brake (0.6 s stop; about 20 s coasting); motor capped by its 1.2:1 step-up and the MotionCore limit; lowest pedal-case safety factor 17 at 1,200 rpm; speed display item 19. Containment of a liner fragment not verified |
 | R13 | Clean up quickly and securely | Bowl concentrate flushed into a lockable container in 5 min or less without tools; table concentrate drops into a lockable tray | Design review; later timed trial | Met on paper: toolless lid clamps, lid lifts clear of the feed pipe; lockable concentrate box under the table's far end; time not verified |
 | R14 | Last in abrasive service | Bowl liner and riffles replaceable in 30 min; liner life 500 h or more (estimate to be checked) | Wear data for cast polyurethane; later test | Not verifiable at TRL 3 |
@@ -79,9 +83,14 @@ Amish accepted the recommendations on 2026-09-25 (GVS-DDR-002):
 
 - **R9:** target raised from $450 to $455 to cover the priced BOM (budget approved by Amish, GVS-DDR-002). Not met to met on paper.
 
+## Change decided on 2026-10-01
+
+Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort" (GVS-DDR-003, A1; GVS-DEC-001):
+
+- **R11:** total restated from 80 kg or less to 100 kg or less, keeping every load at 30 kg or less, because the per-load limit decides whether two people can carry the machine to site. Not met to met on paper (95.7 kg). The savings of about 16 kg are to be tried at TRL 4.
+
 ## Still proposed, awaiting Amish
 
 These are tracked in the design decisions register, GVS-DEC-001 (`docs/06-design-decisions.md`).
 
 - **R2:** restate the target as 200 kg/h of feed time, or raise the design feed to about 210 kg/h (GVS-DDR-001 item 13). No option was recommended.
-- **R11:** restate the total as 100 kg or less, keeping loads of 30 kg or less, or look for about 16 kg of savings (GVS-DDR-003, A1). Recommendation: restate the total.

@@ -3,7 +3,7 @@ doc_id: GVS-BLD-001
 title: GravitySort prototype build plan
 project: GravitySort
 doc_type: Build plan
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: First build plan; design made constructable (GVS-DDR-003)
+  - version: "0.2"
+    date: '2026-10-01'
+    author: Amish Chadha
+    change: GVS-DDR-003 accepted by Amish
 ---
 
 # GravitySort prototype build plan
@@ -31,7 +35,7 @@ The prototype is one GravitySort machine: a welded steel frame about 900 mm long
 
 ## 2. What changed to make it buildable
 
-The concept showed what GravitySort does; some of its parts could not be made, fixed or assembled as drawn. Each change below keeps what the machine does, and all of them are recorded in decision record GVS-DDR-003, open for Amish's review.
+The concept showed what GravitySort does; some of its parts could not be made, fixed or assembled as drawn. Each change below keeps what the machine does, and all of them are recorded in decision record GVS-DDR-003, accepted by Amish on 2026-10-01.
 
 *Table 1. Changes from the concept.*
 

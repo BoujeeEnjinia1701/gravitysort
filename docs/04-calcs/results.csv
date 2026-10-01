@@ -9,7 +9,7 @@ R7,Motor power margin,5.2 x at 60 G (4.0 x at 80 G),3 x or more,Met (paper)
 R8,Water use at 200 kg/h,1.19 m3/h,1.5 m3/h or less,Met (paper)
 R9,Parts cost,$558,value-engineering target $455,Over the value-engineering target by $103
 R10,Local workshop build,"welding, drill press, printed mold and segmented core; set-screw inserts, taper bush, welded nipple, no lathe",no lathe,Met (design review); casting route unproven
-R11,Transport mass,"96 kg total in 6 loads, heaviest 25 kg",80 kg or less; loads 30 kg or less,Not met (16 kg over 80 kg; every load under 30 kg)
+R11,Transport mass,"96 kg total in 6 loads, heaviest 25 kg",100 kg or less; loads 30 kg or less,Met (paper)
 R12,"Guards, speed limit, stop time","brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal: SF 17 at 1200 rpm, speed display",guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s,Met (paper); containment not verified
 R13,"Quick, secure clean-up",toolless lid clamps; flush into lockable container; lockable tray,"5 min, no tools",Met (paper); time not verified
 R14,Liner life,no wear data for this PU on quartz,500 h; replace in 30 min,Not verifiable at TRL 3

@@ -1,5 +1,53 @@
 # Review note: GravitySort
 
+## Session 2026-10-01: recommendations accepted
+
+Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort". This answers the recommendations in the design decisions register (GVS-DEC-001 v0.1), including GVS-DDR-003. Items whose recommendation was "None yet" or "Decide with the partner" were not decided and stay open. trl stays 3; no build or test work was done.
+
+### Accepted, as recommended
+
+| Register item (v0.1) | Decision |
+| --- | --- |
+| 1 | GVS-DDR-003 accepted: design-for-construction changes P1 to P15 and their knock-on changes |
+| 2 | R11 restated: total 100 kg or less, every load 30 kg or less (was 80 kg in all); try the savings of about 16 kg at TRL 4 |
+| 3 | Asymmetric table stroke: adjustable rubber bump stop at the return end for the prototype; a toggle head only if the first test shows it is not enough |
+| 4 | Pedal position: keep the bicycle-style seat, seat post adjustable; check with two riders at TRL 4 |
+| 9 | Liner fragment containment: check by calculation before any spin test; add a steel band round the tub only if the check fails |
+| 10 | Lid: keep the plain 10 mm HDPE lid, no sight window |
+| 12 | Cranks at 100 degrees from top dead centre is a render pose only |
+
+### What changed
+
+- `docs/06-design-decisions.md` (GVS-DEC-001 v0.2): the seven items moved to Decisions made, dated 2026-10-01, with Amish's words and the record; open items renumbered 1 to 5.
+- `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003 v0.2, status Draft as for the pilot repos): status line now "accepted" with Amish's words; Table 3 marked as accepted as recommended; a consequence added for A1 to A3.
+- `docs/03-requirements.md` (GVS-REQ-001 v0.7): R11 restated to 100 kg or less in all, loads 30 kg or less; status not met to **met on paper** (95.7 kg, heaviest load 25.2 kg); a "Change decided on 2026-10-01" section added; R11 removed from "Still proposed".
+- `docs/04-calcs/sizing.py` and `docs/04-calcs/results.csv`: the R11 check uses 100 kg; re-run, and only the R11 row changed.
+- `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.5): summary, section 11 and Table 6 show R11 met on paper against the restated total.
+- `docs/02-concept.md` (GVS-PRC-001 v0.7): summary and the size and mass row show R11 met on paper; component 15 records the bump stop decision; the decision records paragraph names GVS-DDR-003 and the register.
+- `docs/05-build-plan.md` (GVS-BLD-001 v0.2): section 2 says GVS-DDR-003 is accepted. No open decisions were added.
+- PDFs regenerated for GVS-DEC-001 v0.2, GVS-DDR-003 v0.2, GVS-REQ-001 v0.7, GVS-CAL-001 v0.5, GVS-PRC-001 v0.7 and GVS-BLD-001 v0.2; the superseded PDFs removed.
+
+Requirements (GVS-CAL-001 v0.5): none unmet, three at risk (R2, R5, R6), two not verifiable at TRL 3 (R4, R14), eight met on paper or by design review; R9 is USD 103 over the value-engineering target.
+
+### Still to do for the accepted decisions
+
+- The rubber bump stop is not yet in the model, the making sketches or the build plan (section 3.16 and step 16 would carry it). Adding it needs a model change, a regenerated picture set and a first check for the stroke; it is left for the next design session.
+- The containment calculation (decided item 9) is still to be done; safety stop S4 of the build plan already requires it before any spin above hand speed.
+
+### Still open (GVS-DEC-001)
+
+1. Head for the fluidization supply (1.7 m tank post or a small pump).
+2. Water from the settling pond at pedal-only sites.
+3. R2 throughput margin.
+4. First co-design partner and country.
+5. Concentrate security in practice.
+
+The 10 items to confirm when parts are bought are unchanged.
+
+### Recommended next step
+
+Add the rubber bump stop to the model and the build plan, and do the containment calculation, once Amish asks for that session. Regenerate the product renders on the Mac. TRL 4 remains on hold by Amish's instruction.
+
 ## Session 2026-10-01: prototype build plan and design for construction (kit 1.7.0)
 
 Kit 1.7.0 installed (`.kit/`, `.claude/commands/`, root `CLAUDE.md` from `.kit/CLAUDE.md`). The design was made constructable under Amish's 2026-09-30 instruction ("If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations."), and the illustrated build plan and the design decisions register were written. Every change is in `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003, Draft, open for Amish's review).

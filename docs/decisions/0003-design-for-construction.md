@@ -3,7 +3,7 @@ doc_id: GVS-DDR-003
 title: GravitySort design for construction
 project: GravitySort
 doc_type: Design decision record
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -13,12 +13,16 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Changes that make the concept physically buildable, with the reason for each; made under Amish's 2026-09-30 instruction to make the design physically buildable; open for his review
+- version: "0.2"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Accepted by Amish, including the recommendations for A1 to A3
 ---
 
 # 0003: Design for construction
 
 - **Date:** 2026-10-01
-- **Status:** Draft. Made under Amish's 2026-09-30 instruction to make the design physically buildable; open for his review. The items in Table 3 change a requirement or what the machine does and are **Proposed, awaiting Amish**; they are also in the design decisions register (GVS-DEC-001).
+- **Status:** accepted. Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort". This covers every change in Tables 1 and 2 and the recommendations in Table 3 (A1 to A3), which are now decided as recommended and recorded in the design decisions register (GVS-DEC-001).
 
 ## Context
 
@@ -60,7 +64,7 @@ The changes below keep what GravitySort does: the same two stages, the same bowl
 | Documents | GVS-CAL-001 v0.4, GVS-REQ-001 v0.6, GVS-PRC-001 v0.6: mass, cost, spindle and R9, R10, R11 updated. | Follows the model. |
 | Unchanged | Bowl speed, G, drive ratio, power, water, settling, fluidization supply, burst factors, brake and gold balance. | The bowl, jacket and drive geometry did not change. |
 
-*Table 3. Proposed, awaiting Amish.*
+*Table 3. Items that change a requirement or what the machine does: proposed, then accepted by Amish as recommended on 2026-10-01.*
 
 | # | Question | Options | Recommendation |
 | --- | --- | --- | --- |
@@ -71,6 +75,7 @@ The changes below keep what GravitySort does: the same two stages, the same bowl
 ## Consequences
 
 - `design_state: constructable` in `project.yaml`. The build plan GVS-BLD-001 shows every component and step in pictures generated from the model (`cad/src/build_plan_media.py`); the open questions are in the design decisions register GVS-DEC-001.
-- Requirement status: R11 moves to not met (16 kg over, every load under 30 kg) and R9 is now reported against the value-engineering target (USD 103 over). R2, R5 and R6 stay at risk, R4 and R14 not verifiable, the rest met on paper or by design review (GVS-CAL-001 v0.4).
+- Requirement status: R11 moved to not met (16 kg over 80 kg, every load under 30 kg) and R9 is now reported against the value-engineering target (USD 103 over). R2, R5 and R6 stay at risk, R4 and R14 not verifiable, the rest met on paper or by design review (GVS-CAL-001 v0.4).
+- With A1 accepted, R11 is restated to 100 kg or less in all, every load 30 kg or less, and is met on paper at 95.7 kg (GVS-REQ-001 v0.7, GVS-CAL-001 v0.5); the savings of option (b) are to be tried at TRL 4. With A2 accepted, the table stroke is made asymmetric by an adjustable rubber bump stop at the return end, with a toggle head only if the first test shows it is not enough; the stop is still to be added to the model, the making sketches and the build plan (section 3.16 and step 16). With A3 accepted, the pedal position is kept and checked with two riders at TRL 4.
 - The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept frame, outrigger, table stand, hose and motor position; they need updating on Amish's Mac, where Blender is.
 - The bought parts that set dimensions (bearing units, shaft flange hub, rotary union, gearbox, pillow blocks, rubber grommets, hub motor) must be checked against the model when bought; they are listed in GVS-DEC-001.

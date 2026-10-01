@@ -440,8 +440,9 @@ try:
 except Exception as e:  # pragma: no cover
     size = f"(model not built: {e})"
 say(f"  overall size {size}")
-st = "Met (paper)" if tot <= 80 and heaviest <= 30 else (f"Not met ({tot - 80:.0f} kg over 80 kg; every load under 30 kg)" if heaviest <= 30 else "Not met")
-rows.append(("R11", "Transport mass", f"{tot:.0f} kg total in 6 loads, heaviest {heaviest:.0f} kg", "80 kg or less; loads 30 kg or less", st))
+# R11 total restated from 80 kg to 100 kg or less, loads 30 kg or less (Amish, 2026-10-01; GVS-DDR-003, A1)
+st = "Met (paper)" if tot <= 100 and heaviest <= 30 else (f"Not met ({tot - 100:.0f} kg over 100 kg; every load under 30 kg)" if heaviest <= 30 else "Not met")
+rows.append(("R11", "Transport mass", f"{tot:.0f} kg total in 6 loads, heaviest {heaviest:.0f} kg", "100 kg or less; loads 30 kg or less", st))
 
 # ---------------------------------------------------------------- 11. cost (R9)
 say("\n11. Cost (R9)")
