@@ -5,7 +5,7 @@ A sheet, joint or step can be drawn alone:  python cad/src/build_plan_media.py s
 With no argument it draws everything. Every picture is drawn from cad/src/model.py
 (build_components), so the pictures and the model never disagree:
     docs/05-build-plan/overview.png        every component pulled apart, numbered in build order
-    cad/drawings/GVS-DWG-101 to 120        making sketches for the made and modified components
+    cad/drawings/GVS-DWG-101 to 121        making sketches for the made and modified components
     docs/05-build-plan/joint-NN.png        close-ups of the joints that need explaining
     docs/05-build-plan/step-NN.png         one picture per assembly step
     docs/05-build-plan/frame-cuts.png      frame cut list and member positions (matplotlib)
@@ -70,7 +70,7 @@ GROUPS = [
     ("Table base", ("table_base",), "#6B7280"),
     ("Flexure legs and cleats", ("flex_legs", "cleats"), "#A16207"),
     ("Table deck and wash pipe", ("deck", "wash_pipe"), "#C9A27E"),
-    ("Table head: plate, bearings, shaft", ("head", "head_bearings", "head_shaft"), "#57534E"),
+    ("Table head, bump stop and striker", ("head", "head_bearings", "head_shaft", "stop_bracket", "bump_stop", "striker"), "#57534E"),
     ("Pitman arm", ("pitman",), "#B45309"),
     ("Table belt, tensioner and guard", ("table_belt", "tensioner", "table_guard"), "#0F766E"),
     ("Tailings launder and concentrate box", ("launder", "conc_box"), "#92400E"),
@@ -110,11 +110,14 @@ def sheet(n):
     return deco
 
 
-def _sheet(key, neighbours, dwg, title, material, notes, view_shape=None, inset=(22, -60), shape=None, name=None):
+def _sheet(key, neighbours, dwg, title, material, notes, view_shape=None, inset=(22, -60), shape=None, name=None, rev="P1", revisions=None):
     pt = Part(name or C[key].name, shape if shape is not None else C[key].shape, C[key].color if key in C else "#6B7280")
     return bv.component_sheet(pt, [cp(k) for k in neighbours], project="GravitySort", dwg_no=dwg, title=title,
                               material=material, notes=notes, date=DATE, view_shape=view_shape, inset_view=inset,
-                              out_dir=str(DWG))
+                              out_dir=str(DWG), rev=rev, revisions=revisions)
+
+
+P1 = ("P1", "Making sketch for the prototype build plan", "2026-10-01", "AC")
 
 
 @sheet(101)
@@ -382,9 +385,11 @@ def s114():
                    "Wash pipe: 40 mm PVC, 770 long, 3 mm holes every 25 toward the",
                    "  deck, along the back edge from 190 to 960; end cap; hose tail.",
                    "Pitman cheeks: two steel plates 40 x 22 x 6 under the head end,",
-                   "  12 mm apart, 12 mm hole for the pitman pin.",
+                   "  12 mm apart; a slot 12 wide, 20 long along the table for the",
+                   "  pitman pin (8 mm of free play toward the far end, for the stop).",
                    "Check: deck flat within 1 mm; riffles straight and well stuck."],
-                  view_shape=v, inset=(30, -50), shape=S("deck", "wash_pipe"))
+                  view_shape=v, inset=(30, -50), shape=S("deck", "wash_pipe"), rev="P2",
+                  revisions=[P1, ("P2", "Pin hole made a slot for the bump stop (GVS-DDR-003 A2)", DATE, "AC")])
 
 
 @sheet(115)
@@ -421,8 +426,10 @@ def s116():
                    "  shaft bearings, 330 apart across the machine.",
                    "Head shaft 20 mm, 410 long; eccentric: 60 mm disc with its 20 mm",
                    "  bore 7.5 off centre (15 mm stroke), two set screws.",
+                   "The bump stop bracket bolts beside it on the top end rail (121).",
                    "Check: shelf square to the plate; shaft turns freely by hand."],
-                  inset=(22, -45))
+                  inset=(22, -45), rev="P2",
+                  revisions=[P1, ("P2", "Bump stop bracket alongside (GVS-DWG-121)", DATE, "AC")])
 
 
 @sheet(117)
@@ -437,10 +444,12 @@ def s117():
                    "Pin end: 12 mm hole; a 12 mm pin with washers and an R-clip",
                    "  joins it to the cheeks under the deck.",
                    "Fit: the arm rises at 46 degrees from the head to the deck;",
-                   "  the eye swings 3 mm clear of the shelf cut-out.",
+                   "  the eye swings 3 mm clear of the shelf cut-out. The pin pulls",
+                   "  the deck from the head end of the slot in the cheeks.",
                    "Grease the bush; it must turn freely with no side play.",
-                   "Check: the deck moves 15 mm per turn of the head shaft."],
-                  view_shape=flat(C["pitman"].shape, (0, 0, 0), (1, 0, 0), (0, 1, 0)), inset=(4, -90))
+                   "Check: with the stop backed off, the deck moves 15 mm per turn."],
+                  view_shape=flat(C["pitman"].shape, (0, 0, 0), (1, 0, 0), (0, 1, 0)), inset=(4, -90), rev="P2",
+                  revisions=[P1, ("P2", "Pin works in a slot for the bump stop (GVS-DDR-003 A2)", DATE, "AC")])
 
 
 @sheet(118)
@@ -492,6 +501,27 @@ def s120():
                    "Check: hub motor 10 mm clear of the base and 17 clear of the frame;",
                    "  its sprocket in line with the jackshaft sprocket (straight edge)."],
                   inset=(30, 60))
+
+
+@sheet(121)
+def s121():
+    import build123d as b
+    return _sheet("stop_bracket", ["frame", "bump_stop", "striker", "head"], "GVS-DWG-121",
+                  "GravitySort table bump stop bracket and striker: making sketch",
+                  "Square tube 25 x 25 x 1.5; plate 6 mm; angle 6 mm; rubber buffer",
+                  ["Arm: 25 x 25 x 1.5 tube, 244 long. Foot: plate 40 x 66 x 6",
+                   "  welded under one end, two 9 mm holes 46 apart across it.",
+                   "Upright: plate 40 x 61 x 6 welded square across the other end,",
+                   "  standing up; 9 mm hole on its centre, 31 above the arm.",
+                   "Fit: the foot bolts on top of the table-end top rail, 205 behind",
+                   "  the centre line (two M8 down through the rail).",
+                   "Buffer: rubber 40 across, 30 long, M8 female thread, on an M8",
+                   "  stud 45 long through the upright, a lock nut each side.",
+                   "Striker: 6 mm angle 40 wide, legs 40 and 70, screwed under",
+                   "  the deck's head end at its back edge (two M6), leg hanging down.",
+                   "Setting: buffer just touching at full forward travel, then",
+                   "  3 mm in (2 to 6). Check: 15 mm clear at the head end."],
+                  inset=(25, 40))
 
 
 def sheets(only=None):
@@ -633,7 +663,7 @@ def j10():
                   part("Pitman arm", w("pitman"), "#B45309"), part("Deck with its cheeks", w("deck"), "#D6D3D1"),
                   part("Frame table end", w("frame"), "#4B5563")],
               "head, pitman and deck",
-              "Seen from the front, cut at the centre line. The eccentric pushes and pulls the deck 15 mm", elev=6, azim=-90, size=(7.5, 6))
+              "Seen from the front, cut at the centre line. The pin pulls the deck from the head end of its slot", elev=6, azim=-90, size=(7.5, 6))
 
 
 @joint_(11)
@@ -675,6 +705,18 @@ def j14():
                   part("Tub member and drop post", w("frame"), "#4B5563")],
               "tailings pipe through the tub wall (cut)",
               "A rubber pipe grommet seals the pipe in the curved wall; the pipe runs out to the settling pond", elev=20, azim=-130, size=(7, 5.5))
+
+
+@joint_(15)
+def j15():
+    bx = (415, 705, 150, 260, 690, 830)
+    w = lambda k: win(C[k].shape, *bx)  # noqa: E731
+    return J(15, [part("Table-end top rail of the frame", w("frame"), "#4B5563"), part("Stop bracket: foot, arm, upright", w("stop_bracket"), "#9CA3AF"),
+                  part("Rubber buffer on its stud, lock nuts", w("bump_stop"), BOLT), part("Striker angle under the deck", w("striker"), "#B45309"),
+                  part("Deck (back edge, head end)", w("deck"), "#D6D3D1")],
+              "table bump stop (deck at full forward travel)",
+              "Seen from behind. The deck strikes the buffer at the end of its forward stroke; the lock nuts set the gap",
+              elev=14, azim=125, size=(8, 6))
 
 
 def joints(only=None):
@@ -759,8 +801,10 @@ def steps(only=None):
        elev=22, azim=-60, label_done=False)
     tb += [G[names[20]]]
     st(16, [fr] + tb, [_mv(grp("Head plate, shelf, bearings and shaft", ("head", "head_bearings", "head_shaft"), "#57534E"), (0, -450, 0)),
-                       _mv(cp("pitman"), (0, -300, 150))],
-       "table head and pitman", "Head plate on the frame end (four M8); pitman from the eccentric to the deck cheeks, 12 mm pin",
+                       _mv(cp("pitman"), (0, -300, 150)),
+                       _mv(grp("Bump stop bracket, buffer and stud", ("stop_bracket", "bump_stop"), "#0F766E"), (0, 0, 300)),
+                       _mv(cp("striker", "Striker angle (screws under the deck)", color="#B45309"), (0, 200, 220))],
+       "table head, pitman and bump stop", "Head plate on the frame end (four M8); pitman pin in the cheek slot; stop bracket on the top rail (two M8)",
        elev=22, azim=-60, label_done=False)
     done += [G[names[21]], G[names[22]]]
     st(17, [fr, G[names[2]]] + tb + [G[names[21]], G[names[22]]], [_mv(cp("table_belt"), (0, -150, 0)), _mv(cp("tensioner"), (0, -300, 250)), _mv(cp("table_guard"), (0, -800, -450))],

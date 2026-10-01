@@ -3,7 +3,7 @@ doc_id: GVS-BLD-001
 title: GravitySort prototype build plan
 project: GravitySort
 doc_type: Build plan
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: GVS-DDR-003 accepted by Amish
+  - version: "0.3"
+    date: '2026-10-01'
+    author: Amish Chadha
+    change: Table bump stop (GVS-DDR-003 A2) added to section 3.16 and step 16, with its making sketch (GVS-DWG-121) and joint close-up; pitman pin works in a slot; first checks and safety stops updated
 ---
 
 # GravitySort prototype build plan
@@ -29,7 +33,7 @@ revisions:
 
 *Figure 1. Every component pulled apart and numbered in build order; 26, the motor, is an option.*
 
-The prototype is one GravitySort machine: a welded steel frame about 900 mm long, 600 mm wide and 700 mm tall that carries a spinning bowl inside a plastic tub, a pedal seat bolted to one end and a shaking table bolted to the other, with a water tank on a post above. Pedalling turns a jackshaft under the frame; a right-angle gearbox and a V-belt spin the bowl at about 730 rpm, and a second belt, engaged by a hand lever, drives the table at clean-up. Figure 1 shows the 26 groups of parts in the order you make or fit them. The work is sawing, drilling and MIG or stick welding square steel tube and plate; laying up glass fibre over 3D-printed plugs and casting polyurethane in the bowl; cutting a plastic drum and HDPE sheet; plywood work for the table; and fitting bought bicycle, bearing and belt-drive parts. The whole machine weighs about 96 kg in six loads of 25 kg or less. The parts cost about $558 from the bill of materials.
+The prototype is one GravitySort machine: a welded steel frame about 900 mm long, 600 mm wide and 700 mm tall that carries a spinning bowl inside a plastic tub, a pedal seat bolted to one end and a shaking table bolted to the other, with a water tank on a post above. Pedalling turns a jackshaft under the frame; a right-angle gearbox and a V-belt spin the bowl at about 730 rpm, and a second belt, engaged by a hand lever, drives the table at clean-up. Figure 1 shows the 26 groups of parts in the order you make or fit them. The work is sawing, drilling and MIG or stick welding square steel tube and plate; laying up glass fibre over 3D-printed plugs and casting polyurethane in the bowl; cutting a plastic drum and HDPE sheet; plywood work for the table; and fitting bought bicycle, bearing and belt-drive parts. The whole machine weighs about 97 kg in six loads of 25 kg or less. The parts cost about $569 from the bill of materials.
 
 > **Safety:** GravitySort is rotating machinery. The bowl stores about 165 J at 730 rpm and coasts for about 20 s after the drive stops; belts, chains and pulleys can trap fingers, hair and clothing. Keep every guard on whenever the drive can turn, and keep the lid clamps shut and the brake parked whenever the bowl is not in use. Welding, grinding and cutting steel need a welding helmet, gloves, eye and hearing protection and a fire-safe area. Epoxy, glass fibre and polyurethane casting need gloves, a respirator rated for organic vapour and good ventilation. Never use the machine with mercury.
 
@@ -50,8 +54,9 @@ The concept showed what GravitySort does; some of its parts could not be made, f
 | Feed pipe | Ran down through the lid into the bowl, so the lid could not come off | Stops 15 mm above the lid (Figure 21) | The lid lifts straight off to flush the bowl |
 | Pedal drive | The chain crossed a frame member; the outrigger arms ended in the air | Bottom bracket 100 mm above the jackshaft; outrigger bolted to the frame end by two plates (Figure 5) | The chain clears the frame; the outrigger lifts off for transport |
 | Table drive | The take-off pulley ran into the members; the table belt looped round a frame rail | The jackshaft runs out in front of the frame; the table belt runs outside the frame | Nothing passes between the belt's two runs |
-| Table | Solid legs; head on a single post; no clutch; concentrate tray where the tailings fall | Plywood flexure legs; head bolted to the frame end; a latched belt tensioner; tailings launder at the front and concentrate box at the far end (Figures 25 to 33) | Each product goes where the table delivers it |
-| Motor option | The motor enclosed its own chain | A bolt-on cradle behind the frame (Figure 35) | The chain clears the motor |
+| Table | Solid legs; head on a single post; no clutch; concentrate tray where the tailings fall | Plywood flexure legs; head bolted to the frame end; a latched belt tensioner; tailings launder at the front and concentrate box at the far end (Figures 25 to 35) | Each product goes where the table delivers it |
+| Table stroke | A plain eccentric and pitman, which shake the deck in a nearly even to-and-fro that does not move gold along the table | An adjustable rubber stop on a bracket on the frame's table end; the deck strikes it at the end of each forward stroke, and the pitman pin works in a short slot so the deck can stop while the pin runs on (Figures 29 and 30) | Gold walks toward the concentrate box only if the deck turns back sharply at its far end (GVS-DDR-003, A2, accepted by Amish on 2026-10-01) |
+| Motor option | The motor enclosed its own chain | A bolt-on cradle behind the frame (Figure 37) | The chain clears the motor |
 | Water | The hose ran through the drive pulley; the tank post was not drawn | Tank post and cradle; the hose runs down outside the back of the frame | Clear path, easy to reach |
 
 ## 3. Making the components
@@ -398,19 +403,23 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 2. Glue nine riffles of HDPE strip, 6 wide and 8 tall, along the deck, the first 60 in from the front edge and the rest every 38. Each starts 30 later than the one in front (60, 90 and so on up to 300 from the head end) and all stop 40 short of the far end.
 3. Build a feed box 180 x 90 x 70 at the back of the head end.
 4. Drill a 40 mm PVC pipe with 3 mm holes every 25, cap one end, fit a hose tail on the other, and clip it along the back edge from 190 to 960 from the head end.
-5. Screw two steel cheeks 40 x 22 x 6, 12 apart, under the head end on the centre line; drill them 12 mm for the pitman pin.
+5. Screw two steel cheeks 40 x 22 x 6, 12 apart, under the head end on the centre line. Cut a slot through both for the pitman pin, 12 wide and 20 long along the table, so the pin has 8 mm of free play toward the far end: drill two 12 mm holes 8 apart and file out the web between them.
 
-**How it fits the parts next to it.** The deck sits on the four leg tops; the pitman pin joins its cheeks to the head (section 3.17); the launder runs under its front edge and the concentrate box under its far end (section 3.18).
+**How it fits the parts next to it.** The deck sits on the four leg tops; the pitman pin joins its cheeks to the head (section 3.17); the striker of the bump stop screws under its head end at the back edge (section 3.16); the launder runs under its front edge and the concentrate box under its far end (section 3.18).
 
 **Check before moving on.** The deck is flat within 1 mm across each diagonal; the riffles are straight and well stuck.
 
-### 3.16 Table head plate and shelf
+### 3.16 Table head plate, shelf and bump stop
 
 ![Figure 28. Making sketch of the table head plate and shelf](../cad/drawings/GVS-DWG-116.png)
 
 *Figure 28. Table head plate and shelf making sketch (GVS-DWG-116).*
 
-**What it is and what it is made from.** The bracket on the table end of the frame that carries the head shaft, the eccentric that shakes the deck, and the 125 mm pulley the table belt turns. Steel plate 6 mm; a 20 mm shaft; two 20 mm pillow blocks; a 60 mm eccentric disc.
+![Figure 29. Making sketch of the bump stop bracket and striker](../cad/drawings/GVS-DWG-121.png)
+
+*Figure 29. Bump stop bracket and striker making sketch (GVS-DWG-121).*
+
+**What it is and what it is made from.** The bracket on the table end of the frame that carries the head shaft, the eccentric that shakes the deck, and the 125 mm pulley the table belt turns; and, beside it, the bump stop that gives the deck its sharp turn at the far end of each stroke. Steel plate 6 mm; a 20 mm shaft; two 20 mm pillow blocks; a 60 mm eccentric disc. For the bump stop: 25 x 25 x 1.5 mm square tube, 6 mm plate, a short piece of 6 mm steel angle, a bought rubber buffer 40 mm across and 30 mm long (about 55 Shore A, with an M8 thread in its steel back plate, rated for 800 N or more in compression), an M8 stainless threaded rod 45 long and three M8 nuts.
 
 **How to make it.**
 
@@ -418,16 +427,39 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 2. Cut the shelf 184 deep, with a cut-out 130 x 280 between the bearing positions; weld it square to the plate, 677 above the ground, with two triangular gussets 90 x 90 under it.
 3. Drill two pairs of 12 mm holes in the shelf, 95 apart, for the pillow blocks, 330 apart across the machine.
 4. Eccentric: a 60 mm steel disc with its 20 mm bore 7.5 off centre (a 15 mm stroke) and two set screws.
+5. Stop bracket: cut the arm 244 long from square tube. Weld a foot plate 40 x 66 under one end, square across it, and drill two 9 mm holes in the foot 46 apart, one each side of the arm. Weld an upright plate 40 x 61 square across the other end, standing up from the top of the arm, and drill a 9 mm hole on its centre line 31 above the arm.
+6. Striker: cut 40 mm off a 6 mm steel angle with legs of at least 40 and 70, and drill two 7 mm holes in the short leg for the deck.
+7. Bump stop: screw the rubber buffer onto the threaded rod until 10 mm of rod is in it and lock it there with one nut against its back plate. Prime and paint the bracket and striker.
 
-**How it fits the parts next to it.** The plate bolts to the frame's table end (four M8). The pillow blocks bolt on the shelf; the head shaft runs through them with the eccentric at the centre line and the 125 mm pulley 330 in front of the centre line, in line with the take-off pulley on the jackshaft.
+**How it fits the parts next to it.**
 
-**Check before moving on.** The shelf is square to the plate; the shaft turns freely by hand; the head pulley lines up with the take-off pulley (straight edge across both faces).
+![Figure 30. Joint 15: the table bump stop](05-build-plan/joint-15.png)
+
+*Figure 30. Seen from behind. The striker under the deck meets the buffer at the end of the forward stroke; the lock nuts either side of the upright set the gap.*
+
+The head plate bolts to the frame's table end (four M8). The pillow blocks bolt on the shelf; the head shaft runs through them with the eccentric at the centre line and the 125 mm pulley 330 in front of the centre line, in line with the take-off pulley on the jackshaft.
+
+The stop bracket's foot bolts on top of the frame's table-end top rail, 205 behind the centre line (two M8 straight down through the rail), with the arm pointing along the table under the deck's back edge. The buffer's rod passes through the hole in the upright with a lock nut on each side, the buffer facing back toward the frame. The striker's short leg screws flat under the deck at its head end, flush with the head-end edge and the back edge (two M6 bolts through the deck with large washers on top), with its long leg hanging straight down in front of the buffer.
+
+How it works: the pitman pulls the deck toward the head through the near end of its slot; the plywood legs push the deck the other way. On each forward stroke the deck runs on until the striker hits the buffer, and stops there sharply while the pin runs on into the slot and comes back for it. The sharp stop is what walks the gold along the riffles to the concentrate box.
+
+How to set it, with the table belt slack (tensioner handle up) and the head turned by hand:
+
+1. Back the buffer right off. Turn the head shaft until the deck is as far from the frame as it goes, with the pin at the near end of its slot.
+2. Move the two lock nuts until the buffer just touches the striker; this is the zero setting. Then turn the buffer 3 mm toward the deck (about two and a half turns of the nuts) and lock both nuts against the upright with a 13 mm spanner. Settings from 2 to 6 mm in are useful; the slot allows up to 8.
+3. Take the pitman pin out. Slide the table base away from the frame until the legs lean about 5 mm toward the head at the top when the striker rests on the buffer; the deck then presses on the buffer with about 200 N. Refit the pin.
+
+The nuts are reached from behind the machine, under the deck's back edge, with the deck at rest on the buffer.
+
+**Check before moving on.** The shelf is square to the plate; the shaft turns freely by hand; the head pulley lines up with the take-off pulley (straight edge across both faces). Turning the head by hand, the deck stops on the buffer at the set gap each turn, the pin stays at the near end of its slot until then, and the striker clears the buffer by 15 mm or more at the head end of the stroke. Nothing else touches the striker or the stop bracket.
+
+> **Safety:** The striker and buffer close with up to about 600 N at every stroke. Never put fingers between them, and set the stop only with the table belt slack and the head turned by hand.
 
 ### 3.17 Pitman arm
 
-![Figure 29. Making sketch of the pitman arm](../cad/drawings/GVS-DWG-117.png)
+![Figure 31. Making sketch of the pitman arm](../cad/drawings/GVS-DWG-117.png)
 
-*Figure 29. Pitman arm making sketch (GVS-DWG-117).*
+*Figure 31. Pitman arm making sketch (GVS-DWG-117).*
 
 **What it is and what it is made from.** The link that turns the eccentric's rotation into the deck's to-and-fro stroke. Flat bar 22 x 12 mm, 12 mm plate, a 60 mm bore bronze bush and a 12 mm pin.
 
@@ -438,17 +470,17 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 
 **How it fits the parts next to it.**
 
-![Figure 30. Joint 10: head, pitman and deck](05-build-plan/joint-10.png)
+![Figure 32. Joint 10: head, pitman and deck](05-build-plan/joint-10.png)
 
-*Figure 30. The eye runs on the eccentric through the shelf cut-out; the pin joins the arm to the cheeks under the deck.*
+*Figure 32. The eye runs on the eccentric through the shelf cut-out; the pin joins the arm to the cheeks under the deck and pulls from the near end of their slot.*
 
-**Check before moving on.** Turning the head shaft one full turn moves the deck 15 mm and back; the eye clears the shelf all round.
+**Check before moving on.** With the bump stop backed off, turning the head shaft one full turn moves the deck 15 mm and back; the eye clears the shelf all round.
 
 ### 3.18 Tailings launder and concentrate box
 
-![Figure 31. Making sketch of the launder and box](../cad/drawings/GVS-DWG-118.png)
+![Figure 33. Making sketch of the launder and box](../cad/drawings/GVS-DWG-118.png)
 
-*Figure 31. Tailings launder and concentrate box making sketch (GVS-DWG-118).*
+*Figure 33. Tailings launder and concentrate box making sketch (GVS-DWG-118).*
 
 **What it is and what it is made from.** The launder catches the light material washed off the deck's front edge; the lockable box catches the gold concentrate that walks off the end of the riffles. Galvanized sheet 1.2 mm and square tube for the legs.
 
@@ -463,9 +495,9 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 
 ### 3.19 Table belt tensioner and guard
 
-![Figure 32. Making sketch of the table belt tensioner](../cad/drawings/GVS-DWG-119.png)
+![Figure 34. Making sketch of the table belt tensioner](../cad/drawings/GVS-DWG-119.png)
 
-*Figure 32. Table belt tensioner making sketch (GVS-DWG-119).*
+*Figure 34. Table belt tensioner making sketch (GVS-DWG-119).*
 
 **What it is and what it is made from.** The table belt runs slack (no drive) until this lever presses an idler onto it, so it is the clutch between bowl and table. Flat bar 25 x 6 and 20 x 6, a 60 mm flat idler pulley, a 12 mm stub axle and pivot bolt, 6 mm plate; the guard is 1.2 mm steel sheet.
 
@@ -477,17 +509,17 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 
 **How it fits the parts next to it.**
 
-![Figure 33. Joint 11: the tensioner on the table belt](05-build-plan/joint-11.png)
+![Figure 35. Joint 11: the tensioner on the table belt](05-build-plan/joint-11.png)
 
-*Figure 33. Handle down presses the idler onto the belt's top run and the table runs; handle up and the belt goes slack.*
+*Figure 35. Handle down presses the idler onto the belt's top run and the table runs; handle up and the belt goes slack.*
 
 **Check before moving on.** Handle down, the head turns with the jackshaft without the belt slipping; handle up, the jackshaft turns and the head stays still.
 
 ### 3.20 Motor cradle (motor option)
 
-![Figure 34. Making sketch of the motor cradle](../cad/drawings/GVS-DWG-120.png)
+![Figure 36. Making sketch of the motor cradle](../cad/drawings/GVS-DWG-120.png)
 
-*Figure 34. Motor cradle making sketch (GVS-DWG-120).*
+*Figure 36. Motor cradle making sketch (GVS-DWG-120).*
 
 **What it is and what it is made from.** Only for the motor option: the bracket that holds the MotionCore reference hub motor behind the frame. Steel plate 6 mm; a sheet steel chain guard.
 
@@ -499,9 +531,9 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 
 **How it fits the parts next to it.**
 
-![Figure 35. Joint 12: motor cradle on the back rail](05-build-plan/joint-12.png)
+![Figure 37. Joint 12: motor cradle on the back rail](05-build-plan/joint-12.png)
 
-*Figure 35. The cradle bolts on the back lower rail; the motor drops into the open slots and its torque washers stop it turning.*
+*Figure 37. The cradle bolts on the back lower rail; the motor drops into the open slots and its torque washers stop it turning.*
 
 **Check before moving on.** The motor sprocket lines up with the jackshaft sprocket (straight edge); the motor is 10 mm clear of the base and 17 mm clear of the frame.
 
@@ -521,6 +553,7 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Speed display (line 19).** Wired bicycle computer with its magnet and sensor.
 - **Water (line 13).** 60 L HDPE drum, 3/4 in ball valve and tank connector, 2 to 20 L/min rotameter, 3/4 in hose and clips, a ratchet strap, a tee, valve and hose to the wash pipe.
 - **Tub fittings (line 6).** Rubber pipe grommets for 63 and 75 mm pipe in a 6 mm wall; 63 and 75 mm pipe offcuts.
+- **Bump stop buffer (line 22).** A cylindrical rubber-metal buffer 40 mm across and 30 mm long, natural rubber about 55 Shore A, steel back plate with an M8 female thread, rated for 800 N or more in compression; an M8 stainless threaded rod 45 long and three M8 nuts.
 - **Fixings (line 17).** M6, M8 and M10 bolts with nylon-insert nuts and washers (about 60 in all), six M6 x 4 stainless nuts for the liner, a 6 mm pin and R-clip for the hub and a 12 mm pin for the pitman, hose clamps, sealant, an O-ring for the jacket floor, primer and paint.
 - **Motor option (lines 12 and 20).** The MotionCore kit and its reference 250 W geared hub motor with a sprocket on its disc mount (from the MotionCore project), and a battery the user chooses.
 
@@ -610,7 +643,7 @@ Fit the tank connector and valve near the bottom of the drum, on its back; set t
 
 ![Step 14](05-build-plan/step-14.png)
 
-Set the base on level ground, in line with the frame, with its head end 190 from the frame's table end. Bolt the four legs to the base rails with their bottom cleats.
+Set the base on level ground, in line with the frame, with its head end about 190 from the frame's table end; its final position is set with the bump stop in step 16. Bolt the four legs to the base rails with their bottom cleats.
 
 ### Step 15: deck onto the legs
 
@@ -618,11 +651,11 @@ Set the base on level ground, in line with the frame, with its head end 190 from
 
 With a helper, lay the deck on the leg tops and bolt the top cleats to its underside. Set the slope to 3 degrees down to the front with packers under the back cleats.
 
-### Step 16: table head and pitman
+### Step 16: table head, pitman and bump stop
 
 ![Step 16](05-build-plan/step-16.png)
 
-Bolt the head plate to the frame's table end (four M8). Bolt the pillow blocks on the shelf, slide the head shaft through with the eccentric and the pulley, and tighten them. Fit the pitman eye over the eccentric through the shelf cut-out and pin its other end between the deck cheeks.
+Bolt the head plate to the frame's table end (four M8). Bolt the pillow blocks on the shelf, slide the head shaft through with the eccentric and the pulley, and tighten them. Fit the pitman eye over the eccentric through the shelf cut-out and pin its other end in the slot between the deck cheeks (12 mm pin, washers and an R-clip). Bolt the stop bracket's foot on the table-end top rail behind the head plate (two M8), screw the striker under the deck's head end at its back edge (two M6), and fit the buffer and its rod through the upright with a lock nut each side. Set the stop 3 mm in and the legs' push on the buffer as section 3.16 says. **Hold point:** turning the head by hand, the deck stops on the buffer each turn and nothing else touches.
 
 ### Step 17: table belt, tensioner and guard
 
@@ -656,9 +689,10 @@ These are the checks a TRL 4 test report would record; this plan only lists them
 | Pedal speed range | R3, R6 | Pedal at 50, 60 and 71 rpm | 600 to 850 rpm at the bowl |
 | Fluidization flow | R4, R8 | Fill the tank, open the valve, read the rotameter with the bowl still and turning at 730 rpm | 8 to 15 L/min; water from every ring groove |
 | Water use | R8 | Rotameter plus the slurry water at the feed rate | 1.5 m3/h or less |
-| Table drive | R5 | Handle down, pedal at 60 rpm; count the strokes; measure the stroke | 240 to 300 strokes per minute; 15 mm stroke |
+| Table drive | R5 | Handle down, pedal at 60 rpm; count the strokes; measure the stroke with the bump stop backed off, then set 3 mm in | 240 to 300 strokes per minute; 15 mm stroke backed off, 12 mm set |
+| Table bump stop | R5 | Run the table with concentrate and wash water at settings of 2, 3, 4 and 6 mm | A sharp knock at the far end of every stroke; gold moves along the riffles to the box; the nuts have not moved after 30 min |
 | Lid off for a flush | R13 | Time stopping, braking, opening the lid and rinsing the rings into a container | 5 min or less, no tools |
-| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 96 kg estimated) |
+| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 97 kg estimated) |
 | Assembly time | R11 | Two people assemble the six loads with hand tools | 30 min or less |
 
 ## 6. Safety stops
@@ -671,7 +705,8 @@ Stop at each point. Carry on only when everything listed is true.
 - **S4. Before any spin above hand speed.** The brake stops the bowl and parks; the interlock pin stops the right clamp opening; the speed display works; nobody stands in line with the tub; a calculation shows that the tub and lid contain a piece of liner thrown at 1,200 rpm.
 - **S5. Every run.** Never above 900 rpm (90 on the display). Before opening the lid: stop pedalling, apply and park the brake, and wait for the bowl to stop. Never remove or bypass the interlock pin.
 - **S6. Before the motor is powered (motor option).** The MotionCore emergency stop works and is within the operator's reach; its speed limit is set to 900 rpm at the spindle and checked; the lid switch removes torque; the battery is out of the wet.
-- **S7. Before water and slurry.** The settling pond is fenced; boots with grip; no mercury anywhere on site.
+- **S7. Before the table runs.** The table belt guard is on; the bump stop's lock nuts are tight; nobody's hands are near the striker and buffer. Set or adjust the stop only with the tensioner handle up and the head turned by hand.
+- **S8. Before water and slurry.** The settling pond is fenced; boots with grip; no mercury anywhere on site.
 
 ## 7. Tools, skills and workspace
 
@@ -685,10 +720,10 @@ Stop at each point. Carry on only when everything listed is true.
 
 ## 8. Where the numbers come from
 
-- Model and constructability checks: `cad/src/model.py` (`python cad/src/model.py --check`, 102 checks); STEP and STL exports in `cad/step/` and `cad/stl/`.
-- Pictures: `cad/src/build_plan_media.py`, using `.kit/build_views.py`; written to `docs/05-build-plan/` and `cad/drawings/GVS-DWG-101` to `GVS-DWG-120`.
-- General arrangement: `cad/drawings/GVS-DWG-001.pdf`, Rev P3.
-- Calculations: `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.4) and `docs/04-calcs/sizing.py`; mass and loads in section 11, spindle in section 10, cost in section 12.
+- Model and constructability checks: `cad/src/model.py` (`python cad/src/model.py --check`, 115 checks); STEP and STL exports in `cad/step/` and `cad/stl/`.
+- Pictures: `cad/src/build_plan_media.py`, using `.kit/build_views.py`; written to `docs/05-build-plan/` and `cad/drawings/GVS-DWG-101` to `GVS-DWG-121`.
+- General arrangement: `cad/drawings/GVS-DWG-001.pdf`, Rev P4.
+- Calculations: `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.6) and `docs/04-calcs/sizing.py`; bump stop in section 9, mass and loads in section 11, spindle in section 10, cost in section 12.
 - Bill of materials: `bom/bom.csv` and `bom/bom-notes.md`.
 - Decisions: `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003), with GVS-DDR-001 and GVS-DDR-002; open decisions in `docs/06-design-decisions.md` (GVS-DEC-001).
-- Requirements: `docs/03-requirements.md` (GVS-REQ-001 v0.6).
+- Requirements: `docs/03-requirements.md` (GVS-REQ-001 v0.8).

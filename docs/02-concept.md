@@ -3,7 +3,7 @@ doc_id: GVS-PRC-001
 title: GravitySort design precis
 project: GravitySort
 doc_type: Design precis
-version: "0.7"
+version: "0.8"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -37,13 +37,17 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: GVS-DDR-003 accepted by Amish; R11 restated (100 kg total, loads 30 kg or less) and met on paper; table stroke made asymmetric by an adjustable rubber bump stop
+- version: "0.8"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Table bump stop now in the model and build plan (component 15; BOM items 21 and 22); mass 96.5 kg; cost $569 (USD 114 over the target)
 ---
 
 # GravitySort design precis
 
 ## Summary
 
-GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.8 m long, about 96 kg in six loads of 25 kg or less, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). Value-engineering target: USD 455. Estimated cost of the constructable design: USD 558 (USD 103 over the target). Making every part buildable (GVS-DDR-003, accepted by Amish on 2026-10-01) took the mass over R11's original 80 kg total; Amish restated R11 to 100 kg or less in all, with every load 30 kg or less, so it is met on paper. R2, R5 and R6 are at risk. The prototype build plan is GVS-BLD-001 (`docs/05-build-plan.md`); open decisions are in GVS-DEC-001 (`docs/06-design-decisions.md`). All figures are estimates for review, not measurements.
+GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.8 m long, about 97 kg in six loads of 25 kg or less, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). Value-engineering target: USD 455. Estimated cost of the constructable design: USD 569 (USD 114 over the target). Making every part buildable (GVS-DDR-003, accepted by Amish on 2026-10-01) took the mass over R11's original 80 kg total; Amish restated R11 to 100 kg or less in all, with every load 30 kg or less, so it is met on paper. R2, R5 and R6 are at risk. The prototype build plan is GVS-BLD-001 (`docs/05-build-plan.md`); open decisions are in GVS-DEC-001 (`docs/06-design-decisions.md`). All figures are estimates for review, not measurements.
 
 ![Hero render](../media/hero.png)
 
@@ -95,11 +99,12 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 4.
 | 12 | MotionCore kit and reference motor | MotionCore module, e-stop, brake inputs and speed sensor, with the 250 W geared hub motor | Shared component; $335 ($265 kit plus $70 motor, MTC-CAL-001), not in the GravitySort cost |
 | 13 | Water header tank | 60 L HDPE drum on a post 1.25 m above ground, ball valve, 2 to 20 L/min rotameter, hoses | Filled by the user's pump from the settling pond |
 | 14 | Shaking table deck | 1,000 x 450 mm, 18 mm marine plywood faced with HDPE, tapered riffles, feed box, 2 to 4 degrees cross tilt | Adjustable tilt |
-| 15 | Table stand and head motion | Plywood flexure legs on a welded base; head plate and shelf bolted to the frame's table end, eccentric head shaft with a 125 mm pulley and pitman arm, 15 mm stroke at 240 to 300 strokes/min; belt tensioner as the table clutch | The stroke is made asymmetric by an adjustable rubber bump stop at the return end, decided by Amish on 2026-10-01 (GVS-DDR-003, A2), with a toggle head only if the first test shows the stop is not enough; the stop is not yet in the model or the build plan. About 15 W at the pedals |
+| 15 | Table stand and head motion | Plywood flexure legs on a welded base; head plate and shelf bolted to the frame's table end, eccentric head shaft with a 125 mm pulley and pitman arm, 15 mm stroke at 240 to 300 strokes/min; belt tensioner as the table clutch | The stroke is made asymmetric by an adjustable rubber bump stop at the return end, decided by Amish on 2026-10-01 (GVS-DDR-003, A2), with a toggle head only if the first test shows the stop is not enough. The deck strikes a 40 x 30 mm rubber buffer on a bracket on the frame's table end at the end of each forward stroke; the pitman pin works in a slot and the plywood legs push the deck onto the buffer. Set 3 mm in, the stop gives 2.1 G against 0.6 G at the head end (GVS-CAL-001 section 9; items 21 and 22). About 15 W at the pedals |
 | 16 | Concentrate tray | Tailings launder under the table's front edge, lockable concentrate box under its far (gold) end | Security for the operator |
 | 18 | Bowl brake and lid interlock | 160 mm bicycle disc rotor on a flange and collar on the spindle, mechanical caliper, lever with parking latch; lid interlock pin on the same cable | New at TRL 3 (R12) |
 | 19 | Bowl speed display | Wired bicycle computer, magnet on the spindle pulley, wheel size 1,667 mm so it reads rpm divided by 10 | New at TRL 3 (R3) |
 | 20 | Motor cradle | 6 mm cradle with two dropouts bolted on the back lower rail; motor chain guard | Motor option only (GVS-DDR-003) |
+| 21, 22 | Table bump stop | Tube bracket bolted on the frame's table-end top rail; bought rubber buffer on an M8 stud with lock nuts; steel striker angle under the deck | Gap set 2 to 6 mm by the lock nuts (GVS-DDR-003, A2) |
 
 Item 17 (hardware, hoses and sealant) is in the BOM and only partly modelled.
 
@@ -127,8 +132,8 @@ Table 2. Main numbers from GVS-CAL-001.
 | Rotating group | 6.47 kg, 0.0566 kg m2 with the drive; 165 J at 730 rpm | 447 J at 1,200 rpm |
 | Burst safety factor at 1,200 rpm | 17 (jacket wall), 30 (bowl shell), 51 (ring lips) | Assumes sound lamination and a bonded liner |
 | Stop time from 850 rpm | 0.6 s with the brake; about 20 s coasting | R12 asks for 15 s or less |
-| Size and mass | 2.78 x 0.79 x 1.65 m; 95.7 kg in six loads, heaviest 25.2 kg | R11 met on paper: 100 kg or less in all, every load 30 kg or less (restated from 80 kg by Amish, 2026-10-01; 77.3 kg for the concept; GVS-DDR-003) |
-| Parts cost | $558 | `bom/bom.csv`; MotionCore ($335) and battery excluded; USD 103 over the $455 value-engineering target |
+| Size and mass | 2.78 x 0.79 x 1.65 m; 96.5 kg in six loads, heaviest 25.2 kg | R11 met on paper: 100 kg or less in all, every load 30 kg or less (restated from 80 kg by Amish, 2026-10-01; 77.3 kg for the concept; GVS-DDR-003) |
+| Parts cost | $569 | `bom/bom.csv`; MotionCore ($335) and battery excluded; USD 114 over the $455 value-engineering target |
 
 The daily motor energy of 0.55 kWh is a little more than the energy of a SwapCell reference pack (about 468 Wh nominal); a larger pack or a 150 to 200 W solar panel would cover a shift. The pack stays the user's choice.
 

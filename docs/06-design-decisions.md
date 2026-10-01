@@ -3,7 +3,7 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: Amish accepted the recommendations of open items 1 to 4, 9, 10 and 12 (GVS-DDR-003 accepted; R11 restated); moved to decisions made; open items renumbered 1 to 5
+  - version: "0.3"
+    date: '2026-10-01'
+    author: Amish Chadha
+    change: Table bump stop now in the model and build plan (follow-up note removed); buffer added to the items to confirm; Value engineering updated to USD 569
 ---
 
 # GravitySort design decisions register
@@ -47,12 +51,13 @@ Every design decision still to be made, and every decision made, in one place. E
 | 8 | The used bicycle parts: a bottom bracket shell that can be cut from a scrap frame and welded, crank axle length, a 27.2 mm seat post | They set the outrigger's pedal post and seat tube | GVS-DDR-003, P8 |
 | 9 | The disc caliper's mount (post mount or the older standard) and the disc's 6-bolt pattern | They set the caliper bracket holes and the brake flange | GVS-DDR-003, P15 |
 | 10 | MotionCore: the reference hub motor's no-load speed (assumed 250 rpm), a sprocket on its disc mount, axle length for dropouts 76 mm apart inside, a speed limit that maps to 900 rpm at the spindle, a brake input for the lid switch | They set the 1.2:1 step-up, the cradle and the motor speed cap | GVS-DDR-002, item 14; review note 2026-09-25 |
+| 11 | The bump stop's rubber buffer: 40 mm across, 30 mm long, about 55 Shore A, M8 female thread, rated 800 N or more in compression | The stop's force, squeeze and setting range are sized for this buffer (GVS-CAL-001 section 9) | GVS-DDR-003, A2 |
 
 ## Value engineering
 
-Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 558 (USD 103 over the target), excluding the MotionCore kit, reference motor and battery. Main cost drivers and savings worth trying:
+Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 569 (USD 114 over the target), excluding the MotionCore kit, reference motor and battery. Main cost drivers and savings worth trying:
 
-- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the table stand and head ($52); the bowl ($46); the frame ($43); the water supply ($41). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003).
+- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the table stand and head ($52); the bowl ($46); the frame ($43); the water supply ($41). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003); the table bump stop adds $11 more (bracket and striker $6, buffer and fixings $5).
 - **A quarter-turn belt instead of the bevel gearbox,** about $25 less (GVS-DDR-001, item 1). Worth a test, since a used gearbox is also the hardest part to find.
 - **Used bearing units and pillow blocks** from scrap farm or factory machinery, about $10 to $15 less across the six bearings.
 - **Run the table head shaft in two plain bronze bushes** in the head plate instead of two pillow blocks, about $8 less; the shaft turns slowly (about 300 rpm).
@@ -73,7 +78,7 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-10-01 | The budget is a value-engineering target, not a limit; cost is reported against it | Amish: "the budgets are a hypothethical control target to ensure we are thinking along a value engineering lens. its ok to ensure wording reflects that the hypothesis budget was x - the real cost being accrued is y" | `.kit/STANDARDS.md` section 18 |
 | 2026-10-01 | Design for construction accepted: the changes P1 to P15 and their knock-on changes, as made | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, Tables 1 and 2 |
 | 2026-10-01 | R11 restated: total 100 kg or less, every load 30 kg or less (was 80 kg in all); the 95.7 kg design meets it on paper. Follow-up: try the savings of about 16 kg (option b) at TRL 4 | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A1; GVS-REQ-001 v0.7 |
-| 2026-10-01 | Asymmetric table stroke: an adjustable rubber bump stop at the return end of the stroke for the prototype. Follow-up: a toggle head (option b) only if the first test shows the stop is not enough; the stop is still to be added to the model, drawings and build plan | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A2 |
+| 2026-10-01 | Asymmetric table stroke: an adjustable rubber bump stop at the return end of the stroke for the prototype. Follow-up: a toggle head (option b) only if the first test shows the stop is not enough | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A2 |
 | 2026-10-01 | Pedal position: keep the bicycle-style seat, about 910 to 960 mm up, seat post adjustable. Follow-up: check with two riders at TRL 4 | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-DDR-003, A3 |
 | 2026-10-01 | Containment of a liner fragment: check by calculation before any spin test; add a steel band round the tub at the bowl lip height only if the check fails | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-CAL-001 section 10; review note 2026-09-25 |
 | 2026-10-01 | Lid: keep the plain 10 mm HDPE lid, no sight window | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 4 |

@@ -1,4 +1,4 @@
-"""GravitySort sizing calculations, GVS-CAL-001 v0.4 (TRL 3, constructable design of GVS-DDR-003).
+"""GravitySort sizing calculations, GVS-CAL-001 v0.6 (TRL 3, constructable design of GVS-DDR-003).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "cad/src"))
-from model import PARAMS as P, riffle_rings, frame_members, outrigger_members, stand_members, plate_list, bowl_radius  # noqa: E402
+from model import PARAMS as P, riffle_rings, frame_members, outrigger_members, stand_members, stop_bracket_members, plate_list, bowl_radius  # noqa: E402
 
 G = 9.81
 RHO_W, MU_W = 1000.0, 1.0e-3          # water at about 20 °C
@@ -55,6 +55,12 @@ A = {
     # table
     "table_ratio_per_pass": 8.0, "table_passes": 2,
     "table_moving_kg": 17.0, "table_stroke_m": 0.015, "table_friction_W": 10.0,
+    # table bump stop (GVS-DDR-003 A2)
+    "ply_E_MPa": 7000.0,         # marine plywood in bending, face grain along the leg (assumed)
+    "rubber_E_MPa": 3.3,         # natural rubber about 55 Shore A (typical)
+    "buffer_max_strain": 0.20,   # usual working limit in compression for a bonded rubber buffer
+    "stop_settings_mm": (2.0, 3.0, 4.0, 6.0), "stop_start_mm": 3.0, "stop_range_mm": 8.0,
+    "leg_preload_mm": 5.0,       # legs bent this far toward the head when the deck rests on the buffer
     # rotor materials
     "rho_pu": 1150.0, "rho_gfrp": 1800.0, "gfrp_strength_MPa": 80.0, "pu_strength_MPa": 20.0,
     "rho_steel": 7850.0,
@@ -273,6 +279,50 @@ p_table = 2 * 0.5 * A["table_moving_kg"] * v_pk ** 2 * f_t + A["table_friction_W
 say(f"  270 strokes/min, {A['table_stroke_m'] * 1000:.0f} mm stroke: peak speed {v_pk:.2f} m/s, about {p_table:.0f} W at the head, "
     f"{p_table / (A['eta_chain'] * A['eta_vbelt']):.0f} W at the pedals")
 
+# bump stop: the pitman pulls the deck toward the head through a pin in a slot (8 mm lost motion); the flexure legs,
+# set leaning toward the far end, push the deck forward against the pin and then onto the rubber buffer. The buffer
+# is set g mm short of the full forward travel, so the deck strikes it at speed and stops while the pin runs on.
+say("  bump stop (asymmetric stroke, GVS-DDR-003 A2)")
+m_t = A["table_moving_kg"]; Aa = A["table_stroke_m"] / 2; w_t = 2 * math.pi * f_t
+L_leg = (P["table_z"] - 58) - (P["tube"] + 40)
+I_leg = P["flex_w"] * P["flex_t"] ** 3 / 12
+k_leg = 4 * 12 * A["ply_E_MPa"] * I_leg / L_leg ** 3            # N/mm, four legs, both ends clamped
+f_leg = math.sqrt(k_leg * 1000 / m_t) / (2 * math.pi)
+d_b, l_b = P["buffer_d"], P["buffer_l"]
+S_b = d_b / (4 * l_b)                                            # shape factor of a bonded rubber cylinder
+k_buf = A["rubber_E_MPa"] * (1 + 2 * S_b ** 2) * math.pi * d_b ** 2 / 4 / l_b   # N/mm
+say(f"  flexure legs: {L_leg:.0f} mm free, {P['flex_w']:.0f} x {P['flex_t']:.0f} mm plywood, {k_leg:.1f} N/mm for four "
+    f"(deck alone {f_leg:.1f} Hz against {f_t:.1f} Hz drive); buffer {d_b:.0f} x {l_b:.0f} mm rubber: {k_buf:.0f} N/mm")
+a_head = Aa * w_t ** 2
+bump = {}
+for g_mm in A["stop_settings_mm"]:
+    g = g_mm / 1000
+    x_stop = Aa - g                                              # stop position from mid-stroke, m
+    x_n = x_stop + A["leg_preload_mm"] / 1000                    # rest position of the legs
+    v_c = w_t * math.sqrt(max(Aa ** 2 - x_stop ** 2, 0.0))
+    E_imp = 0.5 * m_t * v_c ** 2
+    F_pre = k_leg * A["leg_preload_mm"]                          # N, legs pressing the deck on the buffer
+    kb = k_buf * 1000                                            # N/m
+    dlt = (F_pre + math.sqrt(F_pre ** 2 + kb * m_t * v_c ** 2)) / kb
+    F_pk = kb * dlt
+    a_pk = (F_pk - F_pre) / m_t
+    F_pin = k_leg * 1000 * (x_n + Aa) - m_t * w_t ** 2 * Aa      # pin pull at the head end of the stroke, N
+    th_c = math.acos(x_stop / Aa)
+    dwell = 2 * th_c / (2 * math.pi)
+    bump[g_mm] = dict(v=v_c, E=E_imp, d=dlt * 1000, F=F_pk, a=a_pk, ratio=a_pk / a_head, pin=F_pin, dwell=dwell,
+                      stroke=(2 * Aa - g) * 1000, P=E_imp * f_t, Fpre=F_pre)
+    say(f"    set {g_mm:.0f} mm in: stroke {(2 * Aa - g) * 1000:.0f} mm, strikes at {v_c:.2f} m/s, {E_imp:.2f} J per stroke "
+        f"({E_imp * f_t:.1f} W); buffer {dlt * 1000:.1f} mm ({dlt * 1000 / l_b:.0%}), {F_pk:.0f} N; stop {a_pk / G:.1f} G "
+        f"against {a_head / G:.2f} G at the head end ({a_pk / a_head:.1f} times); dwell {dwell:.0%} of each cycle; pin pull {F_pin:.0f} N")
+bs = bump[A["stop_start_mm"]]; bmax = bump[max(A["stop_settings_mm"])]
+pull_min = bs["Fpre"] + m_t * w_t ** 2 * (Aa - A["stop_start_mm"] / 1000)
+say(f"  legs press the deck on the buffer with {bs['Fpre']:.0f} N; at {A['stop_start_mm']:.0f} mm the pin pull stays between "
+    f"{pull_min:.0f} and {bs['pin']:.0f} N over the stroke, never zero, so the deck follows the pin up to the stop")
+pin_max = max(b_["pin"] for b_ in bump.values())
+say(f"  largest setting: buffer {bmax['d']:.1f} mm of {l_b:.0f} mm ({bmax['d'] / l_b:.0%}, limit {A['buffer_max_strain']:.0%}), "
+    f"{bmax['F']:.0f} N; pin pull at most {pin_max:.0f} N ({pin_max / (math.pi * 6 ** 2):.1f} MPa shear on the 12 mm pin); "
+    f"stud adjustable 0 to {A['stop_range_mm']:.0f} mm, the lost motion of the pin slot ({P['pin_slot']:.0f} mm)")
+
 # ---------------------------------------------------------------- 9. rotor safety (R12)
 say("\n9. Rotor safety: inertia, burst, spindle, brake (R12)")
 t_l, t_s, gap, jt = P["liner_t"] / 1000, P["shell_t"] / 1000, P["jacket_gap"] / 1000, P["jacket_t"] / 1000
@@ -407,10 +457,12 @@ loads = {
                                          "standpipe, tailings pipe, grommets": 0.9, "lid guard and clamps": lid_kg + 0.4,
                                          "hopper, screen, feed pipe": 2.5, "hopper support": 0.47 * kg_m + plates["Hopper ring and post foot"]},
     "4 Table deck": {"plywood": 1.0 * 0.45 * 0.018 * 600, "HDPE facing": 1.0 * 0.45 * 0.003 * 950, "riffles and feed box": 1.1,
-                     "wash pipe": 0.4},
+                     "wash pipe": 0.4, "striker angle": plates["Striker angle"]},
     "5 Table stand, head, belt, tray": {"base": stand_m * kg_m, "flexure legs": flex_kg, "cleats": 8 * 0.08 * 2.42,
                                         "head plate and shelf": plates["Head plate, shelf and gussets"], "head bearings and shaft": 2.3,
-                                        "eccentric, pulley, pitman": 2.0, "tensioner and table belt guard": 2.0, "launder and box": 4.5},
+                                        "eccentric, pulley, pitman": 2.0, "tensioner and table belt guard": 2.0, "launder and box": 4.5,
+                                        "bump stop bracket, buffer and stud": sum(l for _, l in stop_bracket_members()) / 1000 * kg_m
+                                        + plates["Stop bracket plates"] + 0.12},
     "6 Water tank and hoses": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3},
 }
 tot = 0.0; heaviest = 0.0

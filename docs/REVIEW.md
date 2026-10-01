@@ -1,5 +1,45 @@
 # Review note: GravitySort
 
+## Session 2026-10-01: table bump stop in the model, drawings and build plan
+
+Amish asked: "gravitysort - update the documentation, CAD work and picture renderings", to carry out the bump stop he accepted earlier the same day (GVS-DDR-003, A2; register, Decisions made).
+
+### What was done
+
+- **Design.** The stop sits at the return end, the far end of the forward stroke where the deck turns back toward the head, because gold walks toward the concentrate box only if the deck stops sharply while moving that way. Parts: a stop bracket (25 x 25 x 1.5 mm tube arm 244 long, 40 x 66 x 6 mm foot bolted on top of the frame's table-end top rail 205 mm behind the centre line with two M8, 40 x 61 x 6 mm upright); a bought rubber buffer 40 mm across and 30 mm long, about 55 Shore A, M8 female thread, rated 800 N or more, on an M8 stud 45 long with a lock nut each side of the upright; a 6 mm steel striker angle (40 wide, legs 40 and 70) screwed under the deck's head end at its back edge. Setting: zero where the buffer just touches at full forward travel, 3 mm in to start, 2 to 6 mm useful, 0 to 8 mm available. The nuts are reached with a 13 mm spanner from behind the machine.
+- **Knock-on change needed to make the stop work.** A rigid pitman drags the deck through the whole circle of the eccentric, so it can never strike anything. The pitman pin now works in a 12 x 20 mm slot in the deck cheeks (8 mm of free play toward the far end), and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N. The pin pulls the deck toward the head; the legs push it forward into the stop. This keeps the accepted option (a) and the concept's "spring return"; it is recorded in GVS-DDR-003 Table 2. Amish may want to note it, since it is a second part of the table changed for the stop.
+- `cad/src/model.py`: stop bracket, buffer with stud and nuts, striker, and the cheek slot; 13 new checks (contacts, 15 mm clearance at the head end of the stroke, clear of the legs, deck, head and pitman, spanner room); **115 of 115 pass**. STEP and STL re-exported.
+- `docs/04-calcs/sizing.py`, `results.csv`, `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.6): section 9 sizes the stop (Table 4); mass and cost updated.
+- `bom/bom.csv`: line 21 (bracket and striker, make, $6) and line 22 (buffer, stud and fixings, buy, $5); `bom/bom-notes.md` updated.
+- `cad/src/build_plan_media.py`: new making sketch GVS-DWG-121 (bracket and striker), new joint 15 (the stop), step 16 redrawn with the stop, steps 17 and 18 and the overview redrawn (the stop is in group 22); sketches GVS-DWG-114 (cheek slot), 116 and 117 to Rev P2; joint 10 subtitle.
+- `cad/src/sheets.py`: general arrangement GVS-DWG-001 to Rev P4. `cad/src/concept_media.py`: concept media regenerated (blueprint GVS-DWG-010 Rev P3; the stop is item 21 in the exploded view).
+- `docs/05-build-plan.md` (GVS-BLD-001 v0.3): section 2 row, section 3.15 (slot), section 3.16 (making, fitting and setting the stop, with Figures 29 and 30), 3.17 check, bought buffer, step 14 and step 16, a first check for the stop, safety stop S7 (before the table runs); figures renumbered.
+- `docs/02-concept.md` (GVS-PRC-001 v0.8): component 15 and new row 21, 22; mass and cost. `docs/03-requirements.md` (GVS-REQ-001 v0.8): R9 and R11 values. `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003 v0.3): A2 carried out. `docs/06-design-decisions.md` (GVS-DEC-001 v0.3): follow-up note removed, buffer added to the items to confirm, Value engineering updated. `README.md`: mass and cost.
+- `cad/src/product_model.py`: the bump stop added (bracket, buffer, stud and nuts, striker) at the model's positions; the file builds (97 parts).
+
+### Key results
+
+- Bump stop at 270 strokes/min, 17 kg moving, set 3 mm in: stroke 12 mm, strike at 0.17 m/s, **0.24 J per stroke** (1.1 W), buffer squeezed 3.2 mm (11 %, limit 20 %), 539 N peak, **2.1 G at the stop against 0.6 G at the head end (3.4 times)**. Across 2 to 6 mm: 0.18 to 0.37 J, 3.1 to 3.9 times, peak force under 600 N, pin pull at most 593 N.
+- Mass **96.5 kg** (was 95.7), heaviest load 25.2 kg: R11 still met on paper.
+- Value-engineering target: USD 455. Estimated cost of the constructable design: USD 569 (USD 114 over the target).
+- Requirements unchanged otherwise: none unmet; R2, R5, R6 at risk; R4, R14 not verifiable at TRL 3.
+
+### Stale, to update on Amish's Mac (Blender)
+
+- `media/render-*.png` photoreal renders, `media/card.png` and `media/social-preview.png` do not show the bump stop (and still show the concept table stand, as noted before). `cad/src/product_model.py` now includes the stop, so a re-render with `/render-product` will show it; the rest of that model's table end is still the concept stand and head.
+
+### Decisions proposed and awaiting Amish
+
+- None new. The cheek slot and the leaning legs are how the accepted stop is made to work, not a new choice; if Amish prefers, the toggle head (A2, option b) remains the fallback.
+
+### Safety
+
+- The striker and buffer close with up to about 600 N at every stroke: a pinch point. The plan says to set the stop only with the table belt slack and the head turned by hand (section 3.16, safety stop S7). The stop is outside the table belt guard, under the deck's back edge.
+
+### Recommended next step
+
+- Re-render the photoreal set and cards on the Mac. The stop setting (2 to 6 mm), leg stiffness and buffer rate are estimates to be tuned in the first table test, which is TRL 4 work and on hold under the TRL 3 cap.
+
 ## Session 2026-10-01: recommendations accepted
 
 Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort". This answers the recommendations in the design decisions register (GVS-DEC-001 v0.1), including GVS-DDR-003. Items whose recommendation was "None yet" or "Decide with the partner" were not decided and stay open. trl stays 3; no build or test work was done.

@@ -70,6 +70,11 @@ PARAMS = {
     "table_x0": 620.0, "table_l": 1000.0, "table_w": 450.0, "table_z": 820.0, "table_tilt": 3.0,
     "head_x": 560.0, "head_z": 710.0, "eccentric": 7.5,
     "flex_x": (680.0, 1540.0), "flex_y": 135.0, "flex_w": 80.0, "flex_t": 18.0,
+    # Table bump stop (items 21 and 22, GVS-DDR-003 A2): rubber buffer on an M8 stud in a bracket bolted on the
+    # frame's table-end top rail, striking an angle under the deck's back edge at the end of the forward stroke.
+    # The model is drawn at the zero setting (buffer just touching at full forward travel); the working setting
+    # turns the stud 3 mm toward the deck. The pitman pin works in a slot with 8 mm of lost motion.
+    "stop_y": 205.0, "stop_z": 762.0, "buffer_d": 40.0, "buffer_l": 30.0, "pin_slot": 8.0,
 }
 
 STEEL = 7850.0          # kg/m3
@@ -262,7 +267,18 @@ def plate_list(p=PARAMS):
     return [("Bearing plates (2)", vol("bearing_plates")), ("Tank cradle and gussets", vol("tank_cradle")),
             ("Outrigger end plates", vol("outrigger_plates")), ("Head plate, shelf and gussets", vol("head")),
             ("Caliper bracket and brake flange", vol("caliper_bracket", "brake_flange")),
-            ("Hopper ring and post foot", ring), ("Motor cradle (motor option)", vol("motor_cradle"))]
+            ("Hopper ring and post foot", ring), ("Motor cradle (motor option)", vol("motor_cradle")),
+            ("Stop bracket plates", stop_plates_kg(p)), ("Striker angle", vol("striker"))]
+
+
+def stop_bracket_members(p=PARAMS):
+    """(name, cut length mm) of the square tube in the table bump stop bracket (the arm)."""
+    return [("stop arm", p["table_x0"] + 2 * p["plate_t"] + p["buffer_l"] + 6.5 - (p["frame_x1"] - p["tube"]))]
+
+
+def stop_plates_kg(p=PARAMS):
+    """Mass (kg) of the two 6 mm plates of the stop bracket: foot 40 x 66 and upright 40 x 61."""
+    return (40 * 66 + 40 * 61) * p["plate_t"] * 1e-9 * STEEL
 
 
 # ------------------------------------------------------------------ the components
@@ -573,7 +589,9 @@ def build_components(p=PARAMS):
     deck += fbx
     for y0_ in (-14, 8):                                                 # pitman bracket cheeks under the head end
         deck += b(TBX0 + 5, TBX0 + 45, y0_, y0_ + 6, TZ - 40, TZ - 18)
-    deck -= _cyly(TBX0 + 25, TZ - 30, -15, 15, 6)
+    ls_ = p["pin_slot"]                                                  # pin slot: 8 mm of lost motion toward the far end
+    deck -= _cyly(TBX0 + 25, TZ - 30, -15, 15, 6) + _cyly(TBX0 + 25 + ls_, TZ - 30, -15, 15, 6) \
+        + b(TBX0 + 25, TBX0 + 25 + ls_, -15, 15, TZ - 36, TZ - 24)
     add("deck", "Shaking table deck", rot(deck), "#E7E5E4", 14, (0, 0, 300))
     wash = _cylx(TBW / 2 - 25, TZ + 23, TBX0 + 190, TBX1 - 40, 20) - _cylx(TBW / 2 - 25, TZ + 23, TBX0 + 189, TBX1 - 39, 18)
     add("wash_pipe", "Wash water pipe", rot(wash), "#0EA5E9", 14, (0, 0, 380))
@@ -615,6 +633,24 @@ def build_components(p=PARAMS):
     hsh = _cyly(HX, HZ, p["belt_y"] - 15, 64, 10) + _cyly(HX, HZ, p["belt_y"] - 10, p["belt_y"] + 10, p["head_pulley_d"] / 2)
     hsh += _cyly(HX + e, HZ, -12, 12, 30)
     add("head_shaft", "Head shaft, eccentric and 125 mm pulley", hsh, "#57534E", 15, (0, 0, 220))
+    # bump stop (21, 22): bracket on the table-end top rail, M8 stud, rubber buffer, striker angle under the deck
+    sy, sz, bd, bl = p["stop_y"], p["stop_z"], p["buffer_d"], p["buffer_l"]
+    xs = TBX0 + PT                                       # strike face of the striker (deck at full forward travel)
+    xb = xs + bl                                         # back of the buffer
+    xn = xb + 6.5                                        # inner lock nut, then the upright
+    xu = xn + PT
+    foot = b(FX1 - S, FX1 - S + 40, sy - 33, sy + 33, RZ, RZ + PT)
+    arm = b(FX1 - S, xu, sy - S / 2, sy + S / 2, RZ + PT, RZ + PT + S)
+    upr = b(xn, xu, sy - 20, sy + 20, RZ + PT + S, sz + 30) - _cylx(sy, sz, xn - 1, xu + 1, 4.5)
+    add("stop_bracket", "Bump stop bracket (arm, foot and upright)", foot + arm + upr, "#6B7280", 21, (0, 200, 0))
+    buf = _cylx(sy, sz, xs, xb, bd / 2)
+    stud = _cylx(sy, sz, xs + bl - 10, xu + 22, 4)
+    nuts = [_cylx(sy, sz, xb, xn, 7.5), _cylx(sy, sz, xu, xu + 6.5, 7.5)]
+    add("bump_stop", "Rubber buffer 40 x 30 on an M8 stud with lock nuts", _fuse([buf, stud] + nuts), "#111827", 22, (0, 200, 0))
+    # striker: 6 mm angle, 40 wide, screwed under the deck's head end at the back edge (deck coordinates, then tilted)
+    zb = TZ - 18
+    stk = b(TBX0, TBX0 + 40, sy - 20, sy + 20, zb - PT, zb) + b(TBX0, TBX0 + PT, sy - 20, sy + 20, zb - 70, zb - PT)
+    add("striker", "Striker angle under the deck", rot(stk), "#374151", 21, (0, 0, 300))
     # pitman: eye round the eccentric to the pin in the deck bracket
     tr = math.radians(tilt)
     pin = (TBX0 + 25, -(-30) * math.sin(tr), TZ - 30 * math.cos(tr))     # bracket pin, on the deck centre line
@@ -674,17 +710,18 @@ def build_parts(p=PARAMS):
              7: "Bowl lid guard and clamps", 8: "Pedal station (outrigger, seat, crank)", 9: "Jackshaft, gearbox, chain, pulleys",
              10: "Drive belts (bowl and table)", 11: "Belt and chain guards", 12: "MotionCore module and motor option",
              13: "Water header tank, valve, flow meter, hose", 14: "Shaking table deck with riffles", 15: "Table stand, head and tensioner",
-             16: "Tailings launder and concentrate box", 17: "Hardware", 18: "Bowl brake", 19: "Speed display"}
+             16: "Tailings launder and concentrate box", 17: "Hardware", 18: "Bowl brake", 19: "Speed display",
+             21: "Table bump stop (21, 22)"}
     cols = {1: "#4B5563", 2: "#D97706", 3: "#0F766E", 4: "#5EEAD4", 5: "#9CA3AF", 6: "#60A5FA", 7: "#1F2937", 8: "#374151",
             9: "#78716C", 10: "#111827", 11: "#FACC15", 12: "#15803D", 13: "#38BDF8", 14: "#E5E7EB", 15: "#6B7280",
-            16: "#B45309", 17: "#111827", 18: "#DC2626", 19: "#7C3AED"}
+            16: "#B45309", 17: "#111827", 18: "#DC2626", 19: "#7C3AED", 21: "#374151"}
     ex = {1: (0, 0, -250), 2: (0, 0, 520), 3: (0, 0, 380), 4: (0, 0, 250), 5: (0, 0, -150), 6: (0, -150, 80), 7: (0, 0, 460),
           8: (-250, 0, -550), 9: (-100, -150, -300), 10: (0, -250, -450), 11: (0, -450, -420), 12: (150, 230, 260),
           13: (0, 250, 380), 14: (300, 0, 330), 15: (300, 0, 0), 16: (300, -300, 0), 17: (0, 0, 0), 18: (250, 0, -150),
-          19: (0, -250, 150)}
+          19: (0, -250, 150), 21: (300, 250, 330)}
     groups = {}
     for k, comp in C.items():
-        groups.setdefault(comp.bom, []).append(comp.shape)
+        groups.setdefault(21 if comp.bom == 22 else comp.bom, []).append(comp.shape)
     out = []
     for n in sorted(groups):
         if n == 17:
@@ -719,6 +756,8 @@ def checks(p=PARAMS):
     Returns (description, overlap volume mm3, gap mm, expectation, ok) rows."""
     C = build_components(p)
     S = lambda *ks: _fuse([C[k].shape for k in ks])  # noqa: E731
+    P_ = p
+    xn0 = p["table_x0"] + p["plate_t"] + p["buffer_l"]      # back of the buffer: the inner lock nut starts here
     rows = []
 
     def chk(desc, a, b_, expect):
@@ -832,10 +871,28 @@ def checks(p=PARAMS):
     chk("Head plate on the frame end", S("head"), S("frame"), T)
     chk("Head bearings on the shelf", S("head_bearings"), S("head"), T)
     chk("Pitman eye clear of the shelf", S("pitman"), S("head"), 3.0)
-    chk("Pitman pin in the deck bracket", S("pitman"), S("deck"), T)
+    chk("Pitman pin at the pulling end of its slot in the deck cheeks", S("pitman"), S("deck"), T)
     chk("Pitman eye on the eccentric (running fit)", S("pitman"), S("head_shaft"), "fit")
     chk("Deck clear of the head and frame (stroke 15 mm)", S("deck"), S("head", "head_bearings", "head_shaft", "frame"), 15.0)
     chk("Deck clear of the launder and box", S("deck", "wash_pipe"), S("launder", "conc_box"), 15.0)
+    # bump stop (GVS-DDR-003 A2); the model is at full forward travel, so the head end of the stroke is 15 mm toward -X
+    from build123d import Pos
+    back = lambda sh: Pos(-15, 0, 0) * sh  # noqa: E731
+    chk("Stop bracket foot on the table-end top rail", S("stop_bracket"), S("frame"), T)
+    chk("Stop bracket clear of the head plate, bearings and shaft", S("stop_bracket"), S("head", "head_bearings", "head_shaft"), 10.0)
+    chk("Buffer stud held in the upright by its lock nuts", S("bump_stop"), S("stop_bracket"), T)
+    chk("Striker angle under the deck", S("striker"), S("deck"), T)
+    chk("Striker on the buffer at full forward travel (zero setting)", S("striker"), S("bump_stop"), T)
+    chk("Striker 15 mm off the buffer at the head end of the stroke", back(S("striker")), S("bump_stop"), 14.99)
+    chk("Striker clear of the stop arm at full forward travel", S("striker"), S("stop_bracket"), 8.0)
+    chk("Striker clear of the stop arm at the head end of the stroke", back(S("striker")), S("stop_bracket"), 8.0)
+    chk("Deck clear of the stop bracket and buffer", S("deck", "wash_pipe"), S("stop_bracket", "bump_stop"), 15.0)
+    chk("Deck clear of the stop at the head end of the stroke", back(S("deck", "wash_pipe")), S("stop_bracket", "bump_stop"), 15.0)
+    chk("Stop clear of the flexure legs and cleats", S("stop_bracket", "bump_stop", "striker"), S("flex_legs", "cleats"), 10.0)
+    chk("Stop clear of the pitman and table belt guard", S("stop_bracket", "bump_stop", "striker"), S("pitman", "table_guard", "table_belt"), 20.0)
+    others = [k for k in C if k not in ("stop_bracket", "bump_stop")]
+    chk("Room for a 13 mm spanner on the lock nuts from the back", _box(xn0 - 8, xn0 + 30, 214, 330, P_["stop_z"] - 16, P_["stop_z"] + 16),
+        S(*others), 2.0)
     chk("Launder clear of the legs and base", S("launder"), S("flex_legs", "table_base", "cleats"), 10.0)
     chk("Box clear of the legs and base", S("conc_box"), S("flex_legs", "table_base", "cleats", "launder"), 10.0)
     chk("Table belt clear of the frame and head", S("table_belt"), S("frame", "head", "launder"), 5.0)

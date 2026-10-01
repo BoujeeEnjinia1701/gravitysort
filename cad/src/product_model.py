@@ -19,7 +19,8 @@ APPEARANCE MODEL ONLY: no tolerances, no fabrication detail. CONCEPT, NOT FOR FA
 Every main dimension and interface comes from PARAMS, riffle_rings() and build_parts() in
 model.py. Axes as model.py: X along the machine (pedal station at -X, table at +X), Y front (-Y)
 to back (+Y), Z up from the ground. Units mm. Differences from model.py (crank angle, water hose
-route, tank post, sight window) are listed in docs/REVIEW.md, session 2026-09-26.
+route, tank post, sight window) are listed in docs/REVIEW.md, session 2026-09-26. The table bump stop
+(2026-10-01) follows model.py; the rest of the table end still shows the concept stand and head.
 
     from product_model import product_parts
     for p in product_parts(): print(p["name"], p["group"], p["material"])
@@ -721,6 +722,17 @@ def product_parts(P=PARAMS, with_rider=True):
         a = 2 * math.pi * k / 4 + math.pi / 4
         hpul -= _yc(HX + 34 * math.cos(a), -262, -238, HZ + 34 * math.sin(a), 10)
     add("Head pulley, 125 mm", hpul, C_STEEL, "metal", 15, "shell", E15)
+    # table bump stop (GVS-DDR-003 A2; geometry as model.py): bracket on the table-end top rail, rubber buffer, striker
+    sy_, sz_, bl_ = P["stop_y"], P["stop_z"], P["buffer_l"]
+    xs_ = TBX0 + 6; xn_ = xs_ + bl_ + 6.5; xu_ = xn_ + 6
+    sb = _b(FX1 - S, FX1 - S + 40, sy_ - 33, sy_ + 33, RZ, RZ + 6) + _tb(FX1 - S, xu_, sy_ - h, sy_ + h, RZ + 6, RZ + 6 + S)
+    sb += _b(xn_, xu_, sy_ - 20, sy_ + 20, RZ + 6 + S, sz_ + 30)
+    add("Bump stop bracket", sb, C_FRAME, "painted", 21, "shell", E15)
+    add("Bump stop rubber buffer", _xc(xs_, xs_ + bl_, sy_, sz_, P["buffer_d"] / 2), C_RUBBER, "rubber", 22, "shell", E15)
+    add("Bump stop stud and lock nuts", _xc(xs_ + bl_ - 10, xu_ + 22, sy_, sz_, 4) + _xc(xs_ + bl_, xn_, sy_, sz_, 7.5)
+        + _xc(xu_, xu_ + 6.5, sy_, sz_, 7.5), C_STEEL, "metal", 22, "shell", E15)
+    stk_ = _b(TBX0, TBX0 + 40, sy_ - 20, sy_ + 20, TZ - 24, TZ - 18) + _b(TBX0, TBX0 + 6, sy_ - 20, sy_ + 20, TZ - 88, TZ - 24)
+    add("Bump stop striker angle", tilt * stk_, C_FRAME, "painted", 21, "shell", E14)
 
     # ============================================================ 16 concentrate launder and lockable box
     E16 = (350, -350, 0)

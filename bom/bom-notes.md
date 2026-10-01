@@ -10,12 +10,13 @@ Prices are indicative TRL 3 estimates with a supplier or supplier type on every 
 | Pedal drive and transmission | 8 to 11 | $120 |
 | Water supply | 13 | $41 |
 | Shaking table | 14 to 16 | $100 |
+| Table bump stop | 21 and 22 | $11 |
 | Hardware | 17 | $22 |
 | Bowl brake, lid interlock and speed display | 18 and 19 | $28 |
 | Motor cradle (motor option) | 20 | $8 |
-| **GravitySort total, MotionCore excluded** | 1 to 11, 13 to 20 | **$558** |
+| **GravitySort total, MotionCore excluded** | 1 to 11, 13 to 22 | **$569** |
 | Motor option (MotionCore kit and reference motor, battery excluded) | 12 | $335 |
 
-Value-engineering target: USD 455. Estimated cost of the constructable design: USD 558 (USD 103 over the target). The target, `budget_usd` in `project.yaml`, is a hypothetical control target that keeps the design on a value-engineering lens, not a spending limit (Amish, 2026-10-01). The concept BOM was $455; making every part buildable added $103, mostly in the table stand and head (+$24), the frame (+$11), the tub fittings (+$14) and the bowl hub and fixings (+$10). The main cost drivers and the savings worth trying are listed in the Value engineering section of the design decisions register (`docs/06-design-decisions.md`).
+Value-engineering target: USD 455. Estimated cost of the constructable design: USD 569 (USD 114 over the target). The target, `budget_usd` in `project.yaml`, is a hypothetical control target that keeps the design on a value-engineering lens, not a spending limit (Amish, 2026-10-01). The concept BOM was $455; making every part buildable added $103, mostly in the table stand and head (+$24), the frame (+$11), the tub fittings (+$14) and the bowl hub and fixings (+$10). Lines 21 and 22 (the table bump stop decided by Amish on 2026-10-01, GVS-DDR-003 A2) add $11. The main cost drivers and the savings worth trying are listed in the Value engineering section of the design decisions register (`docs/06-design-decisions.md`).
 
 A water pump from the settling pond to the header tank is needed on site (GVS-CAL-001 section 4) and is not in this BOM.
