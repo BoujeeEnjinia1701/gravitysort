@@ -3,9 +3,9 @@ doc_id: GVS-PRB-001
 title: GravitySort problem statement
 project: GravitySort
 doc_type: Problem statement
-version: "0.6"
+version: "0.7"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -33,6 +33,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Budget worded as a value-engineering target; cost of the constructable design (GVS-DDR-003)
+- version: "0.7"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Site water and first partner as decided on 2026-10-02 (GVS-DEC-001)"
 ---
 
 # GravitySort problem statement
@@ -75,7 +79,7 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 - Garage-buildable prototype. Value-engineering target: USD 455 in parts, a hypothetical control target rather than a limit (Amish, 2026-10-01; raised from $350 to $450 on 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002). Estimated cost of the constructable design: USD 558 (USD 103 over the target; GVS-CAL-001 v0.4).
 - No mercury in any step, and no chemicals beyond water and, at the smelting step outside this machine, borax flux.
 - Built with welding, drilling and hand tools; parts that normally need a lathe (bowl, spindle) must have a no-lathe route.
-- Runs without grid power: pedal drive as the baseline, with an optional motor through MotionCore on a pack of the user's choice. The water supply (about 1.19 m3/h from the settling pond) still needs a pump, which the design does not yet provide (GVS-DDR-001 item 12).
+- Runs without grid power: pedal drive as the baseline, with an optional motor through MotionCore on a pack of the user's choice. The water supply (about 1.19 m3/h) comes by gravity from upstream as the site rule for the first field trial, or from a bought treadle or hand pump or a 12 V pump where that is impossible (decided by Amish, 2026-10-02, GVS-DEC-001).
 - Carried to site in parts by two people and assembled with hand tools.
 
 ## Out of scope
@@ -101,8 +105,8 @@ The gap GravitySort targets is an open design that combines the fine-gold captur
 - [ ] What gold particle size distribution do partner sites actually have, and how much of the gold is locked in sulfides that no gravity method will recover?
 - [ ] Is pedal power acceptable for a full shift, or will users treat the motor as the default?
 - [ ] How much water is available per site, and is recirculation practical?
-- [ ] Which country's national action plan and partner offers the best first field site? The screening criterion (GVS-DDR-001 item 8a; decided by Amish, 2026-09-25: go with recommendation) is a country with a mercury ban in force, such as Colombia, or a Minamata action plan with a planetGOLD programme; the partner itself is proposed, awaiting Amish.
-- [ ] How do sites without power pump about 1.2 m3/h of water from the settling pond to the header tank?
+- [ ] Which country's national action plan and partner offers the best first field site? The screening criterion (GVS-DDR-001 item 8a; decided by Amish, 2026-09-25: go with recommendation) is a country with a mercury ban in force, such as Colombia, or a Minamata action plan with a planetGOLD programme; the partner itself was decided by Amish on 2026-10-02 (GVS-DEC-001): Colombia, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach.
+- [ ] How do sites without power get about 1.2 m3/h of water to the header tank? Gravity supply from upstream is the site rule for the first trial, with a treadle, hand or 12 V pump as the fallback (GVS-DEC-001); to be checked at the partner's sites.
 
 ## User research and co-design
 

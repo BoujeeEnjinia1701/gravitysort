@@ -3,9 +3,9 @@ doc_id: GVS-REQ-001
 title: GravitySort requirements
 project: GravitySort
 doc_type: Requirements
-version: "0.8"
+version: "0.9"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -41,18 +41,22 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Status from GVS-CAL-001 v0.6 with the table bump stop (GVS-DDR-003 A2); R9 $569 (USD 114 over the target); R11 met on paper at 96.5 kg
+- version: "0.9"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "R2 restated as 200 kg/h of feed time (GVS-DEC-001, 2026-10-02); status updated"
 ---
 
 # GravitySort requirements
 
-These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.6, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): none is unmet, three are at risk (R2, R5, R6), two cannot be verified before testing (R4, R14) and eight are met on paper or by design review. R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
+These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.6, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): none is unmet, two are at risk (R5, R6), two cannot be verified before testing (R4, R14) and nine are met on paper or by design review, R2 since its restatement by Amish on 2026-10-02 (GVS-DEC-001). R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
 
 Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 
 | ID | Requirement | Target | Verification (TRL 3 or later) | Status at TRL 3 (GVS-CAL-001) |
 | --- | --- | --- | --- | --- |
 | R1 | Use no mercury | No amalgamation step, no mercury-coated plates or traps, no step that needs mercury to recover gold from the concentrate | Design review of the flowsheet | Met (design review) |
-| R2 | Process a small group's daily ore | 200 kg/h or more of ore milled to below 2 mm, as slurry of 25 to 35 % solids, for 8 h (1.6 t per day) | Bowl capacity and cycle calculation | **At risk:** 1.55 t per shift after three 5 min flush stops; 1.6 t needs 206 kg/h |
+| R2 | Process a small group's daily ore | 200 kg/h or more of feed time, of ore milled to below 2 mm, as slurry of 25 to 35 % solids: about 1.55 t in an eight-hour shift with three flush stops (restated on 2026-10-02, GVS-DEC-001; was 1.6 t per day) | Bowl capacity and cycle calculation | Met on paper: 200 kg/h of feed time; 1.55 t per shift after three 5 min flush stops |
 | R3 | Hold fine gold in the bowl | Bowl acceleration adjustable from 40 to 80 G at the riffle rings (about 600 to 850 rpm at 100 mm radius), with speed shown to the operator | Drive ratio and speed calculation | Met on paper: 598 to 846 rpm at a 50 to 71 rpm cadence; speed display (BOM item 19) |
 | R4 | Recover fine gold | Of free gold in the screened feed: 80 % or more of 75 to 1,000 µm gold and 50 % or more of 38 to 75 µm gold in the bowl concentrate; 60 % or more of all gold in the ore to smelted gold overall | Test with spiked or characterized ore (TRL 4) | **Not verifiable at TRL 3; at risk.** Settling check passes; bed behaviour needs testing |
 | R5 | Make a concentrate that can be smelted without mercury | Bowl mass pull 0.5 % or less of feed; shaking table reduces one day's bowl concentrate (about 5 kg) to 100 g or less | Mass balance calculation; later test | **At risk:** bowl pull 0.33 % is met; 5.3 kg per day needs 53:1 on the table, likely two passes |
@@ -93,8 +97,8 @@ Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and Gra
 
 - **R11:** total restated from 80 kg or less to 100 kg or less, keeping every load at 30 kg or less, because the per-load limit decides whether two people can carry the machine to site. Not met to met on paper (95.7 kg). The savings of about 16 kg are to be tried at TRL 4.
 
-## Still proposed, awaiting Amish
+## Change decided on 2026-10-02
 
-These are tracked in the design decisions register, GVS-DEC-001 (`docs/06-design-decisions.md`).
+Amish, 2026-10-02: "i approve your recommendations for all 555 open decisions." (GVS-DDR-001 item 13; GVS-DEC-001):
 
-- **R2:** restate the target as 200 kg/h of feed time, or raise the design feed to about 210 kg/h (GVS-DDR-001 item 13). No option was recommended.
+- **R2:** restated as 200 kg/h of feed time, about 1.55 t in an eight-hour shift with three flush stops; the design feed stays at 200 kg/h rather than rising to 210 kg/h, which would load the bowl and table harder while R5 and R6 are at risk. At risk to met on paper.

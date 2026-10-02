@@ -3,9 +3,9 @@ doc_id: GVS-DDR-002
 title: GravitySort recommendations accepted
 project: GravitySort
 doc_type: Design decision record
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,12 +17,16 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish ($455)
+- version: "0.3"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Items 8b, 11b, 12 and 13 decided by Amish as recommended (GVS-DEC-001)"
 ---
 
 # 0002: Recommendations accepted
 
 - **Date:** 2026-09-25
-- **Status:** accepted. Every item in GVS-DDR-001 and `docs/REVIEW.md` that carried a recommendation is decided by Amish, 2026-09-25: go with recommendation. Items with no recommendation remain proposed, awaiting Amish.
+- **Status:** accepted. Every item in GVS-DDR-001 and `docs/REVIEW.md` that carried a recommendation is decided by Amish, 2026-09-25: go with recommendation. Items 8b, 11b, 12 and 13, which had no recommendation, were decided by Amish on 2026-10-02 as later recommended: "i approve your recommendations for all 555 open decisions." (GVS-DEC-001).
 
 ## Context
 
@@ -49,17 +53,17 @@ On 2026-09-25 Amish wrote: "i accept all your recommendations, go with them acro
 
 No pitch or problem rewording was recommended, so the `project.yaml` pitch and problem are unchanged.
 
-### Items still open
+### Items left open on 2026-09-25
 
-*Table 2. Proposed, awaiting Amish (no recommendation was made).*
+*Table 2. Items with no recommendation on 2026-09-25, and their status since.*
 
-| # (GVS-DDR-001) | Item | Why it is open |
-| --- | --- | --- |
-| 1 (part) | Cost-down options to close the $5 gap: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $70 deferred) | Listed as options with no recommendation |
-| 8b | The first co-design partner itself | No partner was recommended; only the screening criterion |
-| 11b | Head for the fluidization supply: a 1.7 m post or a small pump, for 10 kPa net at every ring | No preference was stated between the two |
-| 12 | Water pumping from the settling pond at pedal-only sites (about 1.19 m3/h, 5.5 W hydraulic) | No recommendation yet |
-| 13 | R2 and R5 margins: raise the design feed to about 210 kg/h, or restate R2 as 200 kg/h of feed time | Two options, no recommendation |
+| # (GVS-DDR-001) | Item | Why it was open | Status |
+| --- | --- | --- | --- |
+| 1 (part) | Cost-down options to close the $5 gap: quarter-turn belt instead of the bevel gearbox (about $25), non-fluidized variant (about $45), table later (about $70 deferred) | Listed as options with no recommendation | Carried as savings worth trying in the Value engineering section of GVS-DEC-001, not as an open decision |
+| 8b | The first co-design partner itself | No partner was recommended; only the screening criterion | Decided by Amish, 2026-10-02, as recommended: Colombia, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate (GVS-DEC-001) |
+| 11b | Head for the fluidization supply: a 1.7 m post or a small pump, for 10 kPa net at every ring | No preference was stated between the two | Decided by Amish, 2026-10-02, as recommended: a 1.7 m post, braced (GVS-DEC-001) |
+| 12 | Water pumping from the settling pond at pedal-only sites (about 1.19 m3/h, 5.5 W hydraulic) | No recommendation yet | Decided by Amish, 2026-10-02, as recommended: gravity supply from upstream as the site rule; otherwise a treadle or hand pump, or a 12 V pump with the MotionCore battery (GVS-DEC-001) |
+| 13 | R2 and R5 margins: raise the design feed to about 210 kg/h, or restate R2 as 200 kg/h of feed time | Two options, no recommendation | Decided by Amish, 2026-10-02, as recommended: R2 restated as 200 kg/h of feed time; design feed kept at 200 kg/h (GVS-DEC-001) |
 
 ### On hold (TRL 4)
 

@@ -1,5 +1,46 @@
 # Review note: GravitySort
 
+## Session 2026-10-02: open decisions decided
+
+Amish, 2026-10-02: "i approve your recommendations for all 555 open decisions." The recommendations written for this repo's open decisions are recorded as decided.
+
+### Decisions recorded
+
+5 decisions, moved from "Open decisions" to "Decisions made" in the register (GVS-DEC-001 v0.5):
+
+1. Fluidization head: the header tank post rises to 1.7 m, braced so a full 60 L tank cannot tip it (GVS-DDR-001 item 11b).
+2. Site water: gravity supply from upstream is the site rule for the first field trial; otherwise a treadle or hand pump worked in turns, or a 12 V pump at sites with the MotionCore battery (item 12).
+3. R2 restated as 200 kg/h of feed time, about 1.55 t per eight-hour shift with three flush stops; design feed kept at 200 kg/h (item 13).
+4. First partner: Colombia, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach (item 8b).
+5. Concentrate security: padlock hasps on the concentrate box and the flush container, and a two-person rule proposed; both to be confirmed with the partner.
+
+### Documents changed
+
+- `docs/06-design-decisions.md`: GVS-DEC-001 v0.5
+- `docs/decisions/0001-trl2-review-decisions.md`: GVS-DDR-001 v0.3
+- `docs/decisions/0002-recommendations-accepted.md`: GVS-DDR-002 v0.3
+- `docs/01-problem.md`: GVS-PRB-001 v0.7 (site water, partner)
+- `docs/02-concept.md`: GVS-PRC-001 v0.9 (header post, water, R2, security, partner)
+- `docs/03-requirements.md`: GVS-REQ-001 v0.9 (R2 restated; met on paper)
+- `docs/04-calcs/01-sizing.md`: GVS-CAL-001 v0.7 (R2 status; head and water decisions; summary corrected on the 1.25 m post; no figure changed)
+- `bom/bom-notes.md` (not controlled)
+
+### Follow-up actions to carry approved decisions into the design
+
+1. Decision 1: raise the tank post in `cad/src/model.py` from 1.25 m to 1.7 m with a brace so a full 60 L tank cannot tip it, and regenerate GVS-DWG-001 and the frame and header tank making sketches (model, drawings).
+2. Decision 1: update the build plan frame step (section 3.1, item 7, tank post 545) and step 13 (header tank) text and pictures for the 1.7 m braced post (pictures).
+3. Decision 1: add the longer post tube and the brace to the frame line of the BOM and reprice it (BOM).
+4. Decision 1: re-run `docs/04-calcs/sizing.py` for the 1.7 m post: head at the union (target 8.1 kPa), mass (R11), and a tipping check of the post with a full tank (calculations).
+5. Decision 2: write the gravity-supply site rule and the pump fallbacks into the field trial plan when TRL 4 is opened; no machine change (docs).
+6. Decision 4: approach the Alliance for Responsible Mining in Medellin to be introduced to a miners' cooperative; nothing is agreed (docs).
+7. Decision 5: add a padlock hasp to the flush container in the model and BOM (the concentrate box already has one), and propose the two-person rule to the partner (model, BOM).
+
+### Points found in the review
+
+- The decisions-made row for R11 says the design is 95.7 kg; with the bump stop it is 96.5 kg (calculation note v0.6), 3.5 kg under the restated 100 kg. A 1.7 m post (item 1) adds a little more.
+- The calculation note summary said 'the fluidization supply only works with a 3/4 in hose from the 1.25 m header post', but section 6 shows that post gives 3.7 kPa against the 8.1 kPa needed, so it does not work without item 1. The summary is corrected in GVS-CAL-001 v0.7.
+- Cost is $569 against the $455 target, $114 (25 percent) over, excluding the MotionCore kit, motor and battery.
+
 ## Session 2026-10-01: bump stop change accepted
 
 Amish, 2026-10-01: "I approve of your recommendations for PicoFlow and GravitySort". For GravitySort this accepts the change made while adding the table bump stop, which was recorded in GVS-DDR-003 Table 2 and left open for his review (session "table bump stop in the model, drawings and build plan", below). It was not an open item in the register, so it is added to Decisions made only. No design change; trl stays 3; no build or test work was done.

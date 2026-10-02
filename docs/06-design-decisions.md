@@ -3,9 +3,9 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: Amish accepted the change made while adding the bump stop (slotted pitman pin, leaning legs; GVS-DDR-003 Table 2); added to decisions made; no open item changed
+  - version: "0.5"
+    date: '2026-10-02'
+    author: Amish Chadha
+    change: "Amish approved the recommendations for open decisions 1 to 5; moved to decisions made"
 ---
 
 # GravitySort design decisions register
@@ -33,13 +37,7 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-| # | Decision needed | Options | Recommendation | Affects in the build | Source |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Head for the fluidization supply | (a) a 1.7 m tank post (8.1 kPa at the union); (b) keep the 1.25 m post and add a small pump | None yet | Tank post height or a pump on the water line | GVS-DDR-001, item 11b |
-| 2 | Water from the settling pond at pedal-only sites (about 1.19 m3/h, 5.5 W hydraulic) | Hand pump; a second rider on a pump; gravity supply from upstream | None yet | Not part of the machine; the header tank is filled by it | GVS-DDR-001, item 12 |
-| 3 | R2 throughput margin (1.55 t per shift after flush stops) | Raise the design feed to about 210 kg/h; restate R2 as 200 kg/h of feed time | None yet | None (operating figure) | GVS-DDR-001, item 13 |
-| 4 | First co-design partner and country | A partner in a country with a mercury ban in force (Colombia) or with a Minamata action plan and a planetGOLD programme | None yet (the screening criterion is decided) | None until a field trial | GVS-DDR-001, item 8b |
-| 5 | Concentrate security in practice | Padlock on the box and container; sealed container; a two-person rule | Decide with the partner | Concentrate box and flush container | GVS-PRC-001, open questions |
+None. All open decisions were decided on 2026-10-02.
 
 ## To confirm when parts are bought
 
@@ -88,3 +86,8 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-10-01 | Lid: keep the plain 10 mm HDPE lid, no sight window | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 4 |
 | 2026-10-01 | Renders: the cranks turned 100 degrees from top dead centre is a render pose only; the model keeps its crank angle | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 1 |
 | 2026-10-01 | Table bump stop, change made to let the deck strike the stop: the pitman pin works in a 12 x 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N. Accepted as made; no design change | Amish: "I approve of your recommendations for PicoFlow and GravitySort" | GVS-DDR-003, Table 2 (v0.4) |
+| 2026-10-02 | Head for the fluidization supply: raise the header tank post to 1.7 m (option a), braced so a full 60 L tank cannot tip it; no pump on the fluidization line. Follow-up: carry it into the model, drawings, build plan and BOM | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 11b |
+| 2026-10-02 | Water at pedal-only sites: gravity supply from upstream is the site rule for the first field trial; where that is impossible, a bought treadle or hand pump worked in turns by the crew, or a small 12 V pump at sites with the MotionCore battery | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 12 |
+| 2026-10-02 | R2 restated as 200 kg/h of feed time, about 1.55 t in an eight-hour shift with three flush stops; the design feed stays at 200 kg/h | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 13 |
+| 2026-10-02 | First co-design partner and country: Colombia, where the mercury ban is in force, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 8b |
+| 2026-10-02 | Concentrate security: padlock hasps on both the concentrate box and the flush container as the baseline, and a two-person rule for opening them proposed to the partner; both to be confirmed with the partner | Amish: "i approve your recommendations for all 555 open decisions." | GVS-PRC-001, open questions |

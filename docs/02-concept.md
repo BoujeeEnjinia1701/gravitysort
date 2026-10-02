@@ -3,9 +3,9 @@ doc_id: GVS-PRC-001
 title: GravitySort design precis
 project: GravitySort
 doc_type: Design precis
-version: "0.8"
+version: "0.9"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -41,6 +41,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Table bump stop now in the model and build plan (component 15; BOM items 21 and 22); mass 96.5 kg; cost $569 (USD 114 over the target)
+- version: "0.9"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Header post, site water, R2, concentrate security and first partner as decided on 2026-10-02 (GVS-DEC-001)"
 ---
 
 # GravitySort design precis
@@ -97,7 +101,7 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 4.
 | 10 | Drive belts | A-section V-belts: bowl (horizontal) and table (inclined, clutch by tensioner) | |
 | 11 | Guards | Perforated sheet covers over belts, pulleys and chain | Must be fitted before running |
 | 12 | MotionCore kit and reference motor | MotionCore module, e-stop, brake inputs and speed sensor, with the 250 W geared hub motor | Shared component; $335 ($265 kit plus $70 motor, MTC-CAL-001), not in the GravitySort cost |
-| 13 | Water header tank | 60 L HDPE drum on a post 1.25 m above ground, ball valve, 2 to 20 L/min rotameter, hoses | Filled by the user's pump from the settling pond |
+| 13 | Water header tank | 60 L HDPE drum on a post 1.25 m above ground in the current model, ball valve, 2 to 20 L/min rotameter, hoses | The post is to rise to 1.7 m, braced so a full tank cannot tip it (decided 2026-10-02, GVS-DEC-001). Filled by gravity from upstream, or by a treadle, hand or 12 V pump where that is impossible |
 | 14 | Shaking table deck | 1,000 x 450 mm, 18 mm marine plywood faced with HDPE, tapered riffles, feed box, 2 to 4 degrees cross tilt | Adjustable tilt |
 | 15 | Table stand and head motion | Plywood flexure legs on a welded base; head plate and shelf bolted to the frame's table end, eccentric head shaft with a 125 mm pulley and pitman arm, 15 mm stroke at 240 to 300 strokes/min; belt tensioner as the table clutch | The stroke is made asymmetric by an adjustable rubber bump stop at the return end, decided by Amish on 2026-10-01 (GVS-DDR-003, A2), with a toggle head only if the first test shows the stop is not enough. The deck strikes a 40 x 30 mm rubber buffer on a bracket on the frame's table end at the end of each forward stroke; the pitman pin works in a slot and the plywood legs push the deck onto the buffer. Set 3 mm in, the stop gives 2.1 G against 0.6 G at the head end (GVS-CAL-001 section 9; items 21 and 22). About 15 W at the pedals |
 | 16 | Concentrate tray | Tailings launder under the table's front edge, lockable concentrate box under its far (gold) end | Security for the operator |
@@ -122,8 +126,8 @@ Table 2. Main numbers from GVS-CAL-001.
 | --- | --- | --- |
 | Bowl speed for 60 G at 100 mm radius | 733 rpm (730 rpm nominal) | 598 rpm for 40 G, 846 rpm for 80 G |
 | Drive ratio, pedal to bowl | 12:1 (4:1 chain, 1:1 bevel, 3:1 belt) | 61 rpm cadence gives 730 rpm |
-| Feed rate | 200 kg/h solids; 1.55 t per 8 h shift | Three 5 min flush stops; 1.6 t needs 206 kg/h |
-| Water | 0.467 m3/h slurry plus 0.72 m3/h fluidization: 1.19 m3/h | 60 L header lasts 3 min; needs a pump (about 5.5 W hydraulic) |
+| Feed rate | 200 kg/h solids; 1.55 t per 8 h shift | Three 5 min flush stops; R2 is 200 kg/h of feed time (restated 2026-10-02) |
+| Water | 0.467 m3/h slurry plus 0.72 m3/h fluidization: 1.19 m3/h | 60 L header lasts 3 min; gravity supply from upstream, or a pump (about 5.5 W hydraulic) where that is impossible |
 | Fluidization supply | 3.7 kPa at the union with a 3/4 in hose; net 5.6 to 15.7 kPa across the ring holes | A 1/2 in hose starves the jacket; 8.1 kPa at the union (about a 1.7 m post) gives 10 kPa at every ring |
 | Input power at the pedals | 48.2 W at 60 G; 62.8 W at 80 G | Drivetrain 0.839; union seal drag assumed |
 | Motor option | 5.2 times power margin at 60 G; 0.55 kWh per shift | 70 % motor and controller efficiency at light load |
@@ -166,10 +170,10 @@ Items new at TRL 3 are also decided by Amish, 2026-09-25: go with recommendation
 - [ ] Is a low-cost rotary union reliable in silty recirculated water, and does its seal drag stay near 0.10 N m?
 - [ ] Can the cast polyurethane liner be made reliably in a small workshop, and how long does it last on quartz feed?
 - [ ] Is a right-angle bevel gearbox easy to source, or should the bowl be driven by a quarter-turn belt (also a cost-down option)?
-- [ ] How is the water pumped from the settling pond at a pedal-only site?
-- [ ] How should concentrate security be handled in practice: padlock, sealed container or a two-person rule?
-- [ ] Which partner and country for the first field trial?
+- [x] Water at a pedal-only site: gravity supply from upstream is the site rule for the first field trial; otherwise a bought treadle or hand pump worked in turns by the crew, or a small 12 V pump at sites with the MotionCore battery. Decided by Amish, 2026-10-02 (GVS-DEC-001).
+- [ ] Concentrate security: padlock hasps on the concentrate box and the flush container as the baseline, and a two-person rule for opening them proposed to the partner. Decided by Amish, 2026-10-02 (GVS-DEC-001); to be confirmed with the partner.
+- [ ] Partner and country for the first field trial: Colombia, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach. Decided by Amish, 2026-10-02 (GVS-DEC-001).
 
 ## Key design decisions
 
-Decision records are in [decisions/](decisions/). [GVS-DDR-001](decisions/0001-trl2-review-decisions.md) records the TRL 2 and TRL 3 review items. [GVS-DDR-002](decisions/0002-recommendations-accepted.md) records Amish's acceptance of the recommendations on 2026-09-25, what changed in the repo, and the items that remain proposed, awaiting Amish. [GVS-DDR-003](decisions/0003-design-for-construction.md) records the design for construction, accepted by Amish on 2026-10-01 with its recommendations (R11 restated, the table bump stop, the pedal position). Open decisions are in the design decisions register, GVS-DEC-001 (`06-design-decisions.md`).
+Decision records are in [decisions/](decisions/). [GVS-DDR-001](decisions/0001-trl2-review-decisions.md) records the TRL 2 and TRL 3 review items. [GVS-DDR-002](decisions/0002-recommendations-accepted.md) records Amish's acceptance of the recommendations on 2026-09-25, what changed in the repo, and the items it left open, which Amish decided on 2026-10-02 (GVS-DEC-001). [GVS-DDR-003](decisions/0003-design-for-construction.md) records the design for construction, accepted by Amish on 2026-10-01 with its recommendations (R11 restated, the table bump stop, the pedal position). Open decisions are in the design decisions register, GVS-DEC-001 (`06-design-decisions.md`).

@@ -3,9 +3,9 @@ doc_id: GVS-CAL-001
 title: GravitySort sizing calculations
 project: GravitySort
 doc_type: Calculation note
-version: "0.6"
+version: "0.7"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -33,11 +33,15 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Table bump stop (GVS-DDR-003 A2) sized in section 9 (impact energy, buffer, setting and asymmetry); mass 96.5 kg; cost $569 (USD 114 over the target)
+- version: "0.7"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "R2 restated (met on paper); fluidization head and site water decided on 2026-10-02 (GVS-DEC-001); summary corrected on the 1.25 m post; no figure changed"
 ---
 
 # GravitySort sizing calculations
 
-On paper, GravitySort meets eight of its fourteen requirements, by calculation or design review, and misses none. Since version 0.4 the note follows the constructable design of GVS-DDR-003, in which every part of the model can be made and fixed to the parts next to it. That design is heavier and dearer than the concept: with the table bump stop added in v0.6 it weighs 96.5 kg in six loads, with every load under 30 kg (the heaviest is 25.2 kg), which meets R11 as restated by Amish on 2026-10-01 (100 kg or less in all; it was 80 kg, which the design missed by 16 kg); and the parts cost is $569 against a value-engineering target of $455, USD 114 over (the budget is a hypothetical control target, not a limit; Amish, 2026-10-01). R2 (throughput per shift), R5 (table ratio) and R6 (pedal power at 80 G) are at risk. R4 (recovery) and R14 (liner life) cannot be verified before testing. The bowl, jacket and drive did not change, so speed, G, power, water, settling and burst figures are as in v0.3. The spindle is now a 25 x 2 mm tube that carries the fluidization water; its first critical speed falls to about 2,710 rpm, still 2.3 times the sprint speed. The table bump stop decided by Amish on 2026-10-01 (GVS-DDR-003, A2) is sized in section 9: set 3 mm short of the full forward travel, it stops the deck at 2.1 G against 0.6 G at the head end, from 0.24 J per stroke, with a 40 x 30 mm rubber buffer compressed 11 %. Two findings from v0.1 stand: the fluidization supply only works with a 3/4 in hose from the 1.25 m header post, and the machine needs a water pump that is not in the design.
+On paper, GravitySort meets eight of its fourteen requirements, by calculation or design review, and misses none. Since version 0.4 the note follows the constructable design of GVS-DDR-003, in which every part of the model can be made and fixed to the parts next to it. That design is heavier and dearer than the concept: with the table bump stop added in v0.6 it weighs 96.5 kg in six loads, with every load under 30 kg (the heaviest is 25.2 kg), which meets R11 as restated by Amish on 2026-10-01 (100 kg or less in all; it was 80 kg, which the design missed by 16 kg); and the parts cost is $569 against a value-engineering target of $455, USD 114 over (the budget is a hypothetical control target, not a limit; Amish, 2026-10-01). R5 (table ratio) and R6 (pedal power at 80 G) are at risk; R2 (throughput per shift) was at risk until Amish restated it on 2026-10-02 as 200 kg/h of feed time (GVS-DEC-001), which it meets on paper. R4 (recovery) and R14 (liner life) cannot be verified before testing. The bowl, jacket and drive did not change, so speed, G, power, water, settling and burst figures are as in v0.3. The spindle is now a 25 x 2 mm tube that carries the fluidization water; its first critical speed falls to about 2,710 rpm, still 2.3 times the sprint speed. The table bump stop decided by Amish on 2026-10-01 (GVS-DDR-003, A2) is sized in section 9: set 3 mm short of the full forward travel, it stops the deck at 2.1 G against 0.6 G at the head end, from 0.24 J per stroke, with a 40 x 30 mm rubber buffer compressed 11 %. Two findings from v0.1 stand: the fluidization supply needs a 3/4 in hose, and the 1.25 m header post in the model gives only 3.7 kPa at the union against the 8.1 kPa needed (section 6); and the site needs water lifted to the header tank, which the machine does not provide. On 2026-10-02 Amish decided a 1.7 m braced post for the head and gravity supply from upstream as the site rule, with a treadle, hand or 12 V pump where that is impossible (GVS-DEC-001); the model and this note are not yet re-run for the taller post.
 
 Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the geometry from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates for a paper design; nothing is measured.
 
@@ -103,7 +107,7 @@ The jacket rotates with the bowl, so the water in it gains centrifugal pressure 
 
 Delivering 12 L/min takes about **89 holes of 1.0 mm** (about 22 per ring); grading them toward the lower rings evens out the flow. The 3/4 in hose and graded holes are decided (GVS-DDR-002, item 11).
 
-The supply works only with a 3/4 in hose. The header gives 12.8 kPa of static head; the 3/4 in hose loses 1.6 kPa and the union, rotameter and valve 7.5 kPa, leaving 3.7 kPa at the union. With a 1/2 in hose the hose loss is 11.8 kPa and the union would see a suction of 6.5 kPa, so the jacket would run partly empty. For a net 10 kPa at every ring at 600 rpm the union needs 8.1 kPa, a water level of 1.90 m (about a 1.7 m post) or a small pump. Which of the two provides the head is still open, together with the site water pump (GVS-DDR-002, items 11b and 12).
+The supply works only with a 3/4 in hose. The header gives 12.8 kPa of static head; the 3/4 in hose loses 1.6 kPa and the union, rotameter and valve 7.5 kPa, leaving 3.7 kPa at the union. With a 1/2 in hose the hose loss is 11.8 kPa and the union would see a suction of 6.5 kPa, so the jacket would run partly empty. For a net 10 kPa at every ring at 600 rpm the union needs 8.1 kPa, a water level of 1.90 m (about a 1.7 m post) or a small pump. Amish decided on 2026-10-02 (GVS-DEC-001) that a 1.7 m post, braced so a full tank cannot tip it, provides the head, and that gravity supply from upstream is the site rule, with a treadle, hand or 12 V pump where that is impossible. The figures in this section are still for the 1.25 m post in the model.
 
 ## 7. Power (R6, R7)
 
@@ -203,7 +207,7 @@ On the 5 g/t reference ore, 8.0 g of gold enters per shift at 200 kg/h for 8 h; 
 
 | ID | Requirement | Value | Target | Status |
 | --- | --- | --- | --- | --- |
-| R2 | Ore per shift | 200 kg/h; 1.55 t with 3 flush stops | 200 kg/h, 1.6 t per 8 h | At risk (needs 206 kg/h) |
+| R2 | Ore per shift | 200 kg/h; 1.55 t with 3 flush stops | 200 kg/h of feed time, about 1.55 t per 8 h shift (restated 2026-10-02, GVS-DEC-001) | Met on paper |
 | R5 | Concentrate for smelting | Bowl pull 0.33 %; 5.3 kg/day needs 53:1 on the table | 0.5 % or less; 100 g or less | At risk (two table passes) |
 | R6 | Pedal power | 48.2 W at 60 G; 62.8 W at 80 G | 60 W or less | At risk (met at 60 G, not at 80 G) |
 | R4 | Fine-gold recovery | Settling ratio 36 or more for 20 µm flakes; overall 60 % assumed | 80 % and 50 % in the bowl; 60 % overall | Not verifiable at TRL 3 (at risk) |
