@@ -3,7 +3,7 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -21,6 +21,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: Table bump stop now in the model and build plan (follow-up note removed); buffer added to the items to confirm; Value engineering updated to USD 569
+  - version: "0.4"
+    date: '2026-10-01'
+    author: Amish Chadha
+    change: Amish accepted the change made while adding the bump stop (slotted pitman pin, leaning legs; GVS-DDR-003 Table 2); added to decisions made; no open item changed
 ---
 
 # GravitySort design decisions register
@@ -83,3 +87,4 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-10-01 | Containment of a liner fragment: check by calculation before any spin test; add a steel band round the tub at the bowl lip height only if the check fails | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | GVS-CAL-001 section 10; review note 2026-09-25 |
 | 2026-10-01 | Lid: keep the plain 10 mm HDPE lid, no sight window | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 4 |
 | 2026-10-01 | Renders: the cranks turned 100 degrees from top dead centre is a render pose only; the model keeps its crank angle | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 1 |
+| 2026-10-01 | Table bump stop, change made to let the deck strike the stop: the pitman pin works in a 12 x 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N. Accepted as made; no design change | Amish: "I approve of your recommendations for PicoFlow and GravitySort" | GVS-DDR-003, Table 2 (v0.4) |

@@ -1,5 +1,39 @@
 # Review note: GravitySort
 
+## Session 2026-10-01: bump stop change accepted
+
+Amish, 2026-10-01: "I approve of your recommendations for PicoFlow and GravitySort". For GravitySort this accepts the change made while adding the table bump stop, which was recorded in GVS-DDR-003 Table 2 and left open for his review (session "table bump stop in the model, drawings and build plan", below). It was not an open item in the register, so it is added to Decisions made only. No design change; trl stays 3; no build or test work was done.
+
+### Accepted, as made
+
+| Item | Decision |
+| --- | --- |
+| GVS-DDR-003, Table 2, "Table bump stop" | The pitman pin works in a 12 x 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N, so the deck can strike the stop and the stroke is asymmetric |
+
+### What changed
+
+- `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003 v0.4): status line records the acceptance with Amish's words; the Table 2 row is marked accepted; a consequence states the slot and leaning legs as the design and the toggle head as the fallback.
+- `docs/06-design-decisions.md` (GVS-DEC-001 v0.4): a Decisions made row dated 2026-10-01 with Amish's words and the record. The open decisions (1 to 5) and the items to confirm are unchanged.
+- PDFs regenerated with `python3 .kit/render.py`.
+
+No model, BOM, calculation, drawing or build plan change: the slot and the legs were already drawn and costed (mass 96.5 kg, USD 569, USD 114 over the USD 455 value-engineering target). Requirement status is unchanged.
+
+### Still open (GVS-DEC-001)
+
+1. Head for the fluidization supply.
+2. Water from the settling pond at pedal-only sites.
+3. R2 throughput margin.
+4. First co-design partner and country.
+5. Concentrate security in practice.
+
+### Safety
+
+Unchanged. The striker and buffer close with up to about 600 N at every stroke; set the stop only with the table belt slack and the head turned by hand (build plan section 3.16, safety stop S7).
+
+### Recommended next step
+
+Re-render the photoreal set and cards on the Mac so they show the bump stop. The stop setting, leg lean and buffer rate are tuned in the first table test, which is TRL 4 work and on hold under the TRL 3 cap.
+
 ## Session 2026-10-01: table bump stop in the model, drawings and build plan
 
 Amish asked: "gravitysort - update the documentation, CAD work and picture renderings", to carry out the bump stop he accepted earlier the same day (GVS-DDR-003, A2; register, Decisions made).

@@ -3,7 +3,7 @@ doc_id: GVS-DDR-003
 title: GravitySort design for construction
 project: GravitySort
 doc_type: Design decision record
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-10-01'
 author: Amish Chadha
@@ -21,12 +21,16 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: A2 carried out; the table bump stop is now in the model, BOM, calculations, making sketch GVS-DWG-121 and build plan (section 3.16, step 16); the pitman pin works in a slot so the deck can strike the stop
+- version: "0.4"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Accepted by Amish, the change made while adding the bump stop (slotted pitman pin with 8 mm free play in the deck cheeks; plywood legs set leaning about 5 mm to press the deck on the buffer with about 200 N), Table 2; no design change
 ---
 
 # 0003: Design for construction
 
 - **Date:** 2026-10-01
-- **Status:** accepted. Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort". This covers every change in Tables 1 and 2 and the recommendations in Table 3 (A1 to A3), which are now decided as recommended and recorded in the design decisions register (GVS-DEC-001).
+- **Status:** accepted. Amish, 2026-10-01: "i agree with your recommendations for both GrowRider and GravitySort". This covers every change in Tables 1 and 2 and the recommendations in Table 3 (A1 to A3), which are now decided as recommended and recorded in the design decisions register (GVS-DEC-001). The change made while carrying out A2 (the slotted pitman pin and the leaning legs, Table 2, "Table bump stop"), which was open for his review, was accepted the same day. Amish, 2026-10-01: "I approve of your recommendations for PicoFlow and GravitySort".
 
 ## Context
 
@@ -66,7 +70,7 @@ The changes below keep what GravitySort does: the same two stages, the same bowl
 | Size | 2.72 x 0.78 x 1.65 m to 2.78 x 0.79 x 1.65 m. | Outrigger feet and the outboard table belt. |
 | Drawings | GVS-DWG-001 Rev P3; making sketches GVS-DWG-101 to 120 added. | Follows the model. |
 | Documents | GVS-CAL-001 v0.4, GVS-REQ-001 v0.6, GVS-PRC-001 v0.6: mass, cost, spindle and R9, R10, R11 updated. | Follows the model. |
-| Table bump stop (A2, carried out in v0.3) | A bracket of 25 mm tube bolted on top of the frame's table-end top rail, 205 mm behind the centre line, carries a bought rubber buffer (40 mm across, 30 mm long, about 55 Shore A) on an M8 stud with a lock nut each side of its upright; a 6 mm steel striker angle under the deck's head end strikes it at the end of each forward stroke. The pitman pin works in a 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning so they press the deck on the buffer with about 200 N. The stop is set 3 mm short of full forward travel (2 to 6 mm useful): 0.24 J per stroke, 2.1 G at the stop against 0.6 G at the head end (GVS-CAL-001 v0.6, section 9). Mass 95.7 to 96.5 kg; cost $558 to $569 (BOM lines 21 and 22); 13 checks added to the model (115 in all); GA Rev P4; making sketch GVS-DWG-121; build plan v0.3. | A rigid pitman drags the deck through the whole circle of the eccentric and cannot strike a stop, so the slot and the legs' push are needed for the stop to make the stroke asymmetric. The concept asked for a "toggle or spring return"; the legs are the spring. |
+| Table bump stop (A2, carried out in v0.3; the slotted pitman pin and leaning legs accepted by Amish 2026-10-01) | A bracket of 25 mm tube bolted on top of the frame's table-end top rail, 205 mm behind the centre line, carries a bought rubber buffer (40 mm across, 30 mm long, about 55 Shore A) on an M8 stud with a lock nut each side of its upright; a 6 mm steel striker angle under the deck's head end strikes it at the end of each forward stroke. The pitman pin works in a 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning so they press the deck on the buffer with about 200 N. The stop is set 3 mm short of full forward travel (2 to 6 mm useful): 0.24 J per stroke, 2.1 G at the stop against 0.6 G at the head end (GVS-CAL-001 v0.6, section 9). Mass 95.7 to 96.5 kg; cost $558 to $569 (BOM lines 21 and 22); 13 checks added to the model (115 in all); GA Rev P4; making sketch GVS-DWG-121; build plan v0.3. | A rigid pitman drags the deck through the whole circle of the eccentric and cannot strike a stop, so the slot and the legs' push are needed for the stop to make the stroke asymmetric. The concept asked for a "toggle or spring return"; the legs are the spring. |
 | Unchanged | Bowl speed, G, drive ratio, power, water, settling, fluidization supply, burst factors, brake and gold balance. | The bowl, jacket and drive geometry did not change. |
 
 *Table 3. Items that change a requirement or what the machine does: proposed, then accepted by Amish as recommended on 2026-10-01.*
@@ -82,5 +86,6 @@ The changes below keep what GravitySort does: the same two stages, the same bowl
 - `design_state: constructable` in `project.yaml`. The build plan GVS-BLD-001 shows every component and step in pictures generated from the model (`cad/src/build_plan_media.py`); the open questions are in the design decisions register GVS-DEC-001.
 - Requirement status: R11 moved to not met (16 kg over 80 kg, every load under 30 kg) and R9 is now reported against the value-engineering target (USD 103 over). R2, R5 and R6 stay at risk, R4 and R14 not verifiable, the rest met on paper or by design review (GVS-CAL-001 v0.4).
 - With A1 accepted, R11 is restated to 100 kg or less in all, every load 30 kg or less, and is met on paper at 95.7 kg (GVS-REQ-001 v0.7, GVS-CAL-001 v0.5); the savings of option (b) are to be tried at TRL 4. With A2 accepted, the table stroke is made asymmetric by an adjustable rubber bump stop at the return end (the far end of the forward stroke, where the deck turns back), with a toggle head only if the first test shows it is not enough; the stop is now in the model, the BOM (lines 21 and 22), the calculations (GVS-CAL-001 v0.6, section 9), making sketch GVS-DWG-121 and the build plan (GVS-BLD-001 v0.3, section 3.16 and step 16), as Table 2 describes. With A3 accepted, the pedal position is kept and checked with two riders at TRL 4.
+- With the bump stop change accepted (2026-10-01), the pitman pin works in a 12 x 20 mm slot in the deck cheeks with 8 mm of free play, and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N; this is the design as drawn in the model, the making sketches and the build plan (GVS-BLD-001 v0.3, sections 3.15 and 3.16). The toggle head of A2, option (b), stays the fallback if the first table test shows the stop is not enough.
 - The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept frame, outrigger, table stand, hose and motor position; they need updating on Amish's Mac, where Blender is.
 - The bought parts that set dimensions (bearing units, shaft flange hub, rotary union, gearbox, pillow blocks, rubber grommets, hub motor) must be checked against the model when bought; they are listed in GVS-DEC-001.
