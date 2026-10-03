@@ -529,3 +529,9 @@ This is an appearance model only: no tolerances, no fabrication detail, nothing 
 - Kit 1.5.0 synced: STANDARDS v1.5 (sections 12 to 15: product renders, storefront images and image quality, public release, authorship and signing), `.kit/cards.py`, `.kit/image_qc.py`, `.kit/release_gate.py`, issue templates, and the `/render-product` and `/release` commands. `CLAUDE.md` now matches `.kit/CLAUDE.md`.
 - Every `media/render-*.png` recaptioned from its original render with the new layout: the title, concept label and repository sit in a band above the render and the view note in a band below it, each line wrapped to the image width, so no text overlaps other text or the render or runs off the image. `media/card.png` and `media/social-preview.png` regenerated with the same rules.
 - `python .kit/image_qc.py` and `python .kit/release_gate.py` pass. trl stays 3.
+
+## 2026-10-03: decisions recorded
+
+Amish decided on 2026-10-03: "GravitySort - i accept your recommendation". Open item 1 is option (a): tank post on the centre line and braced, with a 10 degree any-direction tip criterion with a full tank (13.5 degrees calculated).
+
+- `docs/06-design-decisions.md` (GVS-DEC-001): open item 1 moved to decisions made; no open decisions remain.

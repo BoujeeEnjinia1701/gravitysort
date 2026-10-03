@@ -3,9 +3,9 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.6"
+version: "0.7"
 status: Draft
-date: '2026-10-02'
+date: '2026-10-03'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -33,6 +33,10 @@ revisions:
     date: '2026-10-02'
     author: Amish Chadha
     change: "Decisions of 2026-10-02 carried into the model, BOM, calculations and build plan; one open decision added (tank on the centre line and the tipping criterion, made to carry out decision 1); Value engineering updated to USD 580"
+  - version: "0.7"
+    date: '2026-10-03'
+    author: Amish Chadha
+    change: "Open item 1 decided by Amish on 2026-10-03 (option a: tank post on the centre line, braced, 10 degree any-direction tip criterion); moved to decisions made"
 ---
 
 # GravitySort design decisions register
@@ -41,9 +45,7 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-| # | To decide | Options | Recommendation | What it affects in the build | Source |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Where the 1.7 m tank post stands, and what "a full tank cannot tip it" means. To carry out the decision of 2026-10-02 the post was moved from 180 mm behind the centre line onto it, and the check uses a 10 degree slope in any direction with a full tank. On the centre line the machine tips at 13.5 degrees (193 N side push at the tank); left 180 mm behind, it would tip at 9.5 degrees (133 N) | (a) keep the post on the centre line and the 10 degree criterion, as made; (b) put it back 180 mm behind and add wider feet or outriggers at the back; (c) a stricter criterion (for example 15 degrees), which needs wider feet as well | (a): no extra parts, better than the old 1.25 m layout (11.6 degrees) | Frame (tank post, braces, cradle), hose route, build plan section 3.1 and step 13 | GVS-CAL-001 v0.8 section 11; review note 2026-10-02 |
+None. Open item 1 (tank post position and tip criterion) was decided on 2026-10-03.
 
 ## To confirm when parts are bought
 
@@ -97,3 +99,4 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-10-02 | R2 restated as 200 kg/h of feed time, about 1.55 t in an eight-hour shift with three flush stops; the design feed stays at 200 kg/h | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 13 |
 | 2026-10-02 | First co-design partner and country: Colombia, where the mercury ban is in force, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 8b |
 | 2026-10-02 | Concentrate security: padlock hasps on both the concentrate box and the flush container as the baseline, and a two-person rule for opening them proposed to the partner; both to be confirmed with the partner. Flush container with hasp added to the model and BOM (item 23) on 2026-10-02 | Amish: "i approve your recommendations for all 555 open decisions." | GVS-PRC-001, open questions |
+| 2026-10-03 | Open item 1, option (a): the 1.7 m tank post stands on the centre line and is braced; "a full tank cannot tip it" means a 10 degree slope in any direction with a full tank (tips at 13.5 degrees, 193 N side push at the tank, better than the earlier 1.25 m layout at 11.6 degrees); no wider feet or outriggers | Amish: "GravitySort - i accept your recommendation" | GVS-CAL-001 v0.8 section 11; [REVIEW.md](REVIEW.md), session 2026-10-03 |
