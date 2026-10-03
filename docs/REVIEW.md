@@ -1,5 +1,78 @@
 # Review note: GravitySort
 
+## Session 2026-10-02: Photoreal renders redone on the constructable design
+
+Amish, 2026-10-02: "Photoreal renders are out of date in most repos ... COMPLETE THESE". Rendered with Blender Cycles on Amish's Mac (batch F1) from the scenes exported from `cad/src/product_model.py`, captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` regenerated with `.kit/cards.py`. Each raw render was looked at once. No commit or push; `trl` unchanged.
+
+- Views: `media/render-hero.png`, `media/render-exploded.png`, `media/render-detail.png`.
+- Re-render: exploded, once. In the first render the flush container (BOM item 23) overlapped the table belt guard (item 11), because `model.py`'s exploded offsets move both forward into the same space. `cad/src/product_model.py` now uses `model.py`'s offsets except item 23, moved 600 mm forward instead of 300 mm, so the container clears the guard; scenes re-exported. `model.py` and the concept exploded view are unchanged.
+- Appearance deviations already logged (2026-10-02, open item 2, Proposed, awaiting Amish): crank render pose with level pedals; tank label and bung caps; speed display screen and readout; brass padlock on the flush container hasp; tailings hose to the pond; patch of ground; seated clay mannequin with its feet on the pedals. Unchanged.
+- `python3 .kit/image_qc.py`: 5 images, 0 problems. `python3 .kit/render.py --check`: no FAIL, no storefront warning.
+- The two stale-render notes (sessions of 2026-10-01) are removed; this work resolves them.
+
+## Session 2026-10-02: approved follow-ups carried out
+
+Amish, 2026-10-02, approved carrying out every follow-up action from the open-decision sign-off ("APPROVED CHANGES, COMPLETE THESE") and preparing the render scenes. This session carried the decisions of 2026-10-02 (GVS-DEC-001) into the model, BOM, calculations, drawings, pictures and build plan. trl stays 3; no build or test work was done; no commit or push (no git in this copy).
+
+### Follow-ups
+
+| # | Follow-up (2026-10-02 list) | Done | What was done |
+| --- | --- | --- | --- |
+| 1 | Raise the tank post to 1.7 m with a brace; regenerate GVS-DWG-001 and the frame and header tank sketches | Done | `cad/src/model.py`: cradle at 1,700 mm, post 995 mm, two braces of the frame tube (717 mm cut length) from 1,350 mm up the post to the front and back top side rails, 250 mm toward the table end. To keep a full tank from tipping the taller machine, the post moved from 180 mm behind the centre line onto it (see Decisions proposed). The hose's short run to the rotameter rises from 840 to 860 mm to clear the bracket. Six checks added; 126 of 126 pass. STEP and STL regenerated. GVS-DWG-001 Rev P5; GVS-DWG-101 Rev P2; frame cut picture and joint 8 redrawn. There is no separate header tank sketch (the drum is bought); the cradle is on GVS-DWG-101 |
+| 2 | Build plan frame step (3.1, item 7) and step 13, text and pictures | Done | GVS-BLD-001 v0.4: section 3.1 item 7 and check, step 13 (lift the drum empty, hose route), joint 8 under step 13, section 1 and Table 1 (water row), first checks (tank on its post, flush container lock), safety stop S8 (tipping). Overview and all 19 step pictures redrawn, since the frame shows in nearly all of them |
+| 3 | Longer post tube and brace in the frame BOM line, repriced | Done | Line 1: 16.4 m of tube, $43 to $47 (1.9 m more tube at about $1.80/m plus welding) |
+| 4 | Re-run sizing.py: head at the union, mass (R11), tipping check | Done | GVS-CAL-001 v0.8. Union 8.6 kPa at mid-tank against 8.1 kPa needed (7.1 to 10.1 kPa from nearly empty to nearly full; lowest ring still 9.0 kPa net at 600 rpm with the tank nearly empty). Mass 99.3 kg, heaviest load 27.3 kg. Tipping: 13.5 degrees sideways with a full tank (193 N push at the tank); post above the braces safety factor 2.3 at that push; braces 543 N, buckling factor 81 |
+| 5 | Gravity-supply site rule and pump fallbacks into the field trial plan at TRL 4 | Not done | A field trial plan is TRL 4 work, on hold under the TRL 3 cap (CLAUDE.md section 1). The rule is in GVS-PRC-001, GVS-CAL-001 section 4 and the BOM notes, ready to carry over when TRL 4 opens |
+| 6 | Approach the Alliance for Responsible Mining in Medellin | Not done | An outreach action for Amish, not repo work; nothing has been agreed or sent |
+| 7 | Padlock hasp on the flush container in the model and BOM; propose the two-person rule | Done (model, BOM); proposal is Amish's | Flush container (10 L HDPE pail, lid, hasp staple and strap) added to the model, loose on the ground in front of the tub; three checks; BOM line 23, $7; build plan section 3.21 with Figure 38 (joint 16). Proposing the two-person rule to the partner waits for a partner |
+
+### Documents changed and new versions
+
+- `cad/src/model.py`, STEP and STL in `cad/step/`, `cad/stl/` (126 checks, all pass)
+- `cad/src/sheets.py`, `cad/drawings/GVS-DWG-001` Rev P5 (loose flush container left off the views; listed in the notes)
+- `cad/src/build_plan_media.py`, `cad/drawings/GVS-DWG-101` Rev P2; `docs/05-build-plan/overview.png`, `frame-cuts.png`, `joint-08.png`, new `joint-16.png`, `step-01.png` to `step-19.png`
+- `cad/src/concept_media.py`, `media/hero.png`, `concept-blueprint` (GVS-DWG-010 Rev P4), `exploded.png`, `cutaway.png`, `flow.png`, `model.glb`, `viewer.html`
+- `cad/src/product_model.py` (rebuilt; see below)
+- `bom/bom.csv` (line 1 repriced, line 23 added), `bom/bom-notes.md`
+- `docs/04-calcs/sizing.py`, `results.csv`, `01-sizing.md` GVS-CAL-001 v0.8
+- `docs/03-requirements.md` GVS-REQ-001 v1.0; `docs/02-concept.md` GVS-PRC-001 v1.0; `docs/05-build-plan.md` GVS-BLD-001 v0.4; `docs/06-design-decisions.md` GVS-DEC-001 v0.6; `docs/decisions/0003-design-for-construction.md` GVS-DDR-003 v0.5; `README.md`
+- PDFs regenerated with `python3 .kit/render.py`
+
+### Key results
+
+- Requirement status: none changed. R2 stays met on paper (already restated in v0.9); R11 met on paper at 99.3 kg with only 0.7 kg to spare; R12 met with its lowest burst safety factor down from 17 to 16 (the higher head raises the jacket pressure); R13 now has a hasp on both containers; R9 over the value-engineering target.
+- Value-engineering target: USD 455. Estimated cost of the constructable design: USD 580 (USD 125 over the target).
+- Mass 99.3 kg in six loads, heaviest 27.3 kg (the frame). Overall size 2.78 x 0.79 x 2.10 m (was 1.65 m tall).
+- Fluidization holes: with the higher head, 12 L/min needs only about 74 holes of 1.0 mm with the valve fully open. The 89 graded holes decided under GVS-DDR-002 are kept; the valve is then set slightly closed, which leaves margin as the tank level falls.
+- The hose length in the calculation now comes from the model's route (2.31 m plus 0.5 m of slack, 2.8 m) instead of the 4 m allowance; with 4 m the union would have 8.1 kPa, just at the need.
+
+### Decisions proposed, awaiting Amish
+
+1. **Tank post on the centre line and the tipping criterion** (now open item 1 in GVS-DEC-001). Raising the post where it stood, 180 mm behind the centre line, would let a full tank tip the machine sideways on a 9.5 degree slope (133 N push at the tank); on the centre line it is 13.5 degrees (193 N), better than the old 1.25 m layout (11.6 degrees). The check uses a 10 degree slope in any direction as its reading of "cannot tip it". Options: (a) keep as made; (b) back to 180 mm behind with wider feet at the back; (c) a stricter criterion with wider feet. Recommendation: (a).
+2. **Appearance model deviations from `model.py`** (STANDARDS section 12): the cranks drawn at 100 degrees from top dead centre with level pedals (render pose, decided 2026-10-01); a label and bung caps on the tank; the speed display's screen and readout; a brass padlock on the flush container hasp (padlocks are the partner's, not in the BOM); a tailings hose from the tailings pipe to the pond; a patch of ground; the seated clay mannequin. Recommendation: accept as appearance detail. The previous appearance model's lid sight window is gone (the plain lid was decided on 2026-10-01), as are its concept table stand, launder position and hose route.
+
+### Points for Amish
+
+- The tank top is now 2.1 m up, so gravity supply needs a source more than about 2.1 m above the machine's feet, and a pump lifts about 2.1 m (6.8 W hydraulic).
+- With the post welded on, the frame load is about 1.7 m tall for transport. A socket so the post and braces bolt on is a possible later change (suggestion only).
+- R11 has 0.7 kg of margin; any further addition will need one of the savings in GVS-DDR-003 A1 (b).
+
+### Cross-repo actions
+
+None. No follow-up in this list lives in another repo.
+
+### Render scenes
+
+`cad/src/product_model.py` was rebuilt so that every part is taken from `build_components()` in `model.py` (so it matches the constructable design, the 1.7 m braced post and the flush container), with product colours and materials, the crank render pose and the appearance details above. RENDER_VIEWS kept: hero, exploded, detail. Scenes exported with `python3 .kit/export_views.py /home/claude/renders/gravitysort`. Photoreal renders, `media/card.png` and `media/social-preview.png` were not regenerated; they are made on Amish's Mac next.
+
+### Safety
+
+A full header tank 1.7 m up makes the machine top-heavy: about 190 N pushed sideways at the tank tips it on level ground. The calculation note, precis and build plan (safety stop S8) now say to fill the tank only with the machine level, lift the drum onto the cradle empty, and never climb on the frame or hang anything on the tank. Other safety notes are unchanged.
+
+### Recommended next step
+
+Amish to decide open item 1 in GVS-DEC-001, then render the photoreal set and cards on the Mac from the exported scenes.
+
 ## Session 2026-10-02: open decisions decided
 
 Amish, 2026-10-02: "i approve your recommendations for all 555 open decisions." The recommendations written for this repo's open decisions are recorded as decided.
@@ -98,10 +171,6 @@ Amish asked: "gravitysort - update the documentation, CAD work and picture rende
 - Mass **96.5 kg** (was 95.7), heaviest load 25.2 kg: R11 still met on paper.
 - Value-engineering target: USD 455. Estimated cost of the constructable design: USD 569 (USD 114 over the target).
 - Requirements unchanged otherwise: none unmet; R2, R5, R6 at risk; R4, R14 not verifiable at TRL 3.
-
-### Stale, to update on Amish's Mac (Blender)
-
-- `media/render-*.png` photoreal renders, `media/card.png` and `media/social-preview.png` do not show the bump stop (and still show the concept table stand, as noted before). `cad/src/product_model.py` now includes the stop, so a re-render with `/render-product` will show it; the rest of that model's table end is still the concept stand and head.
 
 ### Decisions proposed and awaiting Amish
 
@@ -212,10 +281,6 @@ All open items are in the design decisions register (GVS-DEC-001). New this sess
 - The standpipe keeps spilt slurry off the upper bearing.
 - Containment of a liner fragment by the tub and lid is still not checked (register item 9); the build plan's safety stop S4 requires it before any spin above hand speed.
 - The pedal drive is still not speed-capped; the speed display and the burst margin carry that risk (R12 as restated).
-
-### Stale media (made on Amish's Mac; not regenerated here)
-
-The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept: the old frame and outrigger, the table head on a post, the hose route, the motor inside the frame and the display on the front rail. The design changed visibly, so all of them are stale and need regenerating on the Mac.
 
 ### Recommended next step
 

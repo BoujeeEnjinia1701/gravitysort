@@ -3,7 +3,7 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.5"
+version: "0.6"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -29,6 +29,10 @@ revisions:
     date: '2026-10-02'
     author: Amish Chadha
     change: "Amish approved the recommendations for open decisions 1 to 5; moved to decisions made"
+  - version: "0.6"
+    date: '2026-10-02'
+    author: Amish Chadha
+    change: "Decisions of 2026-10-02 carried into the model, BOM, calculations and build plan; one open decision added (tank on the centre line and the tipping criterion, made to carry out decision 1); Value engineering updated to USD 580"
 ---
 
 # GravitySort design decisions register
@@ -37,7 +41,9 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-None. All open decisions were decided on 2026-10-02.
+| # | To decide | Options | Recommendation | What it affects in the build | Source |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Where the 1.7 m tank post stands, and what "a full tank cannot tip it" means. To carry out the decision of 2026-10-02 the post was moved from 180 mm behind the centre line onto it, and the check uses a 10 degree slope in any direction with a full tank. On the centre line the machine tips at 13.5 degrees (193 N side push at the tank); left 180 mm behind, it would tip at 9.5 degrees (133 N) | (a) keep the post on the centre line and the 10 degree criterion, as made; (b) put it back 180 mm behind and add wider feet or outriggers at the back; (c) a stricter criterion (for example 15 degrees), which needs wider feet as well | (a): no extra parts, better than the old 1.25 m layout (11.6 degrees) | Frame (tank post, braces, cradle), hose route, build plan section 3.1 and step 13 | GVS-CAL-001 v0.8 section 11; review note 2026-10-02 |
 
 ## To confirm when parts are bought
 
@@ -57,9 +63,9 @@ None. All open decisions were decided on 2026-10-02.
 
 ## Value engineering
 
-Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 569 (USD 114 over the target), excluding the MotionCore kit, reference motor and battery. Main cost drivers and savings worth trying:
+Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 580 (USD 125 over the target), excluding the MotionCore kit, reference motor and battery. Main cost drivers and savings worth trying:
 
-- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the table stand and head ($52); the bowl ($46); the frame ($43); the water supply ($41). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003); the table bump stop adds $11 more (bracket and striker $6, buffer and fixings $5).
+- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the table stand and head ($52); the frame ($47); the bowl ($46); the water supply ($41). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003); the table bump stop adds $11 more (bracket and striker $6, buffer and fixings $5); the decisions of 2026-10-02 add $11 (the braced 1.7 m tank post $4, the flush container with its hasp $7).
 - **A quarter-turn belt instead of the bevel gearbox,** about $25 less (GVS-DDR-001, item 1). Worth a test, since a used gearbox is also the hardest part to find.
 - **Used bearing units and pillow blocks** from scrap farm or factory machinery, about $10 to $15 less across the six bearings.
 - **Run the table head shaft in two plain bronze bushes** in the head plate instead of two pillow blocks, about $8 less; the shaft turns slowly (about 300 rpm).
@@ -86,8 +92,8 @@ Value-engineering target: USD 455 (a hypothetical control target, not a limit; A
 | 2026-10-01 | Lid: keep the plain 10 mm HDPE lid, no sight window | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 4 |
 | 2026-10-01 | Renders: the cranks turned 100 degrees from top dead centre is a render pose only; the model keeps its crank angle | Amish: "i agree with your recommendations for both GrowRider and GravitySort" | Review note 2026-09-26, item 1 |
 | 2026-10-01 | Table bump stop, change made to let the deck strike the stop: the pitman pin works in a 12 x 20 mm slot in the deck cheeks (8 mm of free play), and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N. Accepted as made; no design change | Amish: "I approve of your recommendations for PicoFlow and GravitySort" | GVS-DDR-003, Table 2 (v0.4) |
-| 2026-10-02 | Head for the fluidization supply: raise the header tank post to 1.7 m (option a), braced so a full 60 L tank cannot tip it; no pump on the fluidization line. Follow-up: carry it into the model, drawings, build plan and BOM | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 11b |
+| 2026-10-02 | Head for the fluidization supply: raise the header tank post to 1.7 m (option a), braced so a full 60 L tank cannot tip it; no pump on the fluidization line. Carried into the model, drawings, build plan, BOM and GVS-CAL-001 v0.8 on 2026-10-02 (8.6 kPa at the union at mid-tank) | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 11b |
 | 2026-10-02 | Water at pedal-only sites: gravity supply from upstream is the site rule for the first field trial; where that is impossible, a bought treadle or hand pump worked in turns by the crew, or a small 12 V pump at sites with the MotionCore battery | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 12 |
 | 2026-10-02 | R2 restated as 200 kg/h of feed time, about 1.55 t in an eight-hour shift with three flush stops; the design feed stays at 200 kg/h | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 13 |
 | 2026-10-02 | First co-design partner and country: Colombia, where the mercury ban is in force, with a miners' cooperative introduced through the Alliance for Responsible Mining in Medellin as the first candidate to approach | Amish: "i approve your recommendations for all 555 open decisions." | GVS-DDR-001, item 8b |
-| 2026-10-02 | Concentrate security: padlock hasps on both the concentrate box and the flush container as the baseline, and a two-person rule for opening them proposed to the partner; both to be confirmed with the partner | Amish: "i approve your recommendations for all 555 open decisions." | GVS-PRC-001, open questions |
+| 2026-10-02 | Concentrate security: padlock hasps on both the concentrate box and the flush container as the baseline, and a two-person rule for opening them proposed to the partner; both to be confirmed with the partner. Flush container with hasp added to the model and BOM (item 23) on 2026-10-02 | Amish: "i approve your recommendations for all 555 open decisions." | GVS-PRC-001, open questions |

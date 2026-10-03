@@ -3,9 +3,9 @@ doc_id: GVS-DDR-003
 title: GravitySort design for construction
 project: GravitySort
 doc_type: Design decision record
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Accepted by Amish, the change made while adding the bump stop (slotted pitman pin with 8 mm free play in the deck cheeks; plywood legs set leaning about 5 mm to press the deck on the buffer with about 200 N), Table 2; no design change
+- version: "0.5"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions of 2026-10-02 (GVS-DEC-001) carried into the constructable design: tank post 1.7 m on the centre line with two braces; flush container with a padlock hasp (BOM item 23); appearance model rebuilt from the model; 126 checks"
 ---
 
 # 0003: Design for construction
@@ -87,5 +91,6 @@ The changes below keep what GravitySort does: the same two stages, the same bowl
 - Requirement status: R11 moved to not met (16 kg over 80 kg, every load under 30 kg) and R9 is now reported against the value-engineering target (USD 103 over). R2, R5 and R6 stay at risk, R4 and R14 not verifiable, the rest met on paper or by design review (GVS-CAL-001 v0.4).
 - With A1 accepted, R11 is restated to 100 kg or less in all, every load 30 kg or less, and is met on paper at 95.7 kg (GVS-REQ-001 v0.7, GVS-CAL-001 v0.5); the savings of option (b) are to be tried at TRL 4. With A2 accepted, the table stroke is made asymmetric by an adjustable rubber bump stop at the return end (the far end of the forward stroke, where the deck turns back), with a toggle head only if the first test shows it is not enough; the stop is now in the model, the BOM (lines 21 and 22), the calculations (GVS-CAL-001 v0.6, section 9), making sketch GVS-DWG-121 and the build plan (GVS-BLD-001 v0.3, section 3.16 and step 16), as Table 2 describes. With A3 accepted, the pedal position is kept and checked with two riders at TRL 4.
 - With the bump stop change accepted (2026-10-01), the pitman pin works in a 12 x 20 mm slot in the deck cheeks with 8 mm of free play, and the plywood legs are set leaning about 5 mm so they press the deck on the buffer with about 200 N; this is the design as drawn in the model, the making sketches and the build plan (GVS-BLD-001 v0.3, sections 3.15 and 3.16). The toggle head of A2, option (b), stays the fallback if the first table test shows the stop is not enough.
-- The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept frame, outrigger, table stand, hose and motor position; they need updating on Amish's Mac, where Blender is.
+- Decisions of 2026-10-02 (GVS-DEC-001), carried into this design the same day: the tank post rises to 1.7 m (cradle at 1,700 mm, post 995 mm) with two braces of the frame tube from 1,350 mm up the post to the front and back top side rails; to stop the taller post making the machine easier to tip, the post now stands on the centre line, not 180 mm behind it (kept open for Amish in GVS-DEC-001); the hose's short run to the rotameter rises to 860 mm to clear the bracket. A bought 10 L flush container with a padlock hasp is BOM item 23. The model runs 126 checks, all passing; mass 99.3 kg; cost $580 (GVS-CAL-001 v0.8); GA Rev P5; making sketch GVS-DWG-101 Rev P2; build plan v0.4.
+- The appearance model `cad/src/product_model.py` was rebuilt on 2026-10-02 from the model's components, so it matches the constructable design; the photoreal renders (`media/render-*.png`), `media/card.png` and `media/social-preview.png` still show the concept and need re-rendering on Amish's Mac, where Blender is.
 - The bought parts that set dimensions (bearing units, shaft flange hub, rotary union, gearbox, pillow blocks, rubber grommets, hub motor) must be checked against the model when bought; they are listed in GVS-DEC-001.

@@ -1,5 +1,7 @@
 """GravitySort parametric model (build123d), TRL 3, constructable design (GVS-DDR-003).
 
+Header tank post 1.7 m, braced, and a flush container with a padlock hasp (decisions of 2026-10-02, GVS-DEC-001).
+
 Run from the repo root:
     python cad/src/model.py            exports STEP and STL into cad/step and cad/stl, prints the
                                        main envelopes and the constructability checks
@@ -61,11 +63,19 @@ PARAMS = {
     "take_off_d": 140.0, "head_pulley_d": 125.0,
     "chain_y": 60.0, "belt_y": -330.0, "motor_chain_y": 373.5,
     "pillow_y": (-230.0, 250.0), "pillow_h": 33.0,
-    "seat_z": 910.0,
+    "seat_z": 910.0, "crank_l": 170.0,
     # Motor option (item 12): reference hub motor on a cradle on the back lower rail
     "motor_x": -85.0, "motor_z": 376.0, "motor_y": (306.0, 366.0), "motor_r": 80.0,
-    # Water header tank (item 13)
-    "tank_x": -330.0, "tank_y": 180.0, "tank_d": 380.0, "tank_z": (1250.0, 1650.0),
+    # Water header tank (item 13). Decided 2026-10-02 (GVS-DEC-001): the post rises to 1.7 m and is braced so a
+    # full 60 L tank cannot tip it; the tank stands on the centre line (was 180 mm behind it) so that the taller
+    # post does not make the machine easier to tip backward (GVS-CAL-001 section 11).
+    "tank_x": -330.0, "tank_y": 0.0, "tank_d": 380.0, "tank_z": (1700.0, 2100.0),
+    "brace_z": 1350.0,            # where the two braces meet the post (centre line)
+    "brace_dx": 250.0,            # brace feet on the front and back top side rails, this far toward the table end
+    "hose_run_z": 860.0,          # height of the hose's short run from the tank drop to the rotameter
+    # Flush container (item 23): bought 10 L HDPE pail with a lid and a padlock hasp, loose on the ground in front
+    # of the tub, where the operator rinses the rings into it (GVS-DEC-001, 2026-10-02, concentrate security)
+    "flush_x": 100.0, "flush_y": -520.0, "flush_d": 250.0, "flush_h": 280.0,
     # Shaking table (items 14 to 16)
     "table_x0": 620.0, "table_l": 1000.0, "table_w": 450.0, "table_z": 820.0, "table_tilt": 3.0,
     "head_x": 560.0, "head_z": 710.0, "eccentric": 7.5,
@@ -242,7 +252,50 @@ def frame_members(p=PARAMS):
     m += [("tank post member", ly)]
     m += [("end post", D["top_bot"] - (p["end_low_z"] + S))]
     m += [("tank post", p["tank_z"][0] - p["rail_z"] - 5)]
+    m += [("tank post brace", brace_length(p))] * 2
     return m
+
+
+def brace_ends(p=PARAMS):
+    """Centre-line end points of the two tank post braces: on the post axis at brace_z, and on the centre line
+    of the front and back top side rails, brace_dx toward the table end."""
+    S = p["tube"]
+    a = (p["tank_x"], p["tank_y"], p["brace_z"])
+    return [(a, (p["tank_x"] + p["brace_dx"], s * (p["frame_y"] - S / 2), p["rail_z"] - S / 2)) for s in (-1, 1)]
+
+
+def brace_length(p=PARAMS):
+    """Cut length (mm) of one brace, between the post face and the top of the side rail, measured on its centre line."""
+    S = p["tube"]
+    (a, b_) = brace_ends(p)[0]
+    d = [b_[i] - a[i] for i in range(3)]
+    L = math.sqrt(sum(v * v for v in d))
+    h = math.hypot(d[0], d[1])
+    c_post = (S / 2) / (max(abs(d[0]), abs(d[1])) / L)       # centre line inside the post
+    c_rail = (S / 2) / (abs(d[2]) / L)                         # centre line inside the rail, below its top
+    return L - c_post - c_rail
+
+
+def hose_path(p=PARAMS):
+    """Points of the 3/4 in hose from the tank valve to the rotary union (None marks the rotameter)."""
+    TX, TY = p["tank_x"], p["tank_y"]
+    tk0 = p["tank_z"][0]
+    yv = TY + p["tank_d"] / 2
+    yh = p["frame_y"] + 5 + 15
+    hz = p["hose_run_z"]
+    return [(TX, yv + 15, tk0 + 15), (TX, yv + 15, hz), (TX, yh, hz), (TX, yh, 820), None, (TX, yh, 720), (TX, yh, 140),
+            (TX, 0, 140), (p["bowl_x"] - p["union_d"] / 2, 0, 140)]
+
+
+def hose_length(p=PARAMS):
+    """Length (m) of the hose route in the model, from the valve to the union, rotameter excluded."""
+    pts = hose_path(p)
+    L = 0.0
+    for a, b_ in zip(pts[:-1], pts[1:]):
+        if a is None or b_ is None:
+            continue
+        L += math.dist(a, b_)
+    return L / 1000
 
 
 def outrigger_members(p=PARAMS):
@@ -320,6 +373,17 @@ def build_components(p=PARAMS):
     members.append(b(TX - S / 2, TX + S / 2, TY - S / 2, TY + S / 2, RZ, tk0 - 5))   # tank post
     frame = _fuse(legs + rails + members)
     add("frame", "Base frame, welded", frame, "#4B5563", 1, (0, 0, -300))
+    # two braces from the tank post to the front and back top side rails, mitred and welded to both
+    post_col = b(TX - S / 2, TX + S / 2, TY - S / 2, TY + S / 2, RZ, tk0 - 5)
+    brs = []
+    for a_, e_ in brace_ends(p):
+        d_ = [e_[i] - a_[i] for i in range(3)]
+        n_ = (-d_[1], d_[0], 0.0)                                         # horizontal, square to the brace
+        br = _bar(a_, e_, S, S, normal=n_)
+        rail = b(FX0 + S, FX1 - S, -FY if e_[1] < 0 else FY - S, -FY + S if e_[1] < 0 else FY, RZ - S, RZ)
+        br = br - post_col - rail
+        brs.append(max(br.solids(), key=lambda q: q.volume))              # drop the slivers past the far faces
+    add("tank_braces", "Tank post braces (2), welded", _fuse(brs), "#4B5563", 1, (0, 0, -300))
 
     # bearing plates, welded under the spindle members and under the tub members
     x0, x1 = D["sp_members"][0] - S / 2, D["sp_members"][1] + S / 2
@@ -357,8 +421,9 @@ def build_components(p=PARAMS):
     cr_r = D["chain_r"][0]
     crank = _cyly(PX, BZ, -70, 70, 8) + _cyly(PX, BZ, -34, -24, 17) + _cyly(PX, BZ, 24, 34, 17)
     crank += Pos(PX, 60, BZ) * Rot(90, 0, 0) * __import__("build123d").Cylinder(cr_r, 6)
-    crank += b(PX - 10, PX + 10, 76, 88, BZ - 170, BZ) + b(PX - 50, PX + 50, 88, 138, BZ - 178, BZ - 164)
-    crank += b(PX - 10, PX + 10, -88, -76, BZ, BZ + 170) + b(PX - 50, PX + 50, -138, -88, BZ + 164, BZ + 178)
+    CL = p["crank_l"]
+    crank += b(PX - 10, PX + 10, 76, 88, BZ - CL, BZ) + b(PX - 50, PX + 50, 88, 138, BZ - CL - 8, BZ - CL + 6)
+    crank += b(PX - 10, PX + 10, -88, -76, BZ, BZ + CL) + b(PX - 50, PX + 50, -138, -88, BZ + CL - 6, BZ + CL + 8)
     add("crankset", "Crankset, 48T chainring and pedals", crank, "#1F2937", 8, (0, -200, 0))
 
     # ---------------------------------------------------------------- 9 jackshaft, gearbox, sprockets, pulleys
@@ -534,9 +599,7 @@ def build_components(p=PARAMS):
     meter = b(TX - 20, TX + 20, FY, yb, RZ - S, RZ + 130) + b(TX - 15, TX + 15, yb, yb + 30, 720, 820)
     add("valve_meter", "Ball valve, rotameter and its bracket", valve + meter, "#0EA5E9", 13, (0, 150, 0))
     hr = 13.5
-    yh = yb + 15
-    path = [(TX, yv + 15, tk0 + 15), (TX, yv + 15, 840), (TX, yh, 840), (TX, yh, 820), None, (TX, yh, 720), (TX, yh, 140),
-            (TX, 0, 140), (CX - p["union_d"] / 2, 0, 140)]
+    path = hose_path(p)
     hose = []
     for a_, b_ in zip(path[:-1], path[1:]):
         if a_ is None or b_ is None:
@@ -698,7 +761,26 @@ def build_components(p=PARAMS):
         for y in (-215, 20):
             box += b(x, x + 25, y, y + 25, 0, 640)
     add("conc_box", "Lockable concentrate box on legs", box, "#92400E", 16, (300, 0, 0))
+
+    # ---------------------------------------------------------------- 23 flush container with a padlock hasp (loose)
+    FCX, FCY, FR, FH = p["flush_x"], p["flush_y"], p["flush_d"] / 2, p["flush_h"]
+    pail = c(FCX, FCY, 0, FH, FR) - c(FCX, FCY, 2, FH + 1, FR - 2)
+    lid_ = c(FCX, FCY, FH, FH + 8, FR + 4) + (c(FCX, FCY, FH - 20, FH, FR + 4) - c(FCX, FCY, FH - 21, FH + 1, FR))
+    add("flush_box", "Flush container, 10 L HDPE pail and lid", pail + lid_, "#E5E7EB", 23, (0, -300, 0))
+    yw = FCY - FR                                        # front of the pail wall
+    staple = b(FCX - 15, FCX + 15, yw - 3, yw, 180, 225) + b(FCX - 4, FCX + 4, yw - 15, yw - 3, 196, 208)
+    flap = b(FCX - 18, FCX + 18, yw - 8, yw - 4, 185, FH + 8) + b(FCX - 18, FCX + 18, yw - 8, yw + 60, FH + 8, FH + 11)
+    flap -= b(FCX - 6, FCX + 6, yw - 9, yw - 3, 192, 212)                # slot for the staple loop
+    add("flush_staple", "Hasp staple, riveted on the pail", staple, "#374151", 23, (0, -300, 0))
+    add("flush_hasp", "Hasp strap, riveted on the lid", flap, "#374151", 23, (0, -300, 0))
     return C
+
+
+# exploded-view offsets (mm) per BOM item, shared by the concept media and the appearance model
+EXPLODE_BOM = {1: (0, 0, -250), 2: (0, 0, 520), 3: (0, 0, 380), 4: (0, 0, 250), 5: (0, 0, -150), 6: (0, -150, 80), 7: (0, 0, 460),
+               8: (-250, 0, -550), 9: (-100, -150, -300), 10: (0, -250, -450), 11: (0, -450, -420), 12: (150, 230, 260),
+               13: (0, 250, 380), 14: (300, 0, 330), 15: (300, 0, 0), 16: (300, -300, 0), 17: (0, 0, 0), 18: (250, 0, -150),
+               19: (0, -250, 150), 21: (300, 250, 330), 23: (0, -300, 0)}
 
 
 def build_parts(p=PARAMS):
@@ -711,14 +793,11 @@ def build_parts(p=PARAMS):
              10: "Drive belts (bowl and table)", 11: "Belt and chain guards", 12: "MotionCore module and motor option",
              13: "Water header tank, valve, flow meter, hose", 14: "Shaking table deck with riffles", 15: "Table stand, head and tensioner",
              16: "Tailings launder and concentrate box", 17: "Hardware", 18: "Bowl brake", 19: "Speed display",
-             21: "Table bump stop (21, 22)"}
+             21: "Table bump stop (21, 22)", 23: "Flush container with padlock hasp"}
     cols = {1: "#4B5563", 2: "#D97706", 3: "#0F766E", 4: "#5EEAD4", 5: "#9CA3AF", 6: "#60A5FA", 7: "#1F2937", 8: "#374151",
             9: "#78716C", 10: "#111827", 11: "#FACC15", 12: "#15803D", 13: "#38BDF8", 14: "#E5E7EB", 15: "#6B7280",
-            16: "#B45309", 17: "#111827", 18: "#DC2626", 19: "#7C3AED", 21: "#374151"}
-    ex = {1: (0, 0, -250), 2: (0, 0, 520), 3: (0, 0, 380), 4: (0, 0, 250), 5: (0, 0, -150), 6: (0, -150, 80), 7: (0, 0, 460),
-          8: (-250, 0, -550), 9: (-100, -150, -300), 10: (0, -250, -450), 11: (0, -450, -420), 12: (150, 230, 260),
-          13: (0, 250, 380), 14: (300, 0, 330), 15: (300, 0, 0), 16: (300, -300, 0), 17: (0, 0, 0), 18: (250, 0, -150),
-          19: (0, -250, 150), 21: (300, 250, 330)}
+            16: "#B45309", 17: "#111827", 18: "#DC2626", 19: "#7C3AED", 21: "#374151", 23: "#E5E7EB"}
+    ex = EXPLODE_BOM
     groups = {}
     for k, comp in C.items():
         groups.setdefault(21 if comp.bom == 22 else comp.bom, []).append(comp.shape)
@@ -847,12 +926,18 @@ def checks(p=PARAMS):
     chk("Hopper post clear of the lid and clamps", S("hopper_post"), S("lid", "clamps", "tub"), 30.0)
     # water
     chk("Tank on its cradle", S("tank"), S("tank_cradle"), T)
+    chk("Tank post braces welded to the post and the top side rails", S("tank_braces"), S("frame"), T)
+    chk("Tank post braces clear of the tank and its cradle", S("tank_braces"), S("tank", "tank_cradle"), 50.0)
+    chk("Tank post braces clear of the hopper, screen and support", S("tank_braces"), S("hopper", "screen", "hopper_post"), 50.0)
+    chk("Tank post braces clear of the hose, valve and rotameter", S("tank_braces"), S("hose", "valve_meter"), 20.0)
+    chk("Tank post braces clear of the tensioner and MotionCore module", S("tank_braces"), S("tensioner", "mcore", "lid", "clamps"), 10.0)
     chk("Tank clear of the hopper", S("tank"), S("hopper", "screen"), 50.0)
     chk("Valve on the tank", S("valve_meter"), S("tank"), T)
     chk("Rotameter bracket on the back top rail", S("valve_meter"), S("frame"), T)
     chk("Hose into the valve and rotameter", S("hose"), S("valve_meter"), T)
     chk("Hose to the rotary union", S("hose"), S("union"), T)
     chk("Hose clear of the frame", S("hose"), S("frame"), 3.0)
+    chk("Hose run over the rotameter bracket clears its top", S("hose") & _box(-400, -260, 150, 400, 845, 900), S("valve_meter"), 5.0)
     chk("Hose clear of the guard and drive", S("hose"), S("belt_guard", "drive_pulley", "motor", "motor_cradle", "mcore"), 3.0)
     chk("MotionCore module under the top rails", S("mcore"), S("frame"), T)
     # motor option
@@ -901,6 +986,14 @@ def checks(p=PARAMS):
     chk("Table guard clear of the belt, pulleys and tensioner", S("table_guard"), S("table_belt", "tensioner", "jack_wheels", "head_shaft"), 2.0)
     chk("Table guard clear of the frame and head", S("table_guard"), S("frame", "head"), 2.0)
     chk("Table guard clear of the jackshaft end", S("table_guard"), S("jackshaft"), 1.0)
+    # flush container (item 23), loose on the ground in front of the tub
+    chk("Hasp staple on the flush container wall", S("flush_staple"), S("flush_box"), T)
+    chk("Hasp strap on the flush container lid", S("flush_hasp"), S("flush_box"), T)
+    chk("Hasp strap shuts over the staple, loop free in its slot", S("flush_hasp"), S("flush_staple"), 0.9)
+    machine = [k for k in C if k not in ("flush_box", "flush_staple", "flush_hasp")]
+    chk("Flush container clear of the machine", S("flush_box", "flush_staple", "flush_hasp"), S(*machine), 30.0)
+    zmin = C["flush_box"].shape.bounding_box().min.Z
+    rows.append(("Flush container stands on the ground", 0.0, abs(zmin), "touch", abs(zmin) < 0.05))
     return rows
 
 

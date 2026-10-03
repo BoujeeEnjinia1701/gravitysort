@@ -3,7 +3,7 @@ doc_id: GVS-REQ-001
 title: GravitySort requirements
 project: GravitySort
 doc_type: Requirements
-version: "0.9"
+version: "1.0"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -45,11 +45,15 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "R2 restated as 200 kg/h of feed time (GVS-DEC-001, 2026-10-02); status updated"
+- version: "1.0"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Status from GVS-CAL-001 v0.8 with the 1.7 m braced tank post and the flush container (decisions of 2026-10-02): R9 $580 (USD 125 over the target), R11 99.3 kg, R12 lowest safety factor 16, R13 hasps on both containers; no status changed"
 ---
 
 # GravitySort requirements
 
-These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.6, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): none is unmet, two are at risk (R5, R6), two cannot be verified before testing (R4, R14) and nine are met on paper or by design review, R2 since its restatement by Amish on 2026-10-02 (GVS-DEC-001). R9 is reported against the value-engineering target: the constructable design is USD 103 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
+These are first-pass requirements for the concept. Targets are proposals for review, not user-validated needs, and will be revised after co-design sessions. At TRL 3 each has been checked by calculation or design review in GVS-CAL-001 v0.8, for the constructable design of GVS-DDR-003 (every part can be made and fixed to the next): none is unmet, two are at risk (R5, R6), two cannot be verified before testing (R4, R14) and nine are met on paper or by design review, R2 since its restatement by Amish on 2026-10-02 (GVS-DEC-001). R9 is reported against the value-engineering target: the constructable design is USD 125 over it. Recovery can only be verified by testing with real or spiked ore, which is TRL 4 work and on hold by Amish's instruction.
 
 Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 
@@ -62,12 +66,12 @@ Table 1. Requirements. Status is from GVS-CAL-001 (`docs/04-calcs/results.csv`).
 | R5 | Make a concentrate that can be smelted without mercury | Bowl mass pull 0.5 % or less of feed; shaking table reduces one day's bowl concentrate (about 5 kg) to 100 g or less | Mass balance calculation; later test | **At risk:** bowl pull 0.33 % is met; 5.3 kg per day needs 53:1 on the table, likely two passes |
 | R6 | Run on pedal power | Full throughput at 60 W or less at the pedals, at a cadence of 55 to 70 rpm | Power estimate from slurry, fluidization water and bearing losses | **At risk:** 48.2 W at 60 G is met; 62.8 W at 80 G is not; union seal drag assumed |
 | R7 | Run on a small motor | Full throughput from the MotionCore 250 W reference drive on any 20 to 58 V pack that MotionCore accepts, with at least 3 times power margin | Power estimate | Met on paper: 5.2 times at 60 G, 4.0 times at 80 G; 0.55 kWh per shift |
-| R8 | Use little water | 1.5 m3/h or less at 200 kg/h, and tolerate recirculated water with fine silt | Water balance calculation | Met on paper: 1.19 m3/h; a 3/4 in fluidization hose is needed (GVS-CAL-001 section 6) |
-| R9 | Keep parts cost near the value-engineering target | Value-engineering target $455 for parts, excluding the MotionCore module and battery: a hypothetical control target, not a limit (Amish, 2026-10-01; was $350, then $450; GVS-DDR-002) | Priced BOM | Estimated cost of the constructable design $569: **over the value-engineering target by USD 114** |
+| R8 | Use little water | 1.5 m3/h or less at 200 kg/h, and tolerate recirculated water with fine silt | Water balance calculation | Met on paper: 1.19 m3/h; a 3/4 in fluidization hose is needed, fed from the tank on its 1.7 m post (8.6 kPa at the union at mid-tank; GVS-CAL-001 section 6) |
+| R9 | Keep parts cost near the value-engineering target | Value-engineering target $455 for parts, excluding the MotionCore module and battery: a hypothetical control target, not a limit (Amish, 2026-10-01; was $350, then $450; GVS-DDR-002) | Priced BOM | Estimated cost of the constructable design $580: **over the value-engineering target by USD 125** |
 | R10 | Be built in a local workshop | Welding, drilling and hand tools only; no lathe; bowl liner cast in a printed mold | Design review of every part | Met (design review): set-screw bearing inserts, a taper bush and a welded nipple on a tube spindle avoid the lathe; liner cast on a six-segment printed core (GVS-DDR-003); casting route unproven |
-| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 100 kg or less (restated from 80 kg by Amish, 2026-10-01; GVS-DDR-003, A1); assembled with hand tools in 30 min or less | Mass estimate from the model | Met on paper: 96.5 kg in six loads for the constructable design with the table bump stop (GVS-DDR-003), every load under 30 kg (heaviest 25.2 kg); assembly time not verified |
-| R12 | Guard every moving part | Bowl covered by a lid guard during running; belts, chains and the table head fully guarded; with the motor, bowl speed limited to 900 rpm or less by the drive ratio and the MotionCore speed limit; with the pedals, which gearing cannot cap, a burst safety factor of 10 or more for the bowl, jacket and rings at the highest reachable speed (1,200 rpm at a 100 rpm cadence) and the bowl speed shown to the rider; bowl stops within 15 s of stopping the drive (restated per GVS-DDR-002) | Design review, burst calculation and safety checklist | Met on paper: guards, lid interlock and a disc brake (0.6 s stop; about 20 s coasting); motor capped by its 1.2:1 step-up and the MotionCore limit; lowest pedal-case safety factor 17 at 1,200 rpm; speed display item 19. Containment of a liner fragment not verified |
-| R13 | Clean up quickly and securely | Bowl concentrate flushed into a lockable container in 5 min or less without tools; table concentrate drops into a lockable tray | Design review; later timed trial | Met on paper: toolless lid clamps, lid lifts clear of the feed pipe; lockable concentrate box under the table's far end; time not verified |
+| R11 | Travel to site | Breaks into loads of 30 kg or less, carried by two people; total 100 kg or less (restated from 80 kg by Amish, 2026-10-01; GVS-DDR-003, A1); assembled with hand tools in 30 min or less | Mass estimate from the model | Met on paper: 99.3 kg in six loads for the constructable design with the table bump stop, the 1.7 m braced tank post and the flush container (GVS-DDR-003; GVS-DEC-001), every load under 30 kg (heaviest 27.3 kg); 0.7 kg of margin; assembly time not verified |
+| R12 | Guard every moving part | Bowl covered by a lid guard during running; belts, chains and the table head fully guarded; with the motor, bowl speed limited to 900 rpm or less by the drive ratio and the MotionCore speed limit; with the pedals, which gearing cannot cap, a burst safety factor of 10 or more for the bowl, jacket and rings at the highest reachable speed (1,200 rpm at a 100 rpm cadence) and the bowl speed shown to the rider; bowl stops within 15 s of stopping the drive (restated per GVS-DDR-002) | Design review, burst calculation and safety checklist | Met on paper: guards, lid interlock and a disc brake (0.6 s stop; about 20 s coasting); motor capped by its 1.2:1 step-up and the MotionCore limit; lowest pedal-case safety factor 16 at 1,200 rpm; speed display item 19. Containment of a liner fragment not verified |
+| R13 | Clean up quickly and securely | Bowl concentrate flushed into a lockable container in 5 min or less without tools; table concentrate drops into a lockable tray | Design review; later timed trial | Met on paper: toolless lid clamps, lid lifts clear of the feed pipe; flush container and concentrate box each with a padlock hasp (GVS-DEC-001, 2026-10-02); time not verified |
 | R14 | Last in abrasive service | Bowl liner and riffles replaceable in 30 min; liner life 500 h or more (estimate to be checked) | Wear data for cast polyurethane; later test | Not verifiable at TRL 3 |
 
 ## Assumptions

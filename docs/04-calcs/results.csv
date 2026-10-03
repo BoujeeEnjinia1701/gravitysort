@@ -1,15 +1,15 @@
 id,quantity,value,target,status
 R1,No mercury,no amalgamation step in the flowsheet,no mercury at any step,Met (design review)
-R2,Ore per 8 h shift,200 kg/h; 1.55 t per shift with 3 flush stops,"200 kg/h, 1.6 t per 8 h",At risk (needs 206 kg/h)
+R2,Ore per 8 h shift,200 kg/h; 1.55 t per shift with 3 flush stops,"200 kg/h of feed time, about 1.55 t per 8 h shift",Met (paper)
 R3,Bowl G at 100 mm over the speed range,40 to 81 G (600 to 850 rpm); speed display item 19,"40 to 80 G, speed shown",Met (paper)
 R4,Fine-gold recovery,settling ratio 36 or more for 20 um flakes; overall 60 % assumed,80 % / 50 % in bowl; 60 % overall,Not verifiable at TRL 3 (at risk)
 R5,Concentrate for direct smelting,bowl pull 0.33 %; 5.3 kg/day needs 53:1 on the table,0.5 % or less; 100 g or less,At risk (table ratio needs two passes)
 R6,Pedal power at full throughput,48.2 W at 60 G; 62.8 W at 80 G,60 W or less at 55 to 70 rpm,"At risk (met at 60 G, not at 80 G)"
 R7,Motor power margin,5.2 x at 60 G (4.0 x at 80 G),3 x or more,Met (paper)
 R8,Water use at 200 kg/h,1.19 m3/h,1.5 m3/h or less,Met (paper)
-R9,Parts cost,$569,value-engineering target $455,Over the value-engineering target by $114
+R9,Parts cost,$580,value-engineering target $455,Over the value-engineering target by $125
 R10,Local workshop build,"welding, drill press, printed mold and segmented core; set-screw inserts, taper bush, welded nipple, no lathe",no lathe,Met (design review); casting route unproven
-R11,Transport mass,"97 kg total in 6 loads, heaviest 25 kg",100 kg or less; loads 30 kg or less,Met (paper)
-R12,"Guards, speed limit, stop time","brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal: SF 17 at 1200 rpm, speed display",guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s,Met (paper); containment not verified
+R11,Transport mass,"99 kg total in 6 loads, heaviest 27 kg",100 kg or less; loads 30 kg or less,Met (paper)
+R12,"Guards, speed limit, stop time","brake stop 0.6 s (coast 20 s); motor capped by ratio and MotionCore; pedal: SF 16 at 1200 rpm, speed display",guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s,Met (paper); containment not verified
 R13,"Quick, secure clean-up",toolless lid clamps; flush into lockable container; lockable tray,"5 min, no tools",Met (paper); time not verified
 R14,Liner life,no wear data for this PU on quartz,500 h; replace in 30 min,Not verifiable at TRL 3

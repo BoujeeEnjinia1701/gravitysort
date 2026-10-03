@@ -1,4 +1,4 @@
-"""GravitySort sizing calculations, GVS-CAL-001 v0.6 (TRL 3, constructable design of GVS-DDR-003).
+"""GravitySort sizing calculations, GVS-CAL-001 v0.8 (TRL 3, constructable design of GVS-DDR-003; decisions of 2026-10-02).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "cad/src"))
-from model import PARAMS as P, riffle_rings, frame_members, outrigger_members, stand_members, stop_bracket_members, plate_list, bowl_radius  # noqa: E402
+from model import PARAMS as P, riffle_rings, frame_members, outrigger_members, stand_members, stop_bracket_members, plate_list, bowl_radius, brace_length, brace_ends, hose_length  # noqa: E402
 
 G = 9.81
 RHO_W, MU_W = 1000.0, 1.0e-3          # water at about 20 °C
@@ -47,8 +47,10 @@ A = {
     "film_m": 0.005,
     "flake_factor": 0.5,         # flaky gold settles at about half the sphere velocity
     # fluidization supply
-    "tank_level_m": 1.45, "union_height_m": 0.15,
-    "hose_len_m": 4.0, "hose_d_m": 0.019, "hose_f": 0.03,
+    # tank level: mid-height of the 60 L drum on the 1.7 m post (GVS-DEC-001, 2026-10-02); hose: the model's route plus slack
+    "tank_level_m": sum(P["tank_z"]) / 2000, "tank_level_min_m": P["tank_z"][0] / 1000 + 0.05,
+    "tank_level_max_m": P["tank_z"][1] / 1000 - 0.05, "union_height_m": 0.15,
+    "hose_len_m": round(hose_length() + 0.5, 1), "hose_d_m": 0.019, "hose_f": 0.03,
     "K_fittings": 6.0, "fittings_d_m": 0.0127,   # union, rotameter, valve on a 1/2 in bore
     "Cd_hole": 0.62,
     "p_target_kPa": 10.0,        # proposed minimum net pressure at every ring
@@ -73,6 +75,11 @@ A = {
     # budget
     "budget_usd": 455.0, "budget_previous_usd": 450.0,     # 350 to 450 (GVS-DDR-002, 2026-09-25); 455 approved by Amish 2026-09-26
     "sf_min_sprint": 10.0,       # R12 as reworded: minimum burst safety factor at the sprint speed
+    # header tank post and tipping (GVS-DEC-001, 2026-10-02: "braced so a full 60 L tank cannot tip it")
+    "tank_full_kg": 60.0 + 3.0 + 1.0,   # water, drum, valve and strap
+    "frame_cg_m": 0.55,          # height of the centre of mass of the frame, drive and bowl (assumed)
+    "tip_slope_deg": 10.0,       # check criterion: stands on a 10 degree slope in any direction with a full tank
+    "flush_container_kg": 0.7,   # 10 L HDPE pail, lid and hasp
     "steel_E_GPa": 200.0, "steel_yield_MPa": 235.0,
 }
 
@@ -122,8 +129,9 @@ day_t = A["feed_kg_h"] * feed_h / 1000
 need = 1600 / feed_h
 say(f"  {stops} mid-shift flush stops of {A['flush_min']:.0f} min; feed time {feed_h:.2f} h")
 say(f"  at 200 kg/h: {day_t:.2f} t per shift; 1.6 t needs {need:.0f} kg/h or {1.6e3 / A['feed_kg_h'] + stops * A['flush_min'] / 60:.2f} h")
-rows.append(("R2", "Ore per 8 h shift", f"200 kg/h; {day_t:.2f} t per shift with {stops} flush stops", "200 kg/h, 1.6 t per 8 h",
-             f"At risk (needs {need:.0f} kg/h)"))
+# R2 restated by Amish on 2026-10-02 (GVS-DEC-001): 200 kg/h of feed time, about 1.55 t per 8 h shift with three flush stops
+rows.append(("R2", "Ore per 8 h shift", f"200 kg/h; {day_t:.2f} t per shift with {stops} flush stops",
+             "200 kg/h of feed time, about 1.55 t per 8 h shift", "Met (paper)" if A["feed_kg_h"] >= 200 else "Not met"))
 
 # ---------------------------------------------------------------- 3. water (R8)
 say("\n3. Water (R8)")
@@ -136,8 +144,9 @@ rho_slurry = 1 / (A["solids_frac"] / RHO_Q + (1 - A["solids_frac"]) / RHO_W)
 say(f"  slurry water {mw_sl * 3.6:.3f} m3/h; fluidization {q_fl * 3600:.2f} m3/h; total {water_m3h:.2f} m3/h, {water_m3h * feed_h:.1f} m3 per shift")
 say(f"  slurry {q_slurry * 3.6e6 / 1000:.3f} m3/h at {rho_slurry:.0f} kg/m3; flow over the lip {(q_slurry + q_fl) * 1000:.3f} L/s")
 tank_min = 60 / (water_m3h * 1000 / 60)
-say(f"  60 L header tank lasts {tank_min:.1f} min at full flow; lift from pond to tank top about 1.7 m: "
-    f"{RHO_W * G * 1.7 * water_m3h / 3600:.1f} W hydraulic")
+lift = P["tank_z"][1] / 1000
+say(f"  60 L header tank lasts {tank_min:.1f} min at full flow; lift from pond to tank top about {lift:.1f} m: "
+    f"{RHO_W * G * lift * water_m3h / 3600:.1f} W hydraulic")
 rows.append(("R8", "Water use at 200 kg/h", f"{water_m3h:.2f} m3/h", "1.5 m3/h or less", "Met (paper)"))
 
 # ---------------------------------------------------------------- 4. settling and capture (R4 plausibility)
@@ -188,8 +197,13 @@ p_static = RHO_W * G * (A["tank_level_m"] - A["union_height_m"])
 p_axis = p_static - dp_hose - dp_fit
 v_half = q_fl / (math.pi * 0.0127 ** 2 / 4)
 dp_half = A["hose_f"] * A["hose_len_m"] / 0.0127 * RHO_W * v_half ** 2 / 2
+say(f"  tank water level {A['tank_level_m']:.2f} m (mid drum, post top {P['tank_z'][0] / 1000:.2f} m); hose {A['hose_len_m']:.1f} m "
+    f"(model route {hose_length():.2f} m plus slack)")
 say(f"  header head {p_static / 1000:.1f} kPa; 3/4 in hose loss {dp_hose / 1000:.1f} kPa; fittings {dp_fit / 1000:.1f} kPa; "
     f"pressure at the union {p_axis / 1000:.1f} kPa")
+p_union_lvl = {lv: RHO_W * G * (lv - A["union_height_m"]) - dp_hose - dp_fit for lv in (A["tank_level_min_m"], A["tank_level_max_m"])}
+say(f"  union pressure from {p_union_lvl[A['tank_level_min_m']] / 1000:.1f} kPa (tank nearly empty, {A['tank_level_min_m']:.2f} m) "
+    f"to {p_union_lvl[A['tank_level_max_m']] / 1000:.1f} kPa (nearly full, {A['tank_level_max_m']:.2f} m)")
 say(f"  with 1/2 in hose the hose loss is {dp_half / 1000:.1f} kPa and the union pressure {(p_static - dp_half - dp_fit) / 1000:.1f} kPa")
 rho_bed = A["bed_solids_vf"] * A["bed_solids_rho"] + (1 - A["bed_solids_vf"]) * RHO_W
 
@@ -212,12 +226,15 @@ for i, (z, r, _) in enumerate(rings, 1):
     say(f"  ring {i}: net {dp / 1000:.1f} kPa at 730 rpm (bed full), {ring_dp(A['rpm_lo'], r / 1000, p_axis) / 1000:.1f} kPa at 600 rpm, "
         f"{q1 * 60000:.3f} L/min per 1.0 mm hole")
 n_holes = q_fl / (sum(flows) / len(flows))
-say(f"  holes of 1.0 mm for 12 L/min: about {n_holes:.0f} ({n_holes / len(rings):.0f} per ring); "
+say(f"  holes of 1.0 mm for 12 L/min with the valve fully open: about {n_holes:.0f} ({n_holes / len(rings):.0f} per ring); "
     f"lowest to highest ring flow per hole {flows[0] / flows[-1]:.2f}")
 dp_min_rel = min(ring_dp(A["rpm_lo"], r / 1000, 0) for _, r, _ in rings)
 p_need = A["p_target_kPa"] * 1000 - dp_min_rel
+lvl_need = p_need / RHO_W / G + A['union_height_m'] + (dp_hose + dp_fit) / RHO_W / G
 say(f"  supply pressure at the union for {A['p_target_kPa']:.0f} kPa net at every ring and 600 rpm: {p_need / 1000:.1f} kPa "
-    f"({p_need / RHO_W / G + A['union_height_m'] + (dp_hose + dp_fit) / RHO_W / G:.2f} m tank level)")
+    f"({lvl_need:.2f} m tank level); at mid tank the union has {p_axis / 1000:.1f} kPa ({(p_axis - p_need) / 1000:+.1f} kPa)")
+net_lo = min(ring_dp(A["rpm_lo"], r / 1000, p_union_lvl[A["tank_level_min_m"]]) for _, r, _ in rings)
+say(f"  lowest net ring pressure at 600 rpm with the tank nearly empty: {net_lo / 1000:.1f} kPa (positive: water still enters every ring)")
 
 # ---------------------------------------------------------------- 6. power (R6, R7)
 say("\n6. Power (R6, R7)")
@@ -463,7 +480,8 @@ loads = {
                                         "eccentric, pulley, pitman": 2.0, "tensioner and table belt guard": 2.0, "launder and box": 4.5,
                                         "bump stop bracket, buffer and stud": sum(l for _, l in stop_bracket_members()) / 1000 * kg_m
                                         + plates["Stop bracket plates"] + 0.12},
-    "6 Water tank and hoses": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3},
+    "6 Water tank, hoses and flush container": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3,
+                                                "flush container with hasp": A["flush_container_kg"]},
 }
 tot = 0.0; heaviest = 0.0
 for name, items in loads.items():
@@ -485,10 +503,66 @@ s_mem = M_mem / Z_t
 d_mem = F_mem * span ** 3 / (48 * A["steel_E_GPa"] * 1e3 * I_t)
 say(f"  spindle member {S_t:.0f} x {S_t:.0f} x {t_w} mm over {span:.0f} mm (two share the load; one taken alone): {F_mem:.0f} N central load, "
     f"{s_mem:.0f} MPa bending (SF {A['steel_yield_MPa'] / s_mem:.1f} on {A['steel_yield_MPa']:.0f} MPa), deflection {d_mem:.2f} mm (pinned ends, upper bound)")
+# header tank post, braces and tipping with a full tank (GVS-DEC-001, 2026-10-02)
+say("  header tank post and tipping")
+post_l = P["tank_z"][0] - P["rail_z"] - 5
+L_br = brace_length()
+(a_, e_) = brace_ends()[0]
+d_br = [e_[i] - a_[i] for i in range(3)]
+L_c = math.sqrt(sum(v * v for v in d_br))
+m_tank = A["tank_full_kg"]
+z_tank = sum(P["tank_z"]) / 2000
+m_fr = sum(loads["1 Base frame with spindle, bearings, brake, union"].values()) + sum(loads["2 Drive and pedal station"].values()) \
+    + sum(loads["3 Bowl, jacket, tub, lid, hopper"].values())
+m_all = m_fr + m_tank
+z_cg = (m_fr * A["frame_cg_m"] + m_tank * z_tank) / m_all
+half_w = P["frame_y"] / 1000
+
+
+def tip(y_tank, z_t):
+    """Tipping slope (deg) and side push at the tank (N) for the frame-borne mass and a full tank at (y_tank, z_t), m."""
+    yc = m_tank * y_tank / m_all
+    zc = (m_fr * A["frame_cg_m"] + m_tank * z_t) / m_all
+    lever = half_w - abs(yc)
+    return math.degrees(math.atan(lever / zc)), m_all * G * lever / z_t
+
+
+th_now, F_tip = tip(P["tank_y"] / 1000, z_tank)
+th_old, F_old = tip(0.180, 1.45)
+th_off, F_off = tip(0.180, z_tank)
+say(f"  post {post_l:.0f} mm of 25 x 25 x 1.5 tube on the tank post member; two braces {L_br:.0f} mm (cut length) from the post at "
+    f"{P['brace_z']:.0f} mm to the front and back top side rails, {P['brace_dx']:.0f} mm toward the table end")
+say(f"  frame-borne mass {m_fr:.1f} kg at {A['frame_cg_m']:.2f} m (assumed) plus a full tank {m_tank:.0f} kg at {z_tank:.2f} m: "
+    f"{m_all:.1f} kg, centre of mass {z_cg:.2f} m up, on the centre line")
+say(f"  tips sideways on a slope of {th_now:.1f} deg (criterion {A['tip_slope_deg']:.0f} deg); side push at the tank to tip it on level "
+    f"ground {F_tip:.0f} N")
+say(f"  for comparison: tank 180 mm behind the centre line on the 1.7 m post {th_off:.1f} deg ({F_off:.0f} N); "
+    f"old 1.25 m post, 180 mm behind {th_old:.1f} deg ({F_old:.0f} N)")
+# strength at the largest side push the machine can take before it tips
+Z_post = Z_t
+M_post = F_tip * (z_tank - P["brace_z"] / 1000) * 1000           # N mm, post above the braces as a cantilever
+s_post = M_post / Z_post
+F_node = F_tip * (z_tank - P["rail_z"] / 1000) / ((P["brace_z"] - P["rail_z"]) / 1000)
+N_y = F_node * L_c / (2 * abs(d_br[1]))
+N_x = F_node * L_c / (2 * abs(d_br[0]))
+N_br = max(N_y, N_x)
+P_cr = math.pi ** 2 * A["steel_E_GPa"] * 1e3 * I_t / L_c ** 2
+A_t = S_t ** 2 - (S_t - 2 * t_w) ** 2
+W_t = m_tank * G
+M_pm = W_t * (2 * P["frame_y"] - 2 * S_t) / 4
+s_pm = M_pm / Z_t
+say(f"  at that push ({F_tip:.0f} N): post above the braces {s_post:.0f} MPa bending (SF {A['steel_yield_MPa'] / s_post:.1f}); "
+    f"braces up to {N_br:.0f} N axial ({N_br / A_t:.1f} MPa; Euler buckling {P_cr / 1000:.0f} kN, SF {P_cr / N_br:.0f})")
+say(f"  full tank on the post member ({W_t:.0f} N at mid-span, pinned ends, braces ignored): {s_pm:.0f} MPa (SF {A['steel_yield_MPa'] / s_pm:.1f}); "
+    f"post in compression {W_t / A_t:.1f} MPa")
+tip_ok = th_now >= A["tip_slope_deg"] and A["steel_yield_MPa"] / s_post >= 1.5
+say(f"  tipping check {'passes' if tip_ok else 'FAILS'}: the machine tips before the post or braces yield")
 try:
-    from model import assemblies
-    bb = assemblies()["gravitysort-assembly"].bounding_box()
-    size = f"{bb.size.X / 1000:.2f} x {bb.size.Y / 1000:.2f} x {bb.size.Z / 1000:.2f} m"
+    from build123d import Compound
+    from model import build_components
+    Cm = build_components()
+    bb = Compound(children=[c.shape for k, c in Cm.items() if not k.startswith("flush")]).bounding_box()
+    size = f"{bb.size.X / 1000:.2f} x {bb.size.Y / 1000:.2f} x {bb.size.Z / 1000:.2f} m (the loose flush container left out)"
 except Exception as e:  # pragma: no cover
     size = f"(model not built: {e})"
 say(f"  overall size {size}")

@@ -19,11 +19,12 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
 import build_views as bv  # noqa: E402
 from build_views import Part  # noqa: E402
-from model import PARAMS as P, build_components, derived, frame_members, _box, _cyl, _cyly, _fuse  # noqa: E402
+from model import PARAMS as P, build_components, derived, frame_members, brace_ends, brace_length, _box, _cyl, _cyly, _fuse  # noqa: E402
 
 OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
 DATE = "2026-10-01"
+DATE2 = "2026-10-02"          # sheets and pictures revised for the decisions of 2026-10-02
 D = derived(P)
 C = build_components(P)
 S = lambda *ks: _fuse([C[k].shape for k in ks])  # noqa: E731
@@ -49,7 +50,7 @@ def win(shape, x0, x1, y0, y1, z0, z1):
 
 # ----------------------------------------------------------------- named groups, in build order
 GROUPS = [
-    ("Base frame with bearing plates and tank cradle", ("frame", "bearing_plates", "tank_cradle"), "#4B5563"),
+    ("Base frame with bearing plates, tank post braces and cradle", ("frame", "tank_braces", "bearing_plates", "tank_cradle"), "#4B5563"),
     ("Pedal outrigger and seat", ("outrigger", "outrigger_plates", "seat"), "#374151"),
     ("Jackshaft, bearings, gearbox, pulleys", ("pillow_blocks", "gearbox", "jackshaft", "jack_wheels", "drive_pulley"), "#78716C"),
     ("Crankset and pedal chain", ("crankset", "pedal_chain"), "#1F2937"),
@@ -75,6 +76,7 @@ GROUPS = [
     ("Table belt, tensioner and guard", ("table_belt", "tensioner", "table_guard"), "#0F766E"),
     ("Tailings launder and concentrate box", ("launder", "conc_box"), "#92400E"),
     ("Motor option: cradle, motor, chain, module", ("motor_cradle", "motor", "motor_chain", "motor_guard", "mcore"), "#15803D"),
+    ("Flush container with padlock hasp (loose)", ("flush_box", "flush_staple", "flush_hasp"), "#9CA3AF"),
 ]
 
 
@@ -82,10 +84,10 @@ def overview():
     off = [(0, 0, 0), (-550, 0, 0), (-150, 0, -700), (-650, -350, 750), (250, 0, -800), (250, 0, -1100), (-150, 0, -1000),
            (-150, 0, -1300), (-550, -450, 0), (550, -200, -700), (0, 0, 700), (0, 0, 1050), (0, 0, 1400), (0, -450, 1100),
            (0, 0, 1750), (-350, 250, 250), (0, 900, -150), (-700, 0, 700), (1050, 0, -450), (1050, 0, -150), (1050, 0, 300),
-           (550, 0, 150), (650, -350, 450), (700, -450, -1350), (1050, -700, -150), (0, 1300, 0)]
+           (550, 0, 150), (650, -350, 450), (700, -450, -1350), (1050, -700, -150), (0, 1300, 0), (-700, -500, 0)]
     parts = [grp(n, ks, col, off[i]) for i, (n, ks, col) in enumerate(GROUPS)]
     return bv.overview(parts, OUT / "overview.png", "GravitySort prototype: every component, pulled apart",
-                       subtitle="Numbered in build order; 26 is the motor option. Seen from the front right and above",
+                       subtitle="Numbered in build order; 26 is the motor option, 27 the loose flush container. Seen from the front right and above",
                        elev=20, azim=-62, size=(12, 8.5), dpi=150, key=True)
 
 
@@ -110,10 +112,11 @@ def sheet(n):
     return deco
 
 
-def _sheet(key, neighbours, dwg, title, material, notes, view_shape=None, inset=(22, -60), shape=None, name=None, rev="P1", revisions=None):
+def _sheet(key, neighbours, dwg, title, material, notes, view_shape=None, inset=(22, -60), shape=None, name=None, rev="P1", revisions=None,
+           date=DATE):
     pt = Part(name or C[key].name, shape if shape is not None else C[key].shape, C[key].color if key in C else "#6B7280")
     return bv.component_sheet(pt, [cp(k) for k in neighbours], project="GravitySort", dwg_no=dwg, title=title,
-                              material=material, notes=notes, date=DATE, view_shape=view_shape, inset_view=inset,
+                              material=material, notes=notes, date=date, view_shape=view_shape, inset_view=inset,
                               out_dir=str(DWG), rev=rev, revisions=revisions)
 
 
@@ -123,7 +126,7 @@ P1 = ("P1", "Making sketch for the prototype build plan", "2026-10-01", "AC")
 @sheet(101)
 def s101():
     import build123d as b
-    fr = S("frame", "bearing_plates", "tank_cradle")
+    fr = S("frame", "tank_braces", "bearing_plates", "tank_cradle")
     return _sheet("frame", ["outrigger", "tub", "gearbox", "pillow_blocks"], "GVS-DWG-101",
                   "GravitySort base frame: making sketch", "Mild steel square tube 25 x 25 x 1.5 mm; plate 5 and 6 mm",
                   ["Cut list (frame cut picture in the plan gives every position):",
@@ -131,15 +134,19 @@ def s101():
                    "  2 top end rails, low end member (90 up), head member (600 up), 550;",
                    "  6 members 600 laid across: gearbox pair, spindle pair on top of",
                    "  the lower rails, tub pair hung on 4 drop posts 205 at 445 up;",
-                   "  tank post member 550, end post 560, tank post 545. 14.5 m in all.",
+                   f"  tank post member 550, end post 560, tank post {P['tank_z'][0] - P['rail_z'] - 5:.0f};",
+                   f"  2 tank post braces {brace_length():.0f}, mitred. {sum(l for _, l in frame_members()) / 1000:.1f} m in all.",
                    "Tack on a flat floor, check diagonals within 2 mm, then weld.",
                    "Bearing plates 150 x 130 x 6, 40 mm centre hole, four 11 mm holes",
                    "  70 apart: one under the spindle pair, one under the tub pair,",
                    "  centres in line (plumb bob) before welding.",
-                   "Tank cradle 250 x 250 x 5 on the tank post, two gussets each way.",
+                   "Tank post on the centre line; cradle 250 x 250 x 5 on top,",
+                   f"  {P['tank_z'][0]:.0f} up, two gussets each way. Braces from {P['brace_z']:.0f} up",
+                   f"  the post to the front and back top rails, {P['brace_dx']:.0f} toward the table.",
                    "Drill the bolt holes each later section lists; prime and paint.",
                    "Check: frame sits on all four feet; bearing plate holes in line."],
-                  shape=fr, inset=(20, -55))
+                  shape=fr, inset=(20, -55), rev="P2", date=DATE2,
+                  revisions=[P1, ("P2", "Tank post 1.7 m with two braces, on the centre line (GVS-DEC-001)", DATE2, "AC")])
 
 
 @sheet(102)
@@ -636,12 +643,17 @@ def j7():
 
 @joint_(8)
 def j8():
-    bx = (-470, -190, 40, 320, 660, 1330)
+    bx = (-530, 0, -320, 320, 660, 1830)
     w = lambda k: win(C[k].shape, *bx)  # noqa: E731
-    return J(8, [part("Tank post on its member", win(C["frame"].shape, -470, -190, 40, 320, 660, 1000), "#4B5563"), part("Cradle plate and gussets", w("tank_cradle"), "#9CA3AF"),
-                 part("Header tank (lower part)", w("tank"), "#38BDF8"), part("Rotameter bracket on the back top rail", w("valve_meter"), "#0EA5E9")],
-             "header tank on its cradle",
-             "Gussets each way at both ends of the post; a ratchet strap holds the drum", elev=15, azim=-60, size=(7, 6.5))
+    import build123d as b_
+    post = b_.Compound(children=[win(C["frame"].shape, -345, -315, -15, 15, z0, z1) for z0, z1 in ((700, 1150), (1150, 1450), (1450, 1700))])
+    return J(8, [part("Tank post", post, "#4B5563"),
+                 part("Tank post member and top side rails", win(C["frame"].shape, -360, 0, -310, 310, 660, 700), "#374151"),
+                 part("Two braces, mitred and welded", w("tank_braces"), "#0F766E"), part("Cradle plate and gussets", w("tank_cradle"), "#9CA3AF"),
+                 part("Header tank (lower part)", w("tank"), "#38BDF8"),
+                 part("Rotameter on its bracket", win(C["valve_meter"].shape, -530, 0, -320, 400, 660, 900), "#0EA5E9")],
+             "header tank on its braced post",
+             "Cradle 1.7 m up; braces from the post to the front and back top rails; a ratchet strap holds the drum", elev=14, azim=-35, size=(7, 8))
 
 
 @joint_(9)
@@ -719,6 +731,17 @@ def j15():
               elev=14, azim=125, size=(8, 6))
 
 
+@joint_(16)
+def j16():
+    fx, yw = P["flush_x"], P["flush_y"] - P["flush_d"] / 2
+    bx = (fx - 70, fx + 70, yw - 40, yw + 60, 140, 300)
+    w = lambda k: win(C[k].shape, *bx)  # noqa: E731
+    return J(16, [part("Flush container wall and lid", w("flush_box"), "#9CA3AF"), part("Hasp staple, riveted to the wall", w("flush_staple"), "#0F766E"),
+                  part("Hasp strap, riveted to the lid", w("flush_hasp"), "#B45309")],
+              "padlock hasp on the flush container",
+              "Seen from the front. The strap on the lid drops over the staple; a padlock through the loop locks the lid", elev=12, azim=-70, size=(7, 5.5))
+
+
 def joints(only=None):
     return [fn() for n, fn in JOINTS.items() if only is None or n == only]
 
@@ -789,7 +812,7 @@ def steps(only=None):
        elev=22, azim=-60, label_done=False)
     done += [G[names[13]], G[names[14]]]
     st(13, done, [_mv(cp("tank"), (0, 0, 350)), _mv(grp("Valve, rotameter and hose", ("valve_meter", "hose"), "#0369A1"), (0, 300, 0))],
-       "header tank, valve, rotameter and hose", "Drum on its cradle with a ratchet strap; hose down the back to the rotary union",
+       "header tank, valve, rotameter and hose", "Drum on its cradle 1.7 m up, held by a ratchet strap; hose down the back to the rotary union",
        elev=22, azim=-35, label_done=False)
     done += [G[names[15]], G[names[16]]]
     st(14, [], [_mv(cp("table_base"), (0, 0, 0)), _mv(grp("Flexure legs and cleats", ("flex_legs", "cleats"), "#A16207"), (0, 0, 250))],
@@ -833,12 +856,13 @@ def layouts():
     INK, MUT, AC, TUBE, PL = "#111827", "#4B5563", "#0F766E", "#9CA3AF", "#D1D5DB"
     Sz = P["tube"]; x0 = P["frame_x0"]; FY = P["frame_y"]
     X = lambda x: x - x0          # noqa: E731  distance from the pedal end
-    fig = plt.figure(figsize=(13, 9.2), dpi=150)
+    fig = plt.figure(figsize=(13, 11), dpi=150)
+    TK0 = P["tank_z"][0]; POST = TK0 - P["rail_z"] - 5; BZ_ = P["brace_z"]
     fig.text(0.03, 0.975, "Base frame: where every tube goes", fontsize=13, fontweight="bold", color=INK, va="top")
     fig.text(0.03, 0.948, "Sizes in mm from the model. Along the machine: from the pedal end (left). Across: from the centre line. Up: from the ground.",
              fontsize=8.5, color=MUT, va="top")
     # plan at the lower rail level (the members that lie on the lower rails, and the tub members above them)
-    ax = fig.add_axes([0.04, 0.47, 0.56, 0.44]); ax.set_aspect("equal"); ax.set_axis_off()
+    ax = fig.add_axes([0.04, 0.55, 0.56, 0.35]); ax.set_aspect("equal"); ax.set_axis_off()
     ax.set_title("Plan, looking down (top rails left off)", fontsize=9.5, color=INK, loc="left")
     for xx in (0, 900 - Sz):
         for yy in (-FY, FY - Sz):
@@ -853,6 +877,9 @@ def layouts():
     ax.add_patch(Rectangle((X(D["sp_members"][0]) - Sz / 2, -65), 150, 130, fc=PL, ec=INK, lw=0.6, hatch="////", alpha=0.6))
     ax.add_patch(Rectangle((0, -Sz / 2), Sz, Sz, fc=AC, ec=INK, lw=0.6))
     ax.add_patch(Rectangle((X(P["tank_x"]) - Sz / 2, -FY + Sz), Sz, 2 * FY - 2 * Sz, fc="none", ec=AC, lw=0.9, ls="--"))
+    for a_, e_ in brace_ends():
+        ax.plot([X(a_[0]), X(e_[0])], [a_[1], e_[1]], color=AC, lw=3.0, alpha=0.45, solid_capstyle="butt")
+    ax.add_patch(Rectangle((X(P["tank_x"]) - Sz / 2, P["tank_y"] - Sz / 2), Sz, Sz, fc=AC, ec=INK, lw=0.6))
     ax.plot([-60, 960], [0, 0], color=MUT, lw=0.6, ls=(0, (8, 3, 2, 3)))
     ax.text(965, 0, "centre line", va="center", fontsize=7, color=MUT)
     labs = [(X(D["gbx_members"][0]), "gearbox\nmember"), (X(D["gbx_members"][1]), "gearbox\nmember"),
@@ -862,7 +889,7 @@ def layouts():
         ax.text(xc, -FY - 60 - 40 * (k % 2), f"{xc:g}", ha="center", va="top", fontsize=8, color=AC, fontweight="bold")
         ax.text(xc + 16, FY - 70, t, ha="left", va="top", fontsize=6.8, color=INK, rotation=90)
     ax.plot([X(P["tank_x"])] * 2, [-FY - 10, -FY - 135], color=AC, lw=0.5, ls=":")
-    ax.text(X(P["tank_x"]), -FY - 140, f"{X(P['tank_x']):g} (tank post member)", ha="center", va="top", fontsize=8, color=AC)
+    ax.text(X(P["tank_x"]), -FY - 140, f"{X(P['tank_x']):g} (tank post member; tank post and braces above it)", ha="center", va="top", fontsize=8, color=AC)
     ax.text(X(P["tank_x"]) - 16, FY - 70, "tank post member\n(top level)", ha="right", va="top", fontsize=6.8, color=AC, rotation=90)
     ax.text(X(P["bowl_x"]), 0, "bearing\nplates", ha="center", va="center", fontsize=6.8, color=INK,
             bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none"))
@@ -870,7 +897,7 @@ def layouts():
     ax.text(450, -FY - 215, "distance from the pedal end to each member centre, mm; members 600 long", ha="center", fontsize=7.5, color=MUT)
     ax.set_xlim(-90, 1000); ax.set_ylim(-FY - 230, FY + 40)
     # elevation from the front
-    ay = fig.add_axes([0.04, 0.05, 0.56, 0.38]); ay.set_aspect("equal"); ay.set_axis_off()
+    ay = fig.add_axes([0.04, 0.04, 0.56, 0.47]); ay.set_aspect("equal"); ay.set_axis_off()
     ay.set_title("Elevation, from the front", fontsize=9.5, color=INK, loc="left")
     for xx in (0, 900 - Sz):
         ay.add_patch(Rectangle((xx, 0), Sz, 700, fc=INK, ec=INK))
@@ -887,10 +914,14 @@ def layouts():
     ay.add_patch(Rectangle((X(D["sp_members"][0]) - Sz / 2, 440), 150, 5, fc=PL, ec=INK, lw=0.5))
     ay.add_patch(Rectangle((0, 90), Sz, Sz, fc=AC, ec=INK, lw=0.6))
     ay.add_patch(Rectangle((900 - Sz, 600), Sz, Sz, fc=AC, ec=INK, lw=0.6))
-    ay.add_patch(Rectangle((X(P["tank_x"]) - Sz / 2, 700), Sz, 545, fc=TUBE, ec=INK, lw=0.6))
-    ay.add_patch(Rectangle((X(P["tank_x"]) - 125, 1245), 250, 5, fc=PL, ec=INK, lw=0.6))
+    ay.add_patch(Rectangle((X(P["tank_x"]) - Sz / 2, 700), Sz, POST, fc=TUBE, ec=INK, lw=0.6))
+    ay.add_patch(Rectangle((X(P["tank_x"]) - 125, TK0 - 5), 250, 5, fc=PL, ec=INK, lw=0.6))
+    a_, e_ = brace_ends()[0]
+    ay.plot([X(a_[0]) + Sz / 2, X(e_[0])], [BZ_, 700], color=TUBE, lw=5.5, solid_capstyle="butt", zorder=1)
+    ay.plot([X(a_[0]) + Sz / 2, X(e_[0])], [BZ_, 700], color=INK, lw=0.5, zorder=1)
     hts = [(0, ""), (90, "low end member (pedal end)"), (255, "lower side rails, 255 to 280"), (280, "members on the rails, 280 to 305"),
-           (445, "tub members"), (600, "head member (table end)"), (675, "top rails"), (1245, "tank cradle")]
+           (445, "tub members"), (600, "head member (table end)"), (675, "top rails"), (BZ_, "braces meet the tank post"),
+           (TK0 - 5, "tank cradle")]
     last = -1e9
     for k, (z, t) in enumerate(hts):
         if z == 0:
@@ -899,16 +930,19 @@ def layouts():
         ay.plot([910, 940, 960], [z, z, zt], color=AC, lw=0.5, ls=":")
         ay.text(965, zt, f"{z:g}  {t}", va="center", fontsize=7.5, color=AC)
     ay.text(X(D["sp_members"][0]) + 75, 560, "drop\nposts\n205", ha="center", va="center", fontsize=6.8, color=INK)
-    ay.text(X(P["tank_x"]) + 18, 960, "tank post 545", ha="left", va="center", fontsize=7, color=INK, rotation=90)
+    ay.text(X(P["tank_x"]) - 18, 1150, f"tank post {POST:.0f}", ha="right", va="center", fontsize=7, color=INK, rotation=90)
+    ay.text(X(e_[0]) + 30, 860, f"2 braces {brace_length():.0f}\n(front and back,\nseen one behind\nthe other)", ha="left", va="center",
+            fontsize=6.8, color=INK)
     ay.plot([-30, 1300], [0, 0], color=MUT, lw=0.8)
-    ay.set_xlim(-30, 1300); ay.set_ylim(-20, 1300)
+    ay.set_xlim(-30, 1300); ay.set_ylim(-20, TK0 + 40)
     # cut list
     from collections import Counter
     cnt = Counter((n, round(l)) for n, l in frame_members())
     fig.text(0.64, 0.905, "Cut list, 25 x 25 x 1.5 mm tube", fontsize=10, fontweight="bold", color=INK, va="top")
     yy = 0.87
     order = ["leg", "top side rail", "lower side rail", "top end rail", "low end member (pedal end)", "head member (table end)",
-             "gearbox member", "spindle member", "tub member", "drop post", "tank post member", "end post", "tank post"]
+             "gearbox member", "spindle member", "tub member", "drop post", "tank post member", "end post", "tank post",
+             "tank post brace"]
     tot = 0
     for n in order:
         for (nn, l), q in cnt.items():
@@ -919,11 +953,11 @@ def layouts():
     fig.text(0.64, yy - 0.005, f"{tot / 1000:.1f} m in all", fontsize=8.5, color=INK, va="top", fontweight="bold")
     notes = ["Plates, 6 mm unless noted:", "  2 bearing plates 150 x 130, 40 mm centre hole,",
              "    four 11 mm holes 70 apart, welded under the", "    spindle members and under the tub members",
-             "  tank cradle 250 x 250 x 5, two gussets each way", "", "Order of welding:",
+             "  tank cradle 250 x 250 x 5, two gussets each way", "Braces: mitre each end to sit on the post side", "  and on top of the side rail", "", "Order of welding:",
              "  1 two end frames (legs, top and lower rails)", "  2 join with the side rails; check diagonals",
              "  3 members on the lower rails; tub members on", "    their drop posts; end post; low end member",
              "  4 bearing plates: line up both holes with a", "    plumb line, then weld",
-             "  5 tank post member, tank post, cradle", "  6 drill the bolt holes; prime and paint"]
+             "  5 tank post member, tank post, braces, cradle", "  6 drill the bolt holes; prime and paint"]
     for k, t in enumerate(notes):
         fig.text(0.64, yy - 0.05 - k * 0.025, t, fontsize=8.2, color=INK, va="top")
     fig.text(0.03, 0.012, "BUILD PLAN ILLUSTRATION, PLAN NOT YET BUILT", fontsize=7, color="#B45309")

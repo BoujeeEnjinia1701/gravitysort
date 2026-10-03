@@ -3,9 +3,9 @@ doc_id: GVS-BLD-001
 title: GravitySort prototype build plan
 project: GravitySort
 doc_type: Build plan
-version: "0.3"
+version: "0.4"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -21,6 +21,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: Table bump stop (GVS-DDR-003 A2) added to section 3.16 and step 16, with its making sketch (GVS-DWG-121) and joint close-up; pitman pin works in a slot; first checks and safety stops updated
+  - version: "0.4"
+    date: '2026-10-02'
+    author: Amish Chadha
+    change: Decisions of 2026-10-02 carried in. Tank post 1.7 m on the centre line with two braces (section 3.1, step 13, frame sketch GVS-DWG-101 Rev P2, frame cut picture, joint 8); flush container with a padlock hasp (section 3.21, Figure 38); overview and step pictures redrawn; mass, cost, first checks and safety stops updated
 ---
 
 # GravitySort prototype build plan
@@ -31,15 +35,15 @@ revisions:
 
 ![Figure 1. Every component, pulled apart and numbered in build order](05-build-plan/overview.png)
 
-*Figure 1. Every component pulled apart and numbered in build order; 26, the motor, is an option.*
+*Figure 1. Every component pulled apart and numbered in build order; 26, the motor, is an option; 27 is the loose flush container.*
 
-The prototype is one GravitySort machine: a welded steel frame about 900 mm long, 600 mm wide and 700 mm tall that carries a spinning bowl inside a plastic tub, a pedal seat bolted to one end and a shaking table bolted to the other, with a water tank on a post above. Pedalling turns a jackshaft under the frame; a right-angle gearbox and a V-belt spin the bowl at about 730 rpm, and a second belt, engaged by a hand lever, drives the table at clean-up. Figure 1 shows the 26 groups of parts in the order you make or fit them. The work is sawing, drilling and MIG or stick welding square steel tube and plate; laying up glass fibre over 3D-printed plugs and casting polyurethane in the bowl; cutting a plastic drum and HDPE sheet; plywood work for the table; and fitting bought bicycle, bearing and belt-drive parts. The whole machine weighs about 97 kg in six loads of 25 kg or less. The parts cost about $569 from the bill of materials.
+The prototype is one GravitySort machine: a welded steel frame about 900 mm long, 600 mm wide and 700 mm tall that carries a spinning bowl inside a plastic tub, a pedal seat bolted to one end and a shaking table bolted to the other, with a water tank on a braced post, its cradle 1.7 m above the ground. Pedalling turns a jackshaft under the frame; a right-angle gearbox and a V-belt spin the bowl at about 730 rpm, and a second belt, engaged by a hand lever, drives the table at clean-up. Figure 1 shows the 27 groups of parts in the order you make or fit them; the last, the flush container, is a loose bought item. The work is sawing, drilling and MIG or stick welding square steel tube and plate; laying up glass fibre over 3D-printed plugs and casting polyurethane in the bowl; cutting a plastic drum and HDPE sheet; plywood work for the table; and fitting bought bicycle, bearing and belt-drive parts. The whole machine weighs about 99 kg in six loads of 28 kg or less. The parts cost about $580 from the bill of materials.
 
 > **Safety:** GravitySort is rotating machinery. The bowl stores about 165 J at 730 rpm and coasts for about 20 s after the drive stops; belts, chains and pulleys can trap fingers, hair and clothing. Keep every guard on whenever the drive can turn, and keep the lid clamps shut and the brake parked whenever the bowl is not in use. Welding, grinding and cutting steel need a welding helmet, gloves, eye and hearing protection and a fire-safe area. Epoxy, glass fibre and polyurethane casting need gloves, a respirator rated for organic vapour and good ventilation. Never use the machine with mercury.
 
 ## 2. What changed to make it buildable
 
-The concept showed what GravitySort does; some of its parts could not be made, fixed or assembled as drawn. Each change below keeps what the machine does, and all of them are recorded in decision record GVS-DDR-003, accepted by Amish on 2026-10-01.
+The concept showed what GravitySort does; some of its parts could not be made, fixed or assembled as drawn. Each change below keeps what the machine does, and all of them are recorded in decision record GVS-DDR-003, accepted by Amish on 2026-10-01; the water row also carries Amish's decisions of 2026-10-02 on the tank post.
 
 *Table 1. Changes from the concept.*
 
@@ -57,7 +61,7 @@ The concept showed what GravitySort does; some of its parts could not be made, f
 | Table | Solid legs; head on a single post; no clutch; concentrate tray where the tailings fall | Plywood flexure legs; head bolted to the frame end; a latched belt tensioner; tailings launder at the front and concentrate box at the far end (Figures 25 to 35) | Each product goes where the table delivers it |
 | Table stroke | A plain eccentric and pitman, which shake the deck in a nearly even to-and-fro that does not move gold along the table | An adjustable rubber stop on a bracket on the frame's table end; the deck strikes it at the end of each forward stroke, and the pitman pin works in a short slot so the deck can stop while the pin runs on (Figures 29 and 30) | Gold walks toward the concentrate box only if the deck turns back sharply at its far end (GVS-DDR-003, A2, accepted by Amish on 2026-10-01) |
 | Motor option | The motor enclosed its own chain | A bolt-on cradle behind the frame (Figure 37) | The chain clears the motor |
-| Water | The hose ran through the drive pulley; the tank post was not drawn | Tank post and cradle; the hose runs down outside the back of the frame | Clear path, easy to reach |
+| Water | The hose ran through the drive pulley; the tank post was not drawn; the tank stood too low to give the bowl its water pressure | A tank post on the centre line with its cradle 1.7 m up, braced to the front and back top rails; the hose runs down outside the back of the frame | Clear path; the height gives the water pressure the bowl needs without a pump, and the braces and the central post stop a full tank tipping the machine |
 
 ## 3. Making the components
 
@@ -73,7 +77,7 @@ Make and check each component before the assembly step that needs it. Sizes are 
 
 *Figure 3. Plan, elevation and cut list of the frame.*
 
-**What it is and what it is made from.** The welded frame that carries everything else: the spindle and its bearings, the gearbox and jackshaft, the tub, the hopper and the water tank. Mild steel square tube 25 x 25 x 1.5 mm, 14.5 m in all; two bearing plates 150 x 130 x 6 mm; a tank cradle plate 250 x 250 x 5 mm with four gussets.
+**What it is and what it is made from.** The welded frame that carries everything else: the spindle and its bearings, the gearbox and jackshaft, the tub, the hopper and the water tank. Mild steel square tube 25 x 25 x 1.5 mm, 16.4 m in all; two bearing plates 150 x 130 x 6 mm; a tank cradle plate 250 x 250 x 5 mm with four gussets.
 
 **How to make it.**
 
@@ -83,13 +87,13 @@ Make and check each component before the assembly step that needs it. Sizes are 
 4. Lay the four 600 mm members across the lower side rails: the two gearbox members with their centres 152.5 and 247.5 from the pedal end, and the two spindle members at 487.5 and 612.5. Weld.
 5. Weld the two tub members, 600 long, 445 above the ground, each held up by two drop posts 205 long from the top side rails, directly above the spindle members.
 6. Weld the end post (560) upright at the middle of the pedal end, from the low end member to the top end rail, and the head member (550) between the table-end legs with its bottom 600 above the ground.
-7. Weld the tank post member (550) between the top side rails, 120 from the pedal end, and the tank post (545) upright on it, 180 behind the centre line. Weld the cradle plate on top and a pair of gussets each way at both ends of the post.
+7. Weld the tank post member (550) between the top side rails, 120 from the pedal end, and the tank post (995) upright on it, on the centre line. Weld the cradle plate on top, 1,700 above the ground, and a pair of gussets each way at both ends of the post. Cut the two braces (717 long on their centre line), mitre each end so it sits flat on the side of the post and on top of a top side rail, and weld them from the post, 1,350 above the ground, down to the front and the back top side rail, 370 from the pedal end.
 8. Drill each bearing plate: a 40 mm centre hole and four 11 mm holes at the corners of a 70 mm square. Clamp one plate under the spindle members and one under the tub members, both centred on the bowl axis, 550 from the pedal end on the centre line. Hang a plumb line through both centre holes; when it passes through both centres, weld the plates.
 9. Drill the bolt holes listed in the later sections (tub, hopper foot, outrigger plates, head plate, caliper bracket, belt guard hangers, tensioner bracket, motor cradle). Prime and paint.
 
 **How it fits the parts next to it.** Everything else bolts to it; see each section.
 
-**Check before moving on.** The frame stands on all four feet without rocking; a plumb line through the two bearing plate holes is within 1 mm of both centres; the gearbox members are level across.
+**Check before moving on.** The frame stands on all four feet without rocking; a plumb line through the two bearing plate holes is within 1 mm of both centres; the gearbox members are level across; the tank post is plumb both ways and the cradle level.
 
 ### 3.2 Pedal outrigger
 
@@ -556,6 +560,11 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Bump stop buffer (line 22).** A cylindrical rubber-metal buffer 40 mm across and 30 mm long, natural rubber about 55 Shore A, steel back plate with an M8 female thread, rated for 800 N or more in compression; an M8 stainless threaded rod 45 long and three M8 nuts.
 - **Fixings (line 17).** M6, M8 and M10 bolts with nylon-insert nuts and washers (about 60 in all), six M6 x 4 stainless nuts for the liner, a 6 mm pin and R-clip for the hub and a 12 mm pin for the pitman, hose clamps, sealant, an O-ring for the jacket floor, primer and paint.
 - **Motor option (lines 12 and 20).** The MotionCore kit and its reference 250 W geared hub motor with a sprocket on its disc mount (from the MotionCore project), and a battery the user chooses.
+- **Flush container (line 23).** A 10 L HDPE pail with a push-on lid, about 250 mm across and 280 mm tall, and a steel hasp and staple about 36 x 100 mm. Rivet the staple to the pail wall, about 200 mm up at the front, and the hasp strap to the lid so that it drops over the staple; use four rivets each with backing washers inside. The padlocks come from the partner, two if the crew opens it with two people.
+
+![Figure 38. Joint 16: padlock hasp on the flush container](05-build-plan/joint-16.png)
+
+*Figure 38. The strap riveted on the lid drops over the staple riveted on the wall; a padlock through the staple's loop keeps the lid shut. The container stands loose on the ground in front of the tub, where the rings are rinsed into it.*
 
 ## 4. Putting it together
 
@@ -637,7 +646,9 @@ Bolt the support foot on the front top rail (two M8). Drop the hopper into its r
 
 ![Step 13](05-build-plan/step-13.png)
 
-Fit the tank connector and valve near the bottom of the drum, on its back; set the drum on the cradle and strap it to the post. Bolt the rotameter bracket on the back top rail. Run the 3/4 in hose from the valve down the back to the rotameter, then down outside the back of the frame, along the ground under the belt guard, to the rotary union's side port. Clip it every 300 mm.
+![Joint 8: header tank on its braced post](05-build-plan/joint-08.png)
+
+Fit the tank connector and valve near the bottom of the drum, on its back. With a helper and a stepladder, lift the empty drum onto the cradle, 1.7 m up, and strap it to the post; never lift it with water in it. Bolt the rotameter bracket on the back top rail. Run the 3/4 in hose from the valve straight down inside the frame, then back over the rotameter bracket into the top of the rotameter, then down outside the back of the frame, along the ground under the belt guard, to the rotary union's side port. Clip it every 300 mm.
 
 ### Step 14: table base and flexure legs
 
@@ -692,7 +703,9 @@ These are the checks a TRL 4 test report would record; this plan only lists them
 | Table drive | R5 | Handle down, pedal at 60 rpm; count the strokes; measure the stroke with the bump stop backed off, then set 3 mm in | 240 to 300 strokes per minute; 15 mm stroke backed off, 12 mm set |
 | Table bump stop | R5 | Run the table with concentrate and wash water at settings of 2, 3, 4 and 6 mm | A sharp knock at the far end of every stroke; gold moves along the riffles to the box; the nuts have not moved after 30 min |
 | Lid off for a flush | R13 | Time stopping, braking, opening the lid and rinsing the rings into a container | 5 min or less, no tools |
-| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 97 kg estimated) |
+| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 99 kg estimated) |
+| Header tank on its post | R4, R8 | Fill the tank with the machine level; read the rotameter with the valve open and the tank half full; push sideways on the full tank with a spring balance up to 100 N | 12 L/min or more with the valve open; nothing bends and the machine does not lift off its feet |
+| Flush container lock | R13 | Rinse the rings into the flush container, shut the lid and lock the hasp | The lid cannot be lifted with the padlock in |
 | Assembly time | R11 | Two people assemble the six loads with hand tools | 30 min or less |
 
 ## 6. Safety stops
@@ -706,7 +719,7 @@ Stop at each point. Carry on only when everything listed is true.
 - **S5. Every run.** Never above 900 rpm (90 on the display). Before opening the lid: stop pedalling, apply and park the brake, and wait for the bowl to stop. Never remove or bypass the interlock pin.
 - **S6. Before the motor is powered (motor option).** The MotionCore emergency stop works and is within the operator's reach; its speed limit is set to 900 rpm at the spindle and checked; the lid switch removes torque; the battery is out of the wet.
 - **S7. Before the table runs.** The table belt guard is on; the bump stop's lock nuts are tight; nobody's hands are near the striker and buffer. Set or adjust the stop only with the tensioner handle up and the head turned by hand.
-- **S8. Before water and slurry.** The settling pond is fenced; boots with grip; no mercury anywhere on site.
+- **S8. Before water and slurry.** The settling pond is fenced; boots with grip; no mercury anywhere on site. The machine stands level before the header tank is filled; nobody climbs on the frame or hangs anything on the tank, because about 190 N pushed sideways at a full tank tips the machine.
 
 ## 7. Tools, skills and workspace
 
@@ -720,10 +733,10 @@ Stop at each point. Carry on only when everything listed is true.
 
 ## 8. Where the numbers come from
 
-- Model and constructability checks: `cad/src/model.py` (`python cad/src/model.py --check`, 115 checks); STEP and STL exports in `cad/step/` and `cad/stl/`.
+- Model and constructability checks: `cad/src/model.py` (`python cad/src/model.py --check`, 126 checks); STEP and STL exports in `cad/step/` and `cad/stl/`.
 - Pictures: `cad/src/build_plan_media.py`, using `.kit/build_views.py`; written to `docs/05-build-plan/` and `cad/drawings/GVS-DWG-101` to `GVS-DWG-121`.
-- General arrangement: `cad/drawings/GVS-DWG-001.pdf`, Rev P4.
-- Calculations: `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.6) and `docs/04-calcs/sizing.py`; bump stop in section 9, mass and loads in section 11, spindle in section 10, cost in section 12.
+- General arrangement: `cad/drawings/GVS-DWG-001.pdf`, Rev P5.
+- Calculations: `docs/04-calcs/01-sizing.md` (GVS-CAL-001 v0.8) and `docs/04-calcs/sizing.py`; water pressure from the tank in section 6, bump stop in section 9, spindle in section 10, mass, loads, tank post and tipping in section 11, cost in section 12.
 - Bill of materials: `bom/bom.csv` and `bom/bom-notes.md`.
 - Decisions: `docs/decisions/0003-design-for-construction.md` (GVS-DDR-003), with GVS-DDR-001 and GVS-DDR-002; open decisions in `docs/06-design-decisions.md` (GVS-DEC-001).
-- Requirements: `docs/03-requirements.md` (GVS-REQ-001 v0.8).
+- Requirements: `docs/03-requirements.md` (GVS-REQ-001 v1.0).

@@ -14,20 +14,22 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from concept import Part, render_all  # noqa: E402
 from model import build_parts  # noqa: E402
 
-parts = [Part(n, shape, colour, bom, ex) for n, shape, colour, bom, ex in build_parts()]
+# the loose flush container (BOM item 23) is left out: it is not part of the machine and would widen the views
+parts = [Part(n, shape, colour, bom, ex) for n, shape, colour, bom, ex in build_parts() if bom != 23]
 
 render_all(
-    parts, project="GravitySort", title="Gravity concentrator concept", dwg_no="GVS-DWG-010", date="2026-10-01", rev="P3",
+    parts, project="GravitySort", title="Gravity concentrator concept", dwg_no="GVS-DWG-010", date="2026-10-02", rev="P4",
     key_figures=["Bowl 220 mm lip; 60 G at 730 rpm (40 to 80 G)",
                  "Feed 200 kg/h ore below 2 mm; 1.55 t per shift (est.)",
-                 "Water 1.19 m3/h, recirculated; needs a pump (est.)",
+                 "Water 1.19 m3/h to a tank 1.7 m up (est.)",
                  "48 W at the pedals at 60 G; or 250 W motor (est.)",
                  "Disc brake; lid opens only with the brake set",
                  "Table 1000 x 450 mm; rubber bump stop",
                  "No mercury anywhere in the flowsheet",
-                 "2.78 x 0.79 x 1.65 m, about 97 kg (est.)"],
+                 "2.78 x 0.79 x 2.10 m, about 99 kg (est.)"],
     cut_exclude=("Water header tank, valve, flow meter, hose", "Belt and chain guards", "Speed display", "MotionCore module and motor option",
-                 "Table stand, head and tensioner", "Table bump stop (21, 22)", "Tailings launder and concentrate box", "Shaking table deck with riffles"),
+                 "Table stand, head and tensioner", "Table bump stop (21, 22)", "Tailings launder and concentrate box", "Shaking table deck with riffles",
+                 "Flush container with padlock hasp"),
     flow={"title": "gold balance for one 8 h shift, 1.6 t of ore at 5 g/t (all values are estimates, GVS-CAL-001)",
           "unit": "g Au",
           "stages": [("Ore feed, milled", 8.0), ("Screened slurry", 7.6), ("Bowl concentrate", 5.4),
