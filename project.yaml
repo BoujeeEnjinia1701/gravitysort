@@ -5,26 +5,54 @@ repo: BoujeeEnjinia1701/gravitysort         # GitHub repository, shown on every 
 area: Mining
 trl: 3                   # Technology Readiness Level, see .kit/STANDARDS.md section 9
 trl_target: 3
+stage: P3                # pipeline stage, STANDARDS section 19; P3 since the kit 1.9.1 upgrade on 2026-10-25 (TRL 3 since 2026-09-25)
+stem_check: open         # GVS-STM-001 v0.1: 32 within known science, 6 plausible (S3, S10, S15, S25, S29, C3) needing tests at TRL 4; fixes F1 to F4
+concept_options: [A, B, C]   # GVS-OPT-001: A fluidized bowl and shaking table (current design), B diaphragm jig and shaking table, C carpeted sluice and gold pans
+concept_chosen: A (proposed)  # all three within 10 %: choice awaiting Amish (GVS-DDR-004, GVS-DEC-001 O1); A stays the design in the repo until he decides
 design_state: constructable
 trl_evidence:
   - docs/01-problem.md
+  - docs/01b-stem-check.md
   - docs/02-concept.md
+  - docs/02a-concept-options.md
+  - docs/03a-user-requirements.md
   - docs/03-requirements.md
+  - docs/03b-traceability.md
   - docs/decisions/0001-trl2-review-decisions.md
   - docs/decisions/0002-recommendations-accepted.md
   - docs/decisions/0003-design-for-construction.md
+  - docs/decisions/0004-concept-selection.md
   - docs/04-calcs/01-sizing.md
   - docs/04-calcs/sizing.py
   - docs/04-calcs/results.csv
+  - docs/04-calcs/stem_check.py
+  - docs/04-calcs/stem_results.csv
   - cad/src/model.py
-  - cad/step/gravitysort-assembly.step
+  - cad/src/gvs_option_a.py
+  - cad/src/gvs_option_b.py
+  - cad/src/gvs_option_c.py
+  - cad/src/gvs_parts.py
+  - cad/src/product_model.py
+  - cad/fidelity.json
+  - cad/step/A-assembly.step
+  - cad/step/B-assembly.step
+  - cad/step/C-assembly.step
   - cad/stl/gravitysort-assembly.stl
   - cad/drawings/GVS-DWG-001.svg
   - cad/drawings/GVS-DWG-001.pdf
   - bom/bom.csv
   - bom/bom-notes.md
   - docs/05-build-plan.md
+  - docs/05-build-plan/overview.png
   - docs/06-design-decisions.md
+  - docs/07-regulatory.md
+  - docs/08-feasibility.md
+  - docs/09-risk.md
+  - docs/10-market.md
+  - docs/11-plan.md
+  - media/hero.png
+  - media/concept-blueprint.png
+  - media/model.glb
 shortlisted: false
 pitch: >-
   A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.

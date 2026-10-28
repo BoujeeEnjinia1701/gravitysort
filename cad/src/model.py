@@ -69,10 +69,15 @@ PARAMS = {
     # Water header tank (item 13). Decided 2026-10-02 (GVS-DEC-001): the post rises to 1.7 m and is braced so a
     # full 60 L tank cannot tip it; the tank stands on the centre line (was 180 mm behind it) so that the taller
     # post does not make the machine easier to tip backward (GVS-CAL-001 section 11).
-    "tank_x": -330.0, "tank_y": 0.0, "tank_d": 380.0, "tank_z": (1700.0, 2100.0),
+    # Drum height 560 mm (was 400 mm, which holds only 45 L at 380 mm across): a bought 60 L drum is about 380 mm across
+    # and 560 mm tall (STEM check S20, fixed under Amish's standing instruction of 2026-10-23; GVS-DEC-001 F1).
+    "tank_x": -330.0, "tank_y": 0.0, "tank_d": 380.0, "tank_z": (1700.0, 2260.0),
     "brace_z": 1350.0,            # where the two braces meet the post (centre line)
     "brace_dx": 250.0,            # brace feet on the front and back top side rails, this far toward the table end
     "hose_run_z": 860.0,          # height of the hose's short run from the tank drop to the rotameter
+    # 3/4 in screen filter (120 mesh, 0.125 mm, with a flush valve) on the hose's drop below the rotameter, so silt and sand from recirculated
+    # water cannot block the 1.0 mm fluidization holes (STEM check S21; GVS-DEC-001 F2)
+    "strainer_z": (440.0, 560.0), "strainer_d": 50.0,
     # Flush container (item 23): bought 10 L HDPE pail with a lid and a padlock hasp, loose on the ground in front
     # of the tub, where the operator rinses the rings into it (GVS-DEC-001, 2026-10-02, concentrate security)
     "flush_x": 100.0, "flush_y": -520.0, "flush_d": 250.0, "flush_h": 280.0,
@@ -484,17 +489,17 @@ def build_components(p=PARAMS):
     gz0, gz1 = pz - 10, pz + 50                          # guard box 170 to 230
     gx_0, gx_1 = JX - dr - 8, CX + p["driven_pulley_d"] / 2 + 8
     gy = dr + 8
-    guard = b(gx_0, gx_1, -gy, gy, gz0, gz1) - b(gx_0 + 2, gx_1 - 2, -gy + 2, gy - 2, gz0 + 2, gz1 - 2)
+    guard = b(gx_0, gx_1, -gy, gy, gz0, gz1) - b(gx_0 + 1.2, gx_1 - 1.2, -gy + 1.2, gy - 1.2, gz0 + 1.2, gz1 - 1.2)   # 1.2 mm sheet
     guard -= c(JX, 0, gz1 - 3, gz1 + 1, 20) + c(CX, 0, gz1 - 3, gz1 + 1, 20) + c(CX, 0, gz0 - 1, gz0 + 3, 16)
     straps = [b(xc - 12.5, xc + 12.5, y - 1.5, y + 1.5, gz1, LT) for xc in (D["gbx_members"][0], D["sp_members"][0]) for y in (-140, 140)]
     add("belt_guard", "Bowl belt guard and hangers", guard + _fuse(straps), "#CA8A04", 11, (0, 0, -200))
-    sensor = b(CX - 8, CX + 8, -76, -60, gz1 - 18, gz1 - 2)
+    sensor = b(CX - 8, CX + 8, -76, -60, gz1 - 17.2, gz1 - 1.2)          # under the 1.2 mm guard top
     add("sensor", "Speed sensor (bicycle computer)", sensor, "#7C3AED", 19)
     ccase_o = _hull([(PX, BZ, cr_r + 14), (JX, DZ, D["chain_r"][1] + 14)], "y", 44, 74)
-    ccase_i = _hull([(PX, BZ, cr_r + 12), (JX, DZ, D["chain_r"][1] + 12)], "y", 46, 72)
+    ccase_i = _hull([(PX, BZ, cr_r + 12.8), (JX, DZ, D["chain_r"][1] + 12.8)], "y", 45.2, 72.8)     # 1.2 mm sheet
     xm = D["gbx_members"][0]
     ccase_o -= b(xm - 40, xm + 30, 0, 100, 0, MT)                        # flat bottom where it sits on the gearbox member
-    ccase_i -= b(xm - 42, xm + 32, 0, 100, 0, MT + 2)
+    ccase_i -= b(xm - 41.2, xm + 31.2, 0, 100, 0, MT + 1.2)
     ccase = ccase_o - ccase_i - _cyly(PX, BZ, 40, 80, 14) - _cyly(JX, DZ, 40, 80, 14)
     ccase += b(PX - S / 2, PX + S / 2, S / 2, 44, BZ - 105, BZ - 80)        # tab to the pedal post
     add("chain_case", "Pedal chain case", ccase, "#CA8A04", 11, (0, -150, 0))
@@ -607,7 +612,11 @@ def build_components(p=PARAMS):
         hose.append(_rod(a_, b_, hr))
     for pt in (path[1], path[2], path[6], path[7]):
         hose.append(__import__("build123d").Pos(*pt) * __import__("build123d").Sphere(hr))
-    add("hose", "3/4 in hose to the rotary union", _fuse(hose), "#0369A1", 13, (0, 200, 0))
+    sz0_, sz1_ = p["strainer_z"]
+    yh_ = path[3][1]
+    strainer = c(TX, yh_, sz0_, sz1_, p["strainer_d"] / 2)
+    add("hose", "3/4 in hose to the rotary union", _fuse(hose) - strainer, "#0369A1", 13, (0, 200, 0))
+    add("strainer", "3/4 in screen filter, 120 mesh, with flush valve", strainer, "#0E7490", 13, (0, 200, 0))
 
     # ---------------------------------------------------------------- 19 speed display, brake lever
     disp = b(FX0 - 30, FX0 - 6, -130, -70, RZ - 60, RZ - 10) + b(FX0 - 6, FX0, -112, -88, RZ - 35, RZ)   # faces the rider
@@ -684,7 +693,7 @@ def build_components(p=PARAMS):
     head = b(FX1, FX1 + PT, -310, 65, hz - 5, RZ + 5)
     head += b(FX1 + PT, HX + 80, -310, 65, sh_top - PT, sh_top) - b(HX - 60, HX + 70, -250, 0, sh_top - PT - 1, sh_top + 1) \
         - b(HX - 60, HX + 70, -250, 30, sh_top - PT - 1, sh_top + 1)      # slot for the pitman eye, lightening cut-out
-    for y in (-200, 50):
+    for y in (-200, 59):                     # 59 (was 50): clear of the y 40 pillow block's nuts (GVS-DEC-001 F5)
         head += _prism([(FX1 + PT, sh_top - PT), (FX1 + PT + 90, sh_top - PT), (FX1 + PT, sh_top - PT - 90)], "y", y - 3, y + 3)
     add("head", "Table head plate and shelf", head, "#6B7280", 15, (200, 0, 0))
     hpb = []
@@ -739,23 +748,23 @@ def build_components(p=PARAMS):
     add("tensioner", "Table belt tensioner", tens, "#0F766E", 15, (0, -150, 0))
     tbelt = _band(cA, cB, "y", by - 8, by + 8, -9, 0)
     add("table_belt", "Table belt (A-section V-belt)", tbelt, "#111827", 10, (0, -120, 0))
-    tg = _hull([(cA[0], cA[1], cA[2] + 22), (cB[0], cB[1], cB[2] + 22), (ic[0], ic[1], 52)], "y", -354, -352)
+    tg = _hull([(cA[0], cA[1], cA[2] + 22), (cB[0], cB[1], cB[2] + 22), (ic[0], ic[1], 52)], "y", -353.2, -352)
     tr_o = _hull([(cA[0], cA[1], cA[2] + 22), (cB[0], cB[1], cB[2] + 22), (ic[0], ic[1], 52)], "y", -352, -312)
-    tr_i = _hull([(cA[0], cA[1], cA[2] + 20), (cB[0], cB[1], cB[2] + 20), (ic[0], ic[1], 50)], "y", -353, -311)
+    tr_i = _hull([(cA[0], cA[1], cA[2] + 20.8), (cB[0], cB[1], cB[2] + 20.8), (ic[0], ic[1], 50.8)], "y", -353, -311)
     tg += (tr_o - tr_i) - _hull([(pv[0], pv[1], 22), (ic[0], ic[1], 22)], "y", -352, -311) \
         - _hull([(pv[0], pv[1], 22), (pv[0] - 40, pv[1] + 130, 22)], "y", -352, -311)
     add("table_guard", "Table belt guard", tg, "#CA8A04", 11, (0, -200, 0))
 
     # 16 tailings launder (front) and concentrate box (far end)
     lx0, lx1 = TBX0 + 150, TBX1 - 40
-    lau = b(lx0, lx1, -300, -200, 640, 700) - b(lx0 + 3, lx1 - 3, -297, -203, 643, 701)
+    lau = b(lx0, lx1, -300, -200, 640, 700) - b(lx0 + 1.5, lx1 - 1.5, -298.5, -201.5, 641.5, 701)    # 1.5 mm sheet
     lau -= b(lx0 - 1, lx0 + 3, -270, -230, 650, 701)
     lau += b(lx0 - 60, lx0 + 3, -270, -230, 640, 643) + b(lx0 - 60, lx0 + 3, -273, -270, 640, 660) + b(lx0 - 60, lx0 + 3, -230, -227, 640, 660)
     for x in (lx0 + 20, lx1 - 45):
         lau += b(x, x + 25, -262.5, -237.5, 0, 640)
     add("launder", "Tailings launder on legs", lau, "#B45309", 16, (0, -250, 0))
     kx0, kx1 = TBX1 - 25, TBX1 + 95
-    box = b(kx0, kx1, -230, 60, 640, 760) - b(kx0 + 3, kx1 - 3, -227, 57, 643, 761)
+    box = b(kx0, kx1, -230, 60, 640, 760) - b(kx0 + 1.5, kx1 - 1.5, -228.5, 58.5, 641.5, 761)          # 1.5 mm sheet
     box += b(kx1 - 3, kx1 + 1, -230, 60, 760, 763)          # hinge strip for the lid on the far edge
     for x in (kx0 + 10, kx1 - 35):
         for y in (-215, 20):
@@ -937,6 +946,8 @@ def checks(p=PARAMS):
     chk("Hose into the valve and rotameter", S("hose"), S("valve_meter"), T)
     chk("Hose to the rotary union", S("hose"), S("union"), T)
     chk("Hose clear of the frame", S("hose"), S("frame"), 3.0)
+    chk("Strainer on the hose", S("strainer"), S("hose"), T)
+    chk("Strainer clear of the frame, MotionCore module and motor", S("strainer"), S("frame", "mcore", "motor", "motor_cradle"), 5.0)
     chk("Hose run over the rotameter bracket clears its top", S("hose") & _box(-400, -260, 150, 400, 845, 900), S("valve_meter"), 5.0)
     chk("Hose clear of the guard and drive", S("hose"), S("belt_guard", "drive_pulley", "motor", "motor_cradle", "mcore"), 3.0)
     chk("MotionCore module under the top rails", S("mcore"), S("frame"), T)
@@ -1016,10 +1027,42 @@ if __name__ == "__main__":
     (root / "step").mkdir(exist_ok=True); (root / "stl").mkdir(exist_ok=True)
     for name, shape in assemblies().items():
         export_step(shape, str(root / "step" / f"{name}.step"))
-        export_stl(shape, str(root / "stl" / f"{name}.stl"), tolerance=0.5, angular_tolerance=0.5)
+        export_stl(shape, str(root / "stl" / f"{name}.stl"), tolerance=0.15, angular_tolerance=0.3)
         bb = shape.bounding_box()
         print(f"{name}: {bb.size.X:.0f} x {bb.size.Y:.0f} x {bb.size.Z:.0f} mm")
     for z, r, ri in riffle_rings():
         print(f"riffle ring at z {z:.0f} mm: wall radius {r:.1f} mm, lip radius {ri:.1f} mm")
     print(f"frame tube {sum(l for _, l in frame_members()) / 1000:.2f} m")
     print_checks()
+
+
+# ------------------------------------------------------------------ kit 1.9 interface (STANDARDS section 24)
+# Every concept option is modelled to detail level D3 (GVS-OPT-001; Amish, 2026-10-24: "Detail every option").
+# Option A is the current design above, rebuilt part by part in gvs_option_a.py; B and C are the alternatives.
+TITLE = "GravitySort"
+OPTIONS = {"A": "Fluidized bowl and shaking table", "B": "Diaphragm jig and shaking table", "C": "Carpeted sluice and gold pans"}
+PRINCIPLES = {
+    "A": "A pedal-driven fluidized centrifugal bowl holds fine gold at about 60 G; the same drive then runs a shaking "
+         "table that cleans the bowl concentrate down to about 100 g for direct smelting with borax.",
+    "B": "A pedal-driven rubber diaphragm pulses water up through a ragging bed, so dense grains sink through it into "
+         "the hutch; the same drive runs the shaking table for clean-up.",
+    "C": "Slurry flows in a thin film down an inclined sluice over expanded metal riffles and ribbed matting that trap "
+         "dense grains; the concentrate is cleaned by hand in gold pans, with no power.",
+}
+CHOSEN = "A"
+OPTION_VIEWS = {k: {"el": 22, "az": -55, "scale": "person", "ground_z": 0} for k in OPTIONS}
+ALLOWED_CONTACTS = []
+
+
+def components(option=CHOSEN):
+    """cad_parts.part() dicts for one concept option at detail level D3 (made, bought, fastener, weld)."""
+    if option == "A":
+        from gvs_option_a import option_a
+        return option_a()
+    if option == "B":
+        from gvs_option_b import option_b
+        return option_b()
+    if option == "C":
+        from gvs_option_c import option_c
+        return option_c()
+    raise KeyError(option)

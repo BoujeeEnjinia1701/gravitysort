@@ -3,9 +3,9 @@ doc_id: GVS-BLD-001
 title: GravitySort prototype build plan
 project: GravitySort
 doc_type: Build plan
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-10-02'
+date: '2026-10-25'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
     date: '2026-10-02'
     author: Amish Chadha
     change: Decisions of 2026-10-02 carried in. Tank post 1.7 m on the centre line with two braces (section 3.1, step 13, frame sketch GVS-DWG-101 Rev P2, frame cut picture, joint 8); flush container with a padlock hasp (section 3.21, Figure 38); overview and step pictures redrawn; mass, cost, first checks and safety stops updated
+  - version: "0.5"
+    date: '2026-10-25'
+    author: Amish Chadha
+    change: "Kit 1.9.1 fixes under Amish's standing instruction of 2026-10-23 (GVS-DEC-001 F1 to F5): 60 L drum drawn 560 mm tall; screen filter on the hose below the rotameter (section 3.21, step 13, first checks); head shelf gussets at y 59 to clear the pillow block nuts (section 3.16); pictures and sketches redrawn from the model"
 ---
 
 # GravitySort prototype build plan
@@ -428,7 +432,7 @@ The legs stand on the rails 40 and 900 from the head end of the base. A cleat bo
 **How to make it.**
 
 1. Cut the head plate 375 x 110 and drill four 9 mm holes to match the head member and the top end rail.
-2. Cut the shelf 184 deep, with a cut-out 130 x 280 between the bearing positions; weld it square to the plate, 677 above the ground, with two triangular gussets 90 x 90 under it.
+2. Cut the shelf 184 deep, with a cut-out 130 x 280 between the bearing positions; weld it square to the plate, 677 above the ground, with two triangular gussets 90 x 90 under it, one 200 in front of the centre line and one 59 behind it, so the nuts of the back pillow block clear the gusset (GVS-DEC-001 F5).
 3. Drill two pairs of 12 mm holes in the shelf, 95 apart, for the pillow blocks, 330 apart across the machine.
 4. Eccentric: a 60 mm steel disc with its 20 mm bore 7.5 off centre (a 15 mm stroke) and two set screws.
 5. Stop bracket: cut the arm 244 long from square tube. Weld a foot plate 40 x 66 under one end, square across it, and drill two 9 mm holes in the foot 46 apart, one each side of the arm. Weld an upright plate 40 x 61 square across the other end, standing up from the top of the arm, and drill a 9 mm hole on its centre line 31 above the arm.
@@ -555,7 +559,7 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Bicycle parts (line 8).** Bottom bracket shell (cut from a scrap frame), bottom bracket bearings and axle, crank arms with a 48T chainring, pedals, saddle, 27.2 mm seat post and seat clamp.
 - **Brake (line 18).** 160 mm 6-bolt disc, mechanical disc caliper, brake lever with a parking latch, cable and housing; a pin on the cable for the lid clamp.
 - **Speed display (line 19).** Wired bicycle computer with its magnet and sensor.
-- **Water (line 13).** 60 L HDPE drum, 3/4 in ball valve and tank connector, 2 to 20 L/min rotameter, 3/4 in hose and clips, a ratchet strap, a tee, valve and hose to the wash pipe.
+- **Water (line 13).** 60 L HDPE drum about 380 mm across and 560 mm tall, 3/4 in ball valve and tank connector, 2 to 20 L/min rotameter, a 3/4 in screen filter with a 120 mesh stainless screen and a flush valve (GVS-DEC-001 F2), 3/4 in hose and clips, a ratchet strap, a tee, valve and hose to the wash pipe.
 - **Tub fittings (line 6).** Rubber pipe grommets for 63 and 75 mm pipe in a 6 mm wall; 63 and 75 mm pipe offcuts.
 - **Bump stop buffer (line 22).** A cylindrical rubber-metal buffer 40 mm across and 30 mm long, natural rubber about 55 Shore A, steel back plate with an M8 female thread, rated for 800 N or more in compression; an M8 stainless threaded rod 45 long and three M8 nuts.
 - **Fixings (line 17).** M6, M8 and M10 bolts with nylon-insert nuts and washers (about 60 in all), six M6 x 4 stainless nuts for the liner, a 6 mm pin and R-clip for the hub and a 12 mm pin for the pitman, hose clamps, sealant, an O-ring for the jacket floor, primer and paint.
@@ -648,7 +652,7 @@ Bolt the support foot on the front top rail (two M8). Drop the hopper into its r
 
 ![Joint 8: header tank on its braced post](05-build-plan/joint-08.png)
 
-Fit the tank connector and valve near the bottom of the drum, on its back. With a helper and a stepladder, lift the empty drum onto the cradle, 1.7 m up, and strap it to the post; never lift it with water in it. Bolt the rotameter bracket on the back top rail. Run the 3/4 in hose from the valve straight down inside the frame, then back over the rotameter bracket into the top of the rotameter, then down outside the back of the frame, along the ground under the belt guard, to the rotary union's side port. Clip it every 300 mm.
+Fit the tank connector and valve near the bottom of the drum, on its back. With a helper and a stepladder, lift the empty drum onto the cradle, 1.7 m up, and strap it to the post; never lift it with water in it. Bolt the rotameter bracket on the back top rail. Run the 3/4 in hose from the valve straight down inside the frame, then back over the rotameter bracket into the top of the rotameter, then down outside the back of the frame through the screen filter (arrow pointing down, flush valve at the bottom, about 440 to 560 mm above the ground, clear of both back rails), along the ground under the belt guard, to the rotary union's side port. Clip it every 300 mm. Open the filter's flush valve for a few seconds at every bowl flush, and whenever the rotameter shows the flow falling.
 
 ### Step 14: table base and flexure legs
 
@@ -698,12 +702,12 @@ These are the checks a TRL 4 test report would record; this plan only lists them
 | Brake and interlock | R12, R13 | Spin the bowl to about 600 rpm (pedals, no water), stop pedalling, pull the brake; try to open the right clamp before and after parking | Stops within 15 s; the clamp opens only with the brake parked |
 | Speed display | R3 | Pedal at a steady cadence; count the cadence | The display reads bowl rpm / 10, matching 12 times the cadence within 5 % |
 | Pedal speed range | R3, R6 | Pedal at 50, 60 and 71 rpm | 600 to 850 rpm at the bowl |
-| Fluidization flow | R4, R8 | Fill the tank, open the valve, read the rotameter with the bowl still and turning at 730 rpm | 8 to 15 L/min; water from every ring groove |
+| Fluidization flow | R4, R8 | Fill the tank, open the valve, read the rotameter with the bowl still and turning at 730 rpm; then flush the screen filter and read again | 8 to 15 L/min; water from every ring groove; flow back up after the flush |
 | Water use | R8 | Rotameter plus the slurry water at the feed rate | 1.5 m3/h or less |
 | Table drive | R5 | Handle down, pedal at 60 rpm; count the strokes; measure the stroke with the bump stop backed off, then set 3 mm in | 240 to 300 strokes per minute; 15 mm stroke backed off, 12 mm set |
 | Table bump stop | R5 | Run the table with concentrate and wash water at settings of 2, 3, 4 and 6 mm | A sharp knock at the far end of every stroke; gold moves along the riffles to the box; the nuts have not moved after 30 min |
 | Lid off for a flush | R13 | Time stopping, braking, opening the lid and rinsing the rings into a container | 5 min or less, no tools |
-| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 99 kg estimated) |
+| Loads and mass | R11 | Weigh each of the six loads | Every load 30 kg or less; total recorded (about 99.6 kg estimated) |
 | Header tank on its post | R4, R8 | Fill the tank with the machine level; read the rotameter with the valve open and the tank half full; push sideways on the full tank with a spring balance up to 100 N | 12 L/min or more with the valve open; nothing bends and the machine does not lift off its feet |
 | Flush container lock | R13 | Rinse the rings into the flush container, shut the lid and lock the hasp | The lid cannot be lifted with the padlock in |
 | Assembly time | R11 | Two people assemble the six loads with hand tools | 30 min or less |

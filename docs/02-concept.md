@@ -3,9 +3,9 @@ doc_id: GVS-PRC-001
 title: GravitySort design precis
 project: GravitySort
 doc_type: Design precis
-version: "1.0"
+version: "1.1"
 status: Draft
-date: '2026-10-02'
+date: '2026-10-25'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -49,13 +49,17 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Decisions of 2026-10-02 carried into the design: tank on a 1.7 m braced post on the centre line, flush container with a padlock hasp (item 23); figures from GVS-CAL-001 v0.8 (99.3 kg, $580, 2.10 m tall)"
+- version: "1.1"
+  date: '2026-10-25'
+  author: Amish Chadha
+  change: "Kit 1.9.1 upgrade: concept options (GVS-OPT-001, choice awaiting Amish) and STEM check (GVS-STM-001) referenced; STEM fixes F1 to F5 carried in (drum drawn 560 mm tall, screen filter on the fluidization hose, 800 N buffer, gold balance on 7.75 h, head gusset moved); figures from GVS-CAL-001 v0.9 (99.6 kg, $594, 2.26 m tall); requirements now GVS-PRS-001"
 ---
 
 # GravitySort design precis
 
 ## Summary
 
-GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.8 m long, about 99 kg in six loads of 28 kg or less, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). Value-engineering target: USD 455. Estimated cost of the constructable design: USD 580 (USD 125 over the target). Making every part buildable (GVS-DDR-003, accepted by Amish on 2026-10-01) took the mass over R11's original 80 kg total; Amish restated R11 to 100 kg or less in all, with every load 30 kg or less, so it is met on paper. R5 and R6 are at risk; R2 is met on paper since Amish restated it on 2026-10-02. The prototype build plan is GVS-BLD-001 (`docs/05-build-plan.md`); open decisions are in GVS-DEC-001 (`docs/06-design-decisions.md`). All figures are estimates for review, not measurements.
+GravitySort is a two-stage, mercury-free gravity concentrator for small mining groups. A fluidized centrifugal bowl (220 mm across the lip, about 60 G at 730 rpm) catches fine gold from about 200 kg/h of milled ore, and a small shaking table (1,000 x 450 mm) cleans the day's bowl concentrate (about 5.3 kg) down to about 100 g, small enough to smelt directly with borax. One drive, either a pedal crank or a 250 W motor through the lab's MotionCore module, runs the bowl by day and the table at clean-up. A bicycle disc brake stops the bowl, and the lid can be opened only with the brake set. The whole machine is a welded frame of 25 x 25 x 1.5 mm steel tube about 2.8 m long, about 100 kg (99.6 kg estimated) in six loads of 28 kg or less, built from bicycle parts, bearings, V-belts, HDPE drums and a cast polyurethane bowl liner. The sizing note GVS-CAL-001 gives 48 W at the pedals at 60 G and 1.19 m3/h of water; about 60 % overall gold recovery on free-gold ore is assumed, compared with about 30 % typical of whole-ore amalgamation in Colombian processing centers ([Veiga et al., 2018](https://doi.org/10.1016/j.jclepro.2018.09.039)). Value-engineering target: USD 455. Estimated cost of the constructable design: USD 594 (USD 139 over the target). Making every part buildable (GVS-DDR-003, accepted by Amish on 2026-10-01) took the mass over R11's original 80 kg total; Amish restated R11 to 100 kg or less in all, with every load 30 kg or less, so it is met on paper. R5 and R6 are at risk; R2 is met on paper since Amish restated it on 2026-10-02. The prototype build plan is GVS-BLD-001 (`docs/05-build-plan.md`); open decisions are in GVS-DEC-001 (`docs/06-design-decisions.md`). All figures are estimates for review, not measurements.
 
 ![Hero render](../media/hero.png)
 
@@ -73,7 +77,7 @@ GravitySort is a two-stage, mercury-free gravity concentrator for small mining g
 
 ![Gold balance](../media/flow.png)
 
-*Figure 2. Gold balance for one 8 h shift at 200 kg/h on a reference ore of 5 g/t (GVS-CAL-001 section 13). All values are assumed stage recoveries, not results: oversize loss 5 %, bowl recovery of screened gold about 71 %, table recovery about 93 %, smelting recovery about 96 %. Overall about 60 %.*
+*Figure 2. Gold balance for one 8 h shift (7.75 h of feed, 1.55 t) at 200 kg/h on a reference ore of 5 g/t (GVS-CAL-001 section 13). All values are assumed stage recoveries, not results: oversize loss 5 %, bowl recovery of screened gold about 71 %, table recovery about 93 %, smelting recovery about 96 %. Overall about 60 %.*
 
 ### Drive
 
@@ -105,7 +109,7 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 4.
 | 10 | Drive belts | A-section V-belts: bowl (horizontal) and table (inclined, clutch by tensioner) | |
 | 11 | Guards | Perforated sheet covers over belts, pulleys and chain | Must be fitted before running |
 | 12 | MotionCore kit and reference motor | MotionCore module, e-stop, brake inputs and speed sensor, with the 250 W geared hub motor | Shared component; $335 ($265 kit plus $70 motor, MTC-CAL-001), not in the GravitySort cost |
-| 13 | Water header tank | 60 L HDPE drum on a cradle 1.7 m above ground, on a post on the machine's centre line braced to both top side rails; ball valve, 2 to 20 L/min rotameter, 3/4 in hose | Decided by Amish, 2026-10-02 (GVS-DEC-001): 8.6 kPa at the union at mid-tank against 8.1 kPa needed; with a full tank the machine stands on a 13.5 degree slope (GVS-CAL-001 sections 6 and 11). Filled by gravity from upstream, or by a treadle, hand or 12 V pump where that is impossible |
+| 13 | Water header tank | 60 L HDPE drum (about 380 mm across and 560 mm tall) on a cradle 1.7 m above ground, on a post on the machine's centre line braced to both top side rails; ball valve, 2 to 20 L/min rotameter, 3/4 in screen filter (120 mesh, flush valve; GVS-DEC-001 F2), 3/4 in hose | Decided by Amish, 2026-10-02 (GVS-DEC-001): with the 3/4 in valve and rotameter (GVS-DEC-001 F6), 12.6 kPa at the union and 10.0 kPa net at the lowest ring at 600 rpm at mid-tank; with a full tank the machine stands on a 13.1 degree slope (GVS-CAL-001 sections 6 and 11). Filled by gravity from upstream, or by a treadle, hand or 12 V pump where that is impossible |
 | 14 | Shaking table deck | 1,000 x 450 mm, 18 mm marine plywood faced with HDPE, tapered riffles, feed box, 2 to 4 degrees cross tilt | Adjustable tilt |
 | 15 | Table stand and head motion | Plywood flexure legs on a welded base; head plate and shelf bolted to the frame's table end, eccentric head shaft with a 125 mm pulley and pitman arm, 15 mm stroke at 240 to 300 strokes/min; belt tensioner as the table clutch | The stroke is made asymmetric by an adjustable rubber bump stop at the return end, decided by Amish on 2026-10-01 (GVS-DDR-003, A2), with a toggle head only if the first test shows the stop is not enough. The deck strikes a 40 x 30 mm rubber buffer on a bracket on the frame's table end at the end of each forward stroke; the pitman pin works in a slot and the plywood legs push the deck onto the buffer. Set 3 mm in, the stop gives 2.1 G against 0.6 G at the head end (GVS-CAL-001 section 9; items 21 and 22). About 15 W at the pedals |
 | 16 | Concentrate tray | Tailings launder under the table's front edge, lockable concentrate box with a padlock hasp under its far (gold) end | Security for the operator |
@@ -132,8 +136,8 @@ Table 2. Main numbers from GVS-CAL-001.
 | Bowl speed for 60 G at 100 mm radius | 733 rpm (730 rpm nominal) | 598 rpm for 40 G, 846 rpm for 80 G |
 | Drive ratio, pedal to bowl | 12:1 (4:1 chain, 1:1 bevel, 3:1 belt) | 61 rpm cadence gives 730 rpm |
 | Feed rate | 200 kg/h solids; 1.55 t per 8 h shift | Three 5 min flush stops; R2 is 200 kg/h of feed time (restated 2026-10-02) |
-| Water | 0.467 m3/h slurry plus 0.72 m3/h fluidization: 1.19 m3/h | 60 L header lasts 3 min; gravity supply from upstream to a tank top 2.1 m up, or a pump (about 6.8 W hydraulic) where that is impossible |
-| Fluidization supply | 8.6 kPa at the union at mid-tank (7.1 to 10.1 kPa) with a 3/4 in hose from the tank on its 1.7 m post; net 10.4 to 20.6 kPa across the ring holes | 8.1 kPa at the union gives 10 kPa at every ring at 600 rpm; a 1/2 in hose would leave 1.4 kPa |
+| Water | 0.467 m3/h slurry plus 0.72 m3/h fluidization: 1.19 m3/h | 60 L header lasts 3 min; gravity supply from upstream to a tank top 2.26 m up, or a pump (about 7.3 W hydraulic) where that is impossible |
+| Fluidization supply | 12.6 kPa at the union at mid-tank (10.4 to 14.9 kPa) with a 3/4 in hose, 3/4 in valve and rotameter and the screen filter (0.75 kPa clean) from the tank on its 1.7 m post; after the 0.46 to 0.57 m climb to the rings, net 10.0 to 19.0 kPa across the ring holes at 600 to 730 rpm | 12.7 kPa at the union gives 10 kPa at every ring at 600 rpm; a 1/2 in hose would leave 5.5 kPa (GVS-CAL-001 section 6) |
 | Input power at the pedals | 48.2 W at 60 G; 62.8 W at 80 G | Drivetrain 0.839; union seal drag assumed |
 | Motor option | 5.2 times power margin at 60 G; 0.55 kWh per shift | 70 % motor and controller efficiency at light load |
 | Bowl concentrate per flush | 1.33 kg; mass pull 0.33 % | Groove volume 0.89 L at 60 % fill |
@@ -141,11 +145,15 @@ Table 2. Main numbers from GVS-CAL-001.
 | Rotating group | 6.47 kg, 0.0566 kg m2 with the drive; 165 J at 730 rpm | 447 J at 1,200 rpm |
 | Burst safety factor at 1,200 rpm | 16 (jacket wall), 30 (bowl shell), 51 (ring lips) | Assumes sound lamination and a bonded liner |
 | Stop time from 850 rpm | 0.6 s with the brake; about 20 s coasting | R12 asks for 15 s or less |
-| Size and mass | 2.78 x 0.79 x 2.10 m; 99.3 kg in six loads, heaviest 27.3 kg | R11 met on paper: 100 kg or less in all, every load 30 kg or less (restated from 80 kg by Amish, 2026-10-01; 77.3 kg for the concept; GVS-DDR-003) |
-| Parts cost | $580 | `bom/bom.csv`; MotionCore ($335) and battery excluded; USD 125 over the $455 value-engineering target |
-| Header tank post | Tips sideways on a 13.5 degree slope with a full tank; post above the braces safety factor 2.3 at the push that tips it | Tank on the centre line; 190 N pushed at the tank tips the machine on level ground |
+| Size and mass | 2.78 x 0.79 x 2.26 m; 99.6 kg in six loads, heaviest 27.3 kg | R11 met on paper: 100 kg or less in all, every load 30 kg or less (restated from 80 kg by Amish, 2026-10-01; 77.3 kg for the concept; GVS-DDR-003) |
+| Parts cost | $594 | `bom/bom.csv`; MotionCore ($335) and battery excluded; USD 139 over the $455 value-engineering target |
+| Header tank post | Tips sideways on a 13.1 degree slope with a full tank; post above the braces safety factor 2.1 at the push that tips it | Tank on the centre line; 185 N pushed at the tank tips the machine on level ground |
 
 The daily motor energy of 0.55 kWh is a little more than the energy of a SwapCell reference pack (about 468 Wh nominal); a larger pack or a 150 to 200 W solar panel would cover a shift. The pack stays the user's choice.
+
+## Concept options and STEM check
+
+Kit 1.8 added two alternative concepts with different working principles: B, a pedal-driven diaphragm jig with the same shaking table, and C, a carpeted sluice with hand panning. All three are modelled in detail (`cad/src/model.py`, `components(option)`) and scored against the user requirements in GVS-OPT-001: C 172, A 165, B 157 of 230. All are within 10 %, so the choice is Amish's without a pick (GVS-DDR-004, GVS-DEC-001 O1); this precis describes option A, the current design, which stays unless he decides otherwise. The STEM check GVS-STM-001 found no failed working principle; five details failed and were fixed under Amish's standing instruction of 2026-10-23 (GVS-DEC-001 F1 to F4 and F6: the drum drawn at its real height, a screen filter for the fluidization water, the buffer rating, the gold balance and 3/4 in valve and rotameter for the climb to the rings); two rows fail with fixes that break PR-011 and go to Amish (containment, tank sway; O2 and O3); nine need tests or datasheets at TRL 4.
 
 ## Key design choices
 
@@ -162,7 +170,7 @@ Items new at TRL 3 are also decided by Amish, 2026-09-25: go with recommendation
 
 ## Safety
 
-> **Safety:** Rotating machinery. The bowl turns at up to 850 rpm in use with about 224 J of stored energy, and a rider can push it past the 900 rpm limit, because gearing does not cap the pedal speed; watch the speed display. Belts, chains and pulleys can trap fingers, hair and loose clothing. Never run without the lid guard and all belt and chain guards fitted. The bowl coasts for about 20 s after the drive stops: apply and park the brake, and wait for the bowl to stop, before opening the lid or flushing. The lid interlock pin must never be removed or bypassed. A full header tank 1.7 m up makes the machine top-heavy: fill it only with the machine standing level, never climb on the frame, and keep hoses from pulling sideways on the tank. Keep children and animals away from the machine. The bowl liner must be checked for cracks and debonding before every run; a failed liner at speed can throw fragments, and whether the tub and lid contain them has not been checked. The motor option adds stored electrical energy and a battery; follow the MotionCore safety section, and never bridge its emergency stop. MotionCore's stop does not brake, so the mechanical brake is still needed with the motor.
+> **Safety:** Rotating machinery. The bowl turns at up to 850 rpm in use with about 224 J of stored energy, and a rider can push it past the 900 rpm limit, because gearing does not cap the pedal speed; watch the speed display. Belts, chains and pulleys can trap fingers, hair and loose clothing. Never run without the lid guard and all belt and chain guards fitted. The bowl coasts for about 20 s after the drive stops: apply and park the brake, and wait for the bowl to stop, before opening the lid or flushing. The lid interlock pin must never be removed or bypassed. A full header tank 1.7 m up makes the machine top-heavy (about 185 N pushed sideways at the tank tips it): fill it only with the machine standing level, never climb on the frame, and keep hoses from pulling sideways on the tank. Keep children and animals away from the machine. The bowl liner must be checked for cracks and debonding before every run; a failed liner at speed can throw fragments, and the tub and lid are shown to contain a fragment that strikes face first but not one that strikes edge first (GVS-CAL-001 section 10; a decision for Amish, GVS-DEC-001 O2). The motor option adds stored electrical energy and a battery; follow the MotionCore safety section, and never bridge its emergency stop. MotionCore's stop does not brake, so the mechanical brake is still needed with the motor.
 
 > **Safety:** Mercury. GravitySort must never be used with mercury, and it must not process tailings or concentrates from sites that used mercury without testing, because mercury contamination would spread through the bowl, the water and the table. Legacy mercury at a site calls for specialist handling through the partner organization.
 

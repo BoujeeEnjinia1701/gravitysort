@@ -25,6 +25,7 @@ OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
 DATE = "2026-10-01"
 DATE2 = "2026-10-02"          # sheets and pictures revised for the decisions of 2026-10-02
+DATE3 = "2026-10-25"          # kit 1.9.1 fixes (GVS-DEC-001 F1, F5)
 D = derived(P)
 C = build_components(P)
 S = lambda *ks: _fuse([C[k].shape for k in ks])  # noqa: E731
@@ -145,8 +146,9 @@ def s101():
                    f"  the post to the front and back top rails, {P['brace_dx']:.0f} toward the table.",
                    "Drill the bolt holes each later section lists; prime and paint.",
                    "Check: frame sits on all four feet; bearing plate holes in line."],
-                  shape=fr, inset=(20, -55), rev="P2", date=DATE2,
-                  revisions=[P1, ("P2", "Tank post 1.7 m with two braces, on the centre line (GVS-DEC-001)", DATE2, "AC")])
+                  shape=fr, inset=(20, -55), rev="P3", date=DATE3,
+                  revisions=[P1, ("P2", "Tank post 1.7 m with two braces, on the centre line (GVS-DEC-001)", DATE2, "AC"),
+                             ("P3", "60 L drum drawn 560 mm tall (GVS-DEC-001 F1)", DATE3, "AC")])
 
 
 @sheet(102)
@@ -424,7 +426,8 @@ def s116():
                   "GravitySort table head plate and shelf: making sketch", "Steel plate 6 mm",
                   ["Head plate 375 x 110 x 6, standing on the frame's table end.",
                    "Shelf 184 deep, welded square to the plate 677 above the ground,",
-                   "  with two triangular gussets 90 x 90 under it.",
+                   "  with two triangular gussets 90 x 90 under it, 200 in front",
+                   "  of and 59 behind the centre line (clear of the bearing nuts).",
                    "Shelf cut-out 130 x 280 between the bearings: the pitman eye",
                    "  swings through it.",
                    "Plate holes: two 9 mm into the head member, two into the top",
@@ -435,8 +438,9 @@ def s116():
                    "  bore 7.5 off centre (15 mm stroke), two set screws.",
                    "The bump stop bracket bolts beside it on the top end rail (121).",
                    "Check: shelf square to the plate; shaft turns freely by hand."],
-                  inset=(22, -45), rev="P2",
-                  revisions=[P1, ("P2", "Bump stop bracket alongside (GVS-DWG-121)", DATE, "AC")])
+                  inset=(22, -45), rev="P3", date=DATE3,
+                  revisions=[P1, ("P2", "Bump stop bracket alongside (GVS-DWG-121)", DATE, "AC"),
+                             ("P3", "Back gusset moved to clear the bearing nuts (GVS-DEC-001 F5)", DATE3, "AC")])
 
 
 @sheet(117)

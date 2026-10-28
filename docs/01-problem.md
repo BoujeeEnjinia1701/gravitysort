@@ -3,9 +3,9 @@ doc_id: GVS-PRB-001
 title: GravitySort problem statement
 project: GravitySort
 doc_type: Problem statement
-version: "0.7"
+version: "0.8"
 status: Draft
-date: '2026-10-02'
+date: '2026-10-25'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -37,6 +37,10 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Site water and first partner as decided on 2026-10-02 (GVS-DEC-001)"
+- version: "0.8"
+  date: '2026-10-25'
+  author: Amish Chadha
+  change: "Kit 1.8 pipeline: users-and-needs (Table 2) and stakeholders (Table 3) tables added for GVS-URS-001; constraint cost updated to the estimated USD 594 (GVS-CAL-001 v0.9); requirements now GVS-PRS-001"
 ---
 
 # GravitySort problem statement
@@ -65,6 +69,27 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 | Local workshop or welder | Build, repair and sell the machine with local tools and materials | Welding set, drill press, hand tools; no lathe in many cases |
 | NGO, cooperative or extension officer | Demonstrate mercury-free processing with miners and measure recovery | Programmes under national ASGM action plans; planetGOLD and similar |
 
+Table 2. Users and needs (kit 1.8). Proposed for review with the partner; the source of each user requirement in GVS-URS-001.
+
+| User type | Goals and needs | Typical use scenario | Pain points and challenges |
+| --- | --- | --- | --- |
+| Small mining group (3 to 10 people) | More gold from the same ore without mercury; equipment they can pay back in weeks; keep up with about 1.5 t of milled ore a day | Feeds milled ore by shovel and water through a shift, pedalling in turns; flushes the bowl every 2 h; cleans up on the table at the end of the day | Fine gold lost on sluices; no power at the pit; little and silty water; theft of concentrate; equipment imported, costly and hard to repair |
+| Processing center (entable) operator | Replace whole-ore amalgamation with a concentrate step to meet the law and keep customers; run on mains or generator power | Runs the machine for several miners on a fee basis, with the motor | Customers expect fast turnaround; new rules on mercury; mixed ores from many pits |
+| Women processors | A safer role than panning with mercury at home or at the river; a share of the clean-up work they already do | Clean-up on the table and smelting preparation; handling the locked concentrate | Exposure to mercury vapour and arsenic-bearing concentrate today; heavy, stooped panning |
+| Local workshop or welder | Build, repair and sell the machine with local tools and materials | Welds the frame, casts or buys the liner, fits bicycle parts and bearings | No lathe in many shops; specialist parts not sold locally |
+| NGO, cooperative or extension officer | Demonstrate mercury-free processing and measure recovery with miners | Runs demonstrations and trials with a partner cooperative under a national action plan | Needs equipment that works with local feed and a way to show recovery |
+
+Table 3. Stakeholders (kit 1.8).
+
+| Stakeholder group | Role or interest | Engagement needed |
+| --- | --- | --- |
+| Miners' cooperative in Colombia, introduced through the Alliance for Responsible Mining (first candidate, decided by Amish on 2026-10-02) | Co-design partner and first field site | Co-design sessions on the user requirements; field trial at TRL 5 (on hold) |
+| National mining and environment authorities (for example Colombia, where mercury in mining is banned under Law 1658 of 2013) | Enforce mercury bans and national action plans | Check how a mercury-free concentrator fits the rules the partner works under (GVS-REG-001) |
+| planetGOLD and similar programmes | Fund and promote mercury-free ASGM | Share results; possible route to finance and spread |
+| Gold buyers and refiners | Want traceable, mercury-free gold | Interest in where the gold comes from; no direct design input |
+| Local communities downstream | Rivers and drinking water affected by mercury and silt | Settling pond practice and no mercury at any step |
+| Helpful Engineering network and Design Molecule | Open design, documentation and partner introductions | Keep the design open (CERN-OHL-S) and documented |
+
 ### Operating environment
 
 - **Feed:** ore milled to below 2 mm, as a slurry of about 25 to 35 % solids by mass; gold grades from about 1 to 20 g/t; heavy minerals such as magnetite, pyrite and hematite in the feed.
@@ -76,7 +101,7 @@ Table 1. Intended users. Proposed for review; the real list must come from co-de
 
 ## Constraints
 
-- Garage-buildable prototype. Value-engineering target: USD 455 in parts, a hypothetical control target rather than a limit (Amish, 2026-10-01; raised from $350 to $450 on 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002). Estimated cost of the constructable design: USD 558 (USD 103 over the target; GVS-CAL-001 v0.4).
+- Garage-buildable prototype. Value-engineering target: USD 455 in parts, a hypothetical control target rather than a limit (Amish, 2026-10-01; raised from $350 to $450 on 2026-09-25 and to $455 on 2026-09-26, GVS-DDR-002). Estimated cost of the constructable design: USD 594 (USD 139 over the target; GVS-CAL-001 v0.9).
 - No mercury in any step, and no chemicals beyond water and, at the smelting step outside this machine, borax flux.
 - Built with welding, drilling and hand tools; parts that normally need a lathe (bowl, spindle) must have a no-lathe route.
 - Runs without grid power: pedal drive as the baseline, with an optional motor through MotionCore on a pack of the user's choice. The water supply (about 1.19 m3/h) comes by gravity from upstream as the site rule for the first field trial, or from a bought treadle or hand pump or a 12 V pump where that is impossible (decided by Amish, 2026-10-02, GVS-DEC-001).
@@ -115,4 +140,4 @@ This design is for communities the author is not part of, so requirements come f
 - [ ] Identify a local partner organization (Helpful Engineering network, NGO or university)
 - [ ] Run co-design sessions with intended users; record who, where and what was learned
 - [ ] Validate load, distance, terrain and cost assumptions in the field
-- [ ] Revise requirements (REQ) from findings before freezing the design
+- [ ] Revise the user and product requirements (GVS-URS-001, GVS-PRS-001) from findings before freezing the design

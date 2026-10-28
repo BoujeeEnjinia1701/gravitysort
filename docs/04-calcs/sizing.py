@@ -51,7 +51,11 @@ A = {
     "tank_level_m": sum(P["tank_z"]) / 2000, "tank_level_min_m": P["tank_z"][0] / 1000 + 0.05,
     "tank_level_max_m": P["tank_z"][1] / 1000 - 0.05, "union_height_m": 0.15,
     "hose_len_m": round(hose_length() + 0.5, 1), "hose_d_m": 0.019, "hose_f": 0.03,
-    "K_fittings": 6.0, "fittings_d_m": 0.0127,   # union, rotameter, valve on a 1/2 in bore
+    # union K 2 on its 1/2 in bore; ball valve and rotameter K 4 on a 3/4 in bore (GVS-DEC-001 F6; v0.8 took K 6 for all
+    # three on a 1/2 in bore)
+    "K_union": 2.0, "union_bore_m": 0.0127, "K_fittings": 4.0, "fittings_d_m": 0.019,
+    # 3/4 in screen filter, 120 mesh, with a flush valve (GVS-DEC-001 F2): K 3 clean on the 19 mm bore, cleaned when it reaches K 6
+    "K_strainer": 3.0, "K_strainer_dirty": 6.0, "strainer_d_m": 0.019, "strainer_mesh_mm": 0.125,
     "Cd_hole": 0.62,
     "p_target_kPa": 10.0,        # proposed minimum net pressure at every ring
     # table
@@ -143,6 +147,8 @@ water_m3h = (mw_sl / RHO_W + q_fl) * 3600
 rho_slurry = 1 / (A["solids_frac"] / RHO_Q + (1 - A["solids_frac"]) / RHO_W)
 say(f"  slurry water {mw_sl * 3.6:.3f} m3/h; fluidization {q_fl * 3600:.2f} m3/h; total {water_m3h:.2f} m3/h, {water_m3h * feed_h:.1f} m3 per shift")
 say(f"  slurry {q_slurry * 3.6e6 / 1000:.3f} m3/h at {rho_slurry:.0f} kg/m3; flow over the lip {(q_slurry + q_fl) * 1000:.3f} L/s")
+tank_l = math.pi * (P["tank_d"] / 2000) ** 2 * (P["tank_z"][1] - P["tank_z"][0]) / 1000 * 1000
+say(f"  header drum in the model: {P['tank_d']:.0f} mm across, {P['tank_z'][1] - P['tank_z'][0]:.0f} mm tall, {tank_l:.0f} L gross (60 L nominal)")
 tank_min = 60 / (water_m3h * 1000 / 60)
 lift = P["tank_z"][1] / 1000
 say(f"  60 L header tank lasts {tank_min:.1f} min at full flow; lift from pond to tank top about {lift:.1f} m: "
@@ -192,7 +198,11 @@ say("\n5. Fluidization jacket and supply (R4, R8)")
 v_hose = q_fl / (math.pi * A["hose_d_m"] ** 2 / 4)
 v_fit = q_fl / (math.pi * A["fittings_d_m"] ** 2 / 4)
 dp_hose = A["hose_f"] * A["hose_len_m"] / A["hose_d_m"] * RHO_W * v_hose ** 2 / 2
-dp_fit = A["K_fittings"] * RHO_W * v_fit ** 2 / 2
+v_str = q_fl / (math.pi * A["strainer_d_m"] ** 2 / 4)
+dp_str = A["K_strainer"] * RHO_W * v_str ** 2 / 2
+dp_str_dirty = A["K_strainer_dirty"] * RHO_W * v_str ** 2 / 2
+v_un = q_fl / (math.pi * A["union_bore_m"] ** 2 / 4)
+dp_fit = A["K_fittings"] * RHO_W * v_fit ** 2 / 2 + A["K_union"] * RHO_W * v_un ** 2 / 2 + dp_str   # valve, rotameter, union, clean filter
 p_static = RHO_W * G * (A["tank_level_m"] - A["union_height_m"])
 p_axis = p_static - dp_hose - dp_fit
 v_half = q_fl / (math.pi * 0.0127 ** 2 / 4)
@@ -204,15 +214,20 @@ say(f"  header head {p_static / 1000:.1f} kPa; 3/4 in hose loss {dp_hose / 1000:
 p_union_lvl = {lv: RHO_W * G * (lv - A["union_height_m"]) - dp_hose - dp_fit for lv in (A["tank_level_min_m"], A["tank_level_max_m"])}
 say(f"  union pressure from {p_union_lvl[A['tank_level_min_m']] / 1000:.1f} kPa (tank nearly empty, {A['tank_level_min_m']:.2f} m) "
     f"to {p_union_lvl[A['tank_level_max_m']] / 1000:.1f} kPa (nearly full, {A['tank_level_max_m']:.2f} m)")
+say(f"  strainer (120 mesh, {A['strainer_mesh_mm']:.3f} mm, against 1.0 mm holes) {dp_str / 1000:.2f} kPa clean, "
+    f"{dp_str_dirty / 1000:.2f} kPa at the cleaning point (included in the fittings above when clean)")
 say(f"  with 1/2 in hose the hose loss is {dp_half / 1000:.1f} kPa and the union pressure {(p_static - dp_half - dp_fit) / 1000:.1f} kPa")
 rho_bed = A["bed_solids_vf"] * A["bed_solids_rho"] + (1 - A["bed_solids_vf"]) * RHO_W
 
 
-def ring_dp(n, r, p0):
-    """Net pressure (Pa) across a fluidization hole at wall radius r (m): jacket minus loaded bed and film."""
+def ring_dp(n, r, p0, z=None):
+    """Net pressure (Pa) across a fluidization hole at wall radius r (m) and height z (m above ground): jacket minus
+    loaded bed and film. The water climbs from the union (0.15 m up) to the ring, which costs rho g dz (v0.9,
+    independent review); z None means the union height (no climb)."""
     w2 = rpm2w(n) ** 2
     hb, hf = A["bed_depth_m"], A["film_m"]
-    p_j = p0 + RHO_W * w2 * r * r / 2
+    dz = 0.0 if z is None else z - A["union_height_m"]
+    p_j = p0 - RHO_W * G * dz + RHO_W * w2 * r * r / 2
     p_b = w2 * (rho_bed * hb * (r - hb / 2) + rho_slurry * hf * (r - hb - hf / 2))
     return p_j - p_b
 
@@ -220,21 +235,38 @@ def ring_dp(n, r, p0):
 hole_a = math.pi * (P["fluid_hole_d"] / 1000) ** 2 / 4
 flows = []
 for i, (z, r, _) in enumerate(rings, 1):
-    dp = ring_dp(A["rpm_ref"], r / 1000, p_axis)
+    dp = ring_dp(A["rpm_ref"], r / 1000, p_axis, z / 1000)
     q1 = A["Cd_hole"] * hole_a * math.sqrt(2 * max(dp, 0) / RHO_W)
     flows.append(q1)
-    say(f"  ring {i}: net {dp / 1000:.1f} kPa at 730 rpm (bed full), {ring_dp(A['rpm_lo'], r / 1000, p_axis) / 1000:.1f} kPa at 600 rpm, "
+    say(f"  ring {i}: net {dp / 1000:.1f} kPa at 730 rpm (bed full), {ring_dp(A['rpm_lo'], r / 1000, p_axis, z / 1000) / 1000:.1f} kPa at 600 rpm, "
         f"{q1 * 60000:.3f} L/min per 1.0 mm hole")
 n_holes = q_fl / (sum(flows) / len(flows))
 say(f"  holes of 1.0 mm for 12 L/min with the valve fully open: about {n_holes:.0f} ({n_holes / len(rings):.0f} per ring); "
     f"lowest to highest ring flow per hole {flows[0] / flows[-1]:.2f}")
-dp_min_rel = min(ring_dp(A["rpm_lo"], r / 1000, 0) for _, r, _ in rings)
+dp_min_rel = min(ring_dp(A["rpm_lo"], r / 1000, 0, z / 1000) for z, r, _ in rings)
 p_need = A["p_target_kPa"] * 1000 - dp_min_rel
 lvl_need = p_need / RHO_W / G + A['union_height_m'] + (dp_hose + dp_fit) / RHO_W / G
 say(f"  supply pressure at the union for {A['p_target_kPa']:.0f} kPa net at every ring and 600 rpm: {p_need / 1000:.1f} kPa "
     f"({lvl_need:.2f} m tank level); at mid tank the union has {p_axis / 1000:.1f} kPa ({(p_axis - p_need) / 1000:+.1f} kPa)")
-net_lo = min(ring_dp(A["rpm_lo"], r / 1000, p_union_lvl[A["tank_level_min_m"]]) for _, r, _ in rings)
+net_lo = min(ring_dp(A["rpm_lo"], r / 1000, p_union_lvl[A["tank_level_min_m"]], z / 1000) for z, r, _ in rings)
 say(f"  lowest net ring pressure at 600 rpm with the tank nearly empty: {net_lo / 1000:.1f} kPa (positive: water still enters every ring)")
+net_dirty = min(ring_dp(A["rpm_lo"], r / 1000, p_union_lvl[A["tank_level_min_m"]] - (dp_str_dirty - dp_str), z / 1000) for z, r, _ in rings)
+# record of the v0.8 error (independent review, 2026-10-25): no climb from the union to the rings, fittings on a 1/2 in bore
+dp_fit_v08 = 6.0 * RHO_W * (q_fl / (math.pi * 0.0127 ** 2 / 4)) ** 2 / 2 + dp_str
+p_axis_v08 = p_static - dp_hose - dp_fit_v08
+net_v08 = min(ring_dp(A["rpm_lo"], r / 1000, p_axis_v08, z / 1000) for z, r, _ in rings)
+say(f"  climb from the union to the rings {(rings[0][0] / 1000 - A['union_height_m']):.2f} to {(rings[-1][0] / 1000 - A['union_height_m']):.2f} m "
+    f"({RHO_W * G * (rings[0][0] / 1000 - A['union_height_m']) / 1000:.1f} to {RHO_W * G * (rings[-1][0] / 1000 - A['union_height_m']) / 1000:.1f} kPa); "
+    f"with the v0.8 fittings (K 6 on 1/2 in) the lowest net ring pressure at 600 rpm, mid-tank, would be {net_v08 / 1000:.1f} kPa")
+# minimum fluidization velocity of the bed at 60 G (Wen and Yu), against the upflow (independent review)
+def u_mf(d, rho_p, a):
+    ar = d ** 3 * RHO_W * (rho_p - RHO_W) * a / MU_W ** 2
+    return (math.sqrt(33.7 ** 2 + 0.0408 * ar) - 33.7) * MU_W / (RHO_W * d)
+a60 = rpm2w(A["rpm_ref"]) ** 2 * 0.09
+umf = {k: u_mf(d, rp, a60) for k, d, rp in (("quartz 75 um", 75e-6, RHO_Q), ("quartz 150 um", 150e-6, RHO_Q), ("pyrite 150 um", 150e-6, 5000.0))}
+say("  minimum fluidization velocity at 730 rpm, 90 mm (Wen and Yu): " + ", ".join(f"{k} {v * 1000:.1f} mm/s" for k, v in umf.items())
+    + f"; design upflow {q_fl / sum(2 * math.pi * r / 1000 * (P['ring_pitch'] - P['ring_t']) / 1000 for _, r, _ in rings) * 1000:.1f} mm/s")
+say(f"  the same with the strainer at its cleaning point: {net_dirty / 1000:.1f} kPa")
 
 # ---------------------------------------------------------------- 6. power (R6, R7)
 say("\n6. Power (R6, R7)")
@@ -406,7 +438,29 @@ for n in (n_proof, n_sprint):
         f"liner free hoop {s_pu / 1e6:.2f} MPa; ring lip bending {s_lip / 1e6:.2f} MPa (SF {sf[n][2]:.0f})")
 frag = 0.25 * (parts_i["liner"][0] + parts_i["shell"][0])
 v_frag = rpm2w(n_sprint) * (P["bowl_lip_d"] / 2000 + t_l + t_s)
-say(f"  quarter of liner and shell {frag:.2f} kg at {v_frag:.1f} m/s: {0.5 * frag * v_frag ** 2:.0f} J (containment by tub and lid not verified)")
+say(f"  quarter of liner and shell {frag:.2f} kg at {v_frag:.1f} m/s: {0.5 * frag * v_frag ** 2:.0f} J")
+# containment of a liner fragment by the 6 mm HDPE tub (DEC 2026-10-01: check by calculation before any spin test; PR-016)
+# The fragment leaves the lip on a tangent and meets the tub wall obliquely: the normal share of its energy is 1 - (r1/R)^2.
+# Perforation by plugging: E = pi d t^2 tau / 2 (thin ductile plate, blunt striker; ignores dishing, so it is a lower bound).
+r1 = P["bowl_lip_d"] / 2000 + t_l + t_s
+R_tub = P["tub_d"] / 2000 - P["tub_t"] / 1000
+f_n = 1 - (r1 / R_tub) ** 2
+tau_hdpe, t_tub = 20e6, P["tub_t"] / 1000
+contain = {}
+for n in (A["rpm_limit"], n_sprint):
+    e_n = 0.5 * frag * (rpm2w(n) * r1) ** 2 * f_n
+    contain[n] = e_n
+frag_all = 0.25 * m_rot                                          # a quarter of the whole bowl group (review's bounding case)
+e_all = 0.5 * frag_all * (rpm2w(n_sprint) * r1) ** 2 * f_n
+e_edge = math.pi * 0.012 * t_tub ** 2 * tau_hdpe / 2          # fragment strikes edge first: 12 mm contact (liner and shell)
+e_flat = math.pi * 0.050 * t_tub ** 2 * tau_hdpe / 2          # fragment strikes on its face: about 50 mm contact
+say(f"  containment (PR-016): normal share {f_n:.2f}; energy into the tub wall {contain[A['rpm_limit']]:.0f} J at 900 rpm, "
+    f"{contain[n_sprint]:.0f} J at {n_sprint:.0f} rpm")
+say(f"  6 mm HDPE plugging energy {e_edge:.0f} J edge first (12 mm contact), {e_flat:.0f} J face first (50 mm contact); "
+    f"dishing not counted")
+say(f"  bounding case, a quarter of the whole bowl group ({frag_all:.2f} kg): {e_all:.0f} J into the wall at {n_sprint:.0f} rpm")
+say(f"  verdict: contained face first at both speeds; edge first not shown even at 900 rpm, so containment stays to confirm by an "
+    f"impact test before any spin test (TRL 4)")
 
 # spindle bending and critical speed
 d_sp = P["spindle_d"] / 1000
@@ -420,10 +474,28 @@ L_c = ((P["bowl_z0"] + P["bowl_depth"] / 2) - (P["bearing_z"][1] + P["bearing_h"
 m_over = m_rot + 1.0
 k_sp = 3 * 193e9 * I_sec / L_c ** 3
 n_crit = math.sqrt(k_sp / m_over) * 60 / (2 * math.pi)
+# support compliance (independent review): the bearings hang under 25 x 25 x 1.5 members 600 mm long, two per bearing;
+# the rotor's deflection adds the bearing movements, magnified by the overhang over the bearing span
+span_b = (P["bearing_z"][1] - P["bearing_z"][0]) / 1000
+a_ov = L_c / span_b
+I_m = (P["tube"] ** 4 - (P["tube"] - 2 * P["tube_wall"]) ** 4) / 12 * 1e-12
+k_pin = 2 * 48 * A["steel_E_GPa"] * 1e9 * I_m / (2 * P["frame_y"] / 1000) ** 3     # two members, pinned ends
+k_fix = 4 * k_pin                                                                 # two members, fixed ends
+c_sup = lambda k: ((1 + a_ov) + (1 + 2 * a_ov) * a_ov) / k  # noqa: E731
+n_crit_lo = n_crit * math.sqrt((1 / k_sp) / (1 / k_sp + c_sup(k_pin)))
+n_crit_hi = n_crit * math.sqrt((1 / k_sp) / (1 / k_sp + c_sup(k_fix)))
 say(f"  spindle: belt pull {belt_pull:.0f} N at {overhang * 1000:.0f} mm overhang, {s_sp / 1e6:.0f} MPa bending; "
     f"25 x 2 mm tube; bowl {L_c * 1000:.0f} mm above the upper bearing, first critical about {n_crit:.0f} rpm ({n_crit / n_sprint:.1f} x the sprint speed)")
 unb = 0.05 * 0.1 * rpm2w(A["rpm_ref"]) ** 2
+say(f"  with the supports' compliance (members pinned to fixed at their ends) the first critical speed is {n_crit_lo:.0f} to {n_crit_hi:.0f} rpm")
 say(f"  50 g of uneven concentrate at 100 mm: {unb:.0f} N rotating load at 730 rpm")
+# shell buckling under jacket pressure with the bowl empty and the holes blocked (independent review)
+E_gfrp = 7e9
+D_sh = 2 * (r_top + t_l + t_s / 2)
+p_ext = RHO_W * rpm2w(n_sprint) ** 2 * r_jo ** 2 / 2 + p_axis
+p_cr = 2.42 * E_gfrp * (t_s / D_sh) ** 2.5 / ((1 - 0.3 ** 2) ** 0.75 * ((P["ring_pitch"] / 1000) / D_sh - 0.45 * (t_s / D_sh) ** 0.5))
+say(f"  shell buckling, jacket full, bowl empty, holes blocked at {n_sprint:.0f} rpm: {p_ext / 1000:.0f} kPa outside against "
+    f"{p_cr / 1e6:.1f} MPa (Windenburg-Trilling, rings at {P['ring_pitch']:.0f} mm pitch as stiffeners, liner ignored): SF {p_cr / p_ext:.0f}")
 
 # coast-down and brake
 T_f = 2 * A["T_bearing_Nm"] + A["T_union_Nm"]
@@ -446,7 +518,7 @@ say(f"  R12 as reworded (GVS-DDR-002): lowest burst safety factor at {n_sprint:.
 ok12 = sf_min >= A["sf_min_sprint"] and t_brake <= 15
 rows.append(("R12", "Guards, speed limit, stop time", f"brake stop {t_brake:.1f} s (coast {t_coast:.0f} s); motor capped by ratio and MotionCore; "
              f"pedal: SF {sf_min:.0f} at {n_sprint:.0f} rpm, speed display", "guarded; motor 900 rpm or less; pedal SF 10 or more at sprint speed with display; stop within 15 s",
-             "Met (paper); containment not verified" if ok12 else "Not met"))
+             "Met (paper); containment in PR-016 (at risk)" if ok12 else "Not met"))
 
 # ---------------------------------------------------------------- 10. mass and size (R11)
 say("\n10. Mass and size (R11)")
@@ -480,7 +552,7 @@ loads = {
                                         "eccentric, pulley, pitman": 2.0, "tensioner and table belt guard": 2.0, "launder and box": 4.5,
                                         "bump stop bracket, buffer and stud": sum(l for _, l in stop_bracket_members()) / 1000 * kg_m
                                         + plates["Stop bracket plates"] + 0.12},
-    "6 Water tank, hoses and flush container": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3,
+    "6 Water tank, hoses and flush container": {"60 L drum": 3.0, "valve, rotameter, bracket, hoses": 2.3, "strainer": 0.3,
                                                 "flush container with hasp": A["flush_container_kg"]},
 }
 tot = 0.0; heaviest = 0.0
@@ -555,6 +627,18 @@ say(f"  at that push ({F_tip:.0f} N): post above the braces {s_post:.0f} MPa ben
     f"braces up to {N_br:.0f} N axial ({N_br / A_t:.1f} MPa; Euler buckling {P_cr / 1000:.0f} kN, SF {P_cr / N_br:.0f})")
 say(f"  full tank on the post member ({W_t:.0f} N at mid-span, pinned ends, braces ignored): {s_pm:.0f} MPa (SF {A['steel_yield_MPa'] / s_pm:.1f}); "
     f"post in compression {W_t / A_t:.1f} MPa")
+# lateral frequency of the full tank on the post above the brace node, against the table drive (independent review)
+L_top = z_tank - P["brace_z"] / 1000
+k_post = 3 * A["steel_E_GPa"] * 1e9 * I_t * 1e-12 / L_top ** 3
+f_post = math.sqrt(k_post / m_tank) / (2 * math.pi)
+f_tab = (240 / 60, 300 / 60)
+say(f"  full tank on the post: cantilever {L_top * 1000:.0f} mm above the brace node, first lateral frequency about {f_post:.1f} Hz "
+    f"against the table drive at {f_tab[0]:.1f} to {f_tab[1]:.1f} Hz (bump stop impacts excite harmonics): "
+    f"{'clear' if f_post > 1.4 * f_tab[1] else 'near resonance'}")
+for bz_ in (1600.0,):
+    L2 = z_tank - bz_ / 1000
+    f2 = math.sqrt(3 * A["steel_E_GPa"] * 1e9 * I_t * 1e-12 / L2 ** 3 / m_tank) / (2 * math.pi)
+    say(f"  with the brace node at {bz_:.0f} mm: about {f2:.1f} Hz")
 tip_ok = th_now >= A["tip_slope_deg"] and A["steel_yield_MPa"] / s_post >= 1.5
 say(f"  tipping check {'passes' if tip_ok else 'FAILS'}: the machine tips before the post or braces yield")
 try:
@@ -588,7 +672,7 @@ rows.append(("R9", "Parts cost", f"${total:.0f}", f"value-engineering target ${A
 
 # ---------------------------------------------------------------- 12. gold balance
 say("\n12. Gold balance (reference ore, estimates)")
-au = A["grade_g_t"] * A["feed_kg_h"] * A["shift_h"] / 1000
+au = A["grade_g_t"] * A["feed_kg_h"] * feed_h / 1000       # feed time after the three flush stops (R2; was the full 8 h)
 s1 = au * (1 - A["oversize_loss"]); s2 = s1 * A["bowl_rec"]; s3 = s2 * A["table_rec"]; s4 = s3 * A["smelt_rec"]
 say(f"  gold in {au:.1f} g; screened {s1:.1f}; bowl {s2:.1f}; table {s3:.1f}; smelted {s4:.1f} g; overall {s4 / au * 100:.0f} %")
 say(f"  losses: oversize {au - s1:.1f}, bowl tailings {s1 - s2:.1f}, table tailings {s2 - s3:.1f}, slag {s3 - s4:.1f} g")

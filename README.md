@@ -1,14 +1,14 @@
 # GravitySort
 
-![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![DOI](https://zenodo.org/badge/1388476534.svg)](https://zenodo.org/badge/latestdoi/1388476534) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml) [![Archived in Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/BoujeeEnjinia1701/gravitysort/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/BoujeeEnjinia1701/gravitysort)
+![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Stage P3](https://img.shields.io/badge/stage-P3%20design%20outputs-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![DOI](https://zenodo.org/badge/1388476534.svg)](https://zenodo.org/badge/latestdoi/1388476534) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/gravitysort/actions/workflows/reuse.yml) [![Archived in Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/BoujeeEnjinia1701/gravitysort/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/BoujeeEnjinia1701/gravitysort)
 
-**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 455 (estimated cost USD 580) · **Difficulty:** 4 of 5
+**Area:** Mining · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 455 (estimated cost USD 594) · **Difficulty:** 4 of 5
 
 A mercury-free gravity concentrator for small-scale gold miners: a pedal- or motor-driven centrifugal bowl and shaking table combination that recovers fine gold without amalgamation.
 
 ![GravitySort: mercury-free gold concentrator with centrifugal bowl and shaking table, product render](media/render-hero.png)
 
-[Exploded render](media/render-exploded.png) · [Detail render](media/render-detail.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Prototype build plan](docs/05-build-plan.md) · [Design decisions register](docs/06-design-decisions.md) · [Review note](docs/REVIEW.md)
+[Studio render](media/render-studio.png) · [Exploded render](media/render-exploded.png) · [Detail render](media/render-detail.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement GVS-DWG-001 (PDF)](cad/drawings/GVS-DWG-001.pdf) · [STEM check](docs/01b-stem-check.md) · [Concept options](docs/02a-concept-options.md) · [Requirements](docs/03-requirements.md) · [Traceability](docs/03b-traceability.md) · [Sizing note GVS-CAL-001](docs/04-calcs/01-sizing.md) · [Prototype build plan](docs/05-build-plan.md) · [Design decisions register](docs/06-design-decisions.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 
@@ -57,11 +57,21 @@ Problem statement: [docs/01-problem.md](docs/01-problem.md)
 
 ## Concept
 
-A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a water header tank on a braced 1.7 m post beside it, which gives the bowl's fluidization water its pressure without a pump. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 99 kg in six loads of 28 kg or less. The bowl is rinsed into a flush container and the table drops its gold into a box, both with padlock hasps. Value-engineering target: USD 455. Estimated cost of the constructable design: USD 580 (USD 125 over the target). All figures are estimates, not measurements.
+A welded steel frame carries a fluidized centrifugal bowl (220 mm lip, about 60 G at 730 rpm) that takes about 200 kg/h of ore milled below 2 mm, with a hopper screen above it and a 60 L water header drum on a braced 1.7 m post beside it, filtered through a screen filter on its way to the bowl, which gives the bowl's fluidization water its pressure without a pump. A pedal crank, or a 250 W motor through the lab's MotionCore module, turns the bowl through a jackshaft, bevel gearbox and V-belt; a bicycle disc brake stops it, and the lid opens only with the brake set. At the end of the day the same drive runs a 1,000 x 450 mm shaking table that cleans about 5.3 kg of bowl concentrate down to about 100 g for direct smelting with borax. The TRL 3 sizing note gives 48 W at the pedals, 1.19 m3/h of mostly recirculated water and about 1.55 t of ore per shift; about 60 % overall recovery on free-gold ore is assumed, compared with about 30 % for whole-ore amalgamation. The frame is 25 x 25 x 1.5 mm steel tube, and the machine weighs about 100 kg (99.6 kg estimated) in six loads of 28 kg or less. The bowl is rinsed into a flush container and the table drops its gold into a box, both with padlock hasps. Value-engineering target: USD 455. Estimated cost of the constructable design: USD 594 (USD 139 over the target). All figures are estimates, not measurements.
 
 Sizing note: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Decisions: [GVS-DDR-001](docs/decisions/0001-trl2-review-decisions.md), [GVS-DDR-002](docs/decisions/0002-recommendations-accepted.md), [GVS-DDR-003](docs/decisions/0003-design-for-construction.md) · Drawing: [GVS-DWG-001](cad/drawings/GVS-DWG-001.pdf) · Model: [cad/src/model.py](cad/src/model.py)
 
-Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [docs/03-requirements.md](docs/03-requirements.md)
+Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [GVS-URS-001](docs/03a-user-requirements.md), [GVS-PRS-001](docs/03-requirements.md) · Regulatory, feasibility, risk, market and plan: [REG](docs/07-regulatory.md), [FEA](docs/08-feasibility.md), [RSK](docs/09-risk.md), [MKT](docs/10-market.md), [PLN](docs/11-plan.md)
+
+## STEM check
+
+Forty claims across the three concept options are checked against known physics, chemistry, biology and mathematics (GVS-STM-001): 29 are within known science, 9 need a test or a datasheet at TRL 4 (fine-gold retention in the bed, the critical speed on the real frame, the table ratio, the liner, the filter, the motor's speed cap, borax smelting of a sulfide-rich concentrate, option C's panning), and 2 fail with fixes that would take the machine over 100 kg, so they go to Amish (containment of a bowl fragment, and sway of the full tank near the table drive frequency). Five details failed and were fixed under Amish's standing instruction: the 60 L drum had been drawn only 400 mm tall (45 L), the fluidization water reached the 1.0 mm holes unfiltered (now a 120 mesh screen filter), the bump stop buffer was under-rated in the BOM, the gold balance used the full 8 h of feed, and, found by the independent reviewer, the supply calculation had left out the water's climb to the rings (now 3/4 in valve and rotameter). Everything the reviewer found is recorded in the STEM check.
+
+## Concept options
+
+![Three ways to concentrate fine gold without mercury, side by side at one scale](media/options.png)
+
+Option A, the current fluidized bowl and shaking table (score 165 of 230), option B, a pedal-driven diaphragm jig with the same table (157), and option C, a carpeted sluice with gold pans (172), are all modelled in the same detail (GVS-OPT-001). The three are within 10 %, so the choice is Amish's, with no pick (GVS-DDR-004). C leads on cost, simplicity and safety but scores lowest on fine gold, the gold the project exists to catch; A stays the design in this repository until Amish decides.
 
 ## Key components
 
@@ -72,7 +82,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 - Spindle, bearings, splash tub and lid guard
 - Bicycle disc brake with a parking latch and lid interlock, and a bicycle computer as the bowl speed display
 - Drive: pedal crank, or a 250 W motor via MotionCore, through a jackshaft, bevel gearbox and V-belts, with guards
-- Water header tank on a braced 1.7 m post, valve and flow meter
+- 60 L water header drum on a braced 1.7 m post, valve, flow meter and screen filter
 - Small shaking table on flexure legs, with an eccentric head on the frame end, a belt tensioner as its clutch, and a lockable concentrate box
 - Flush container with a padlock hasp for the bowl concentrate
 

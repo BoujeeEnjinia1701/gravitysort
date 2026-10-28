@@ -1,0 +1,47 @@
+{
+ "level": "D3",
+ "stage": "P3",
+ "hash": "db3126779799d5bb",
+ "options": {
+  "A": {
+   "title": "Fluidized bowl and shaking table",
+   "parts": 617,
+   "made_or_bought": 180,
+   "fasteners": 311,
+   "welds": 126,
+   "bare": [],
+   "bare_share": 0.0,
+   "interference": [],
+   "mass_kg": 116.4,
+   "step_files": 180
+  },
+  "B": {
+   "title": "Diaphragm jig and shaking table",
+   "parts": 503,
+   "made_or_bought": 128,
+   "fasteners": 283,
+   "welds": 92,
+   "bare": [],
+   "bare_share": 0.0,
+   "interference": [],
+   "mass_kg": 118.5,
+   "step_files": 0
+  },
+  "C": {
+   "title": "Carpeted sluice and gold pans",
+   "parts": 188,
+   "made_or_bought": 45,
+   "fasteners": 136,
+   "welds": 7,
+   "bare": [],
+   "bare_share": 0.0,
+   "interference": [],
+   "mass_kg": 88.5,
+   "step_files": 0
+  }
+ },
+ "failures": [],
+ "warnings": [],
+ "passed": true,
+ "seconds": 504.4
+}

@@ -3,9 +3,9 @@ doc_id: GVS-DEC-001
 title: GravitySort design decisions register
 project: GravitySort
 doc_type: Design decisions register
-version: "0.7"
+version: "0.8"
 status: Draft
-date: '2026-10-03'
+date: '2026-10-25'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -37,6 +37,10 @@ revisions:
     date: '2026-10-03'
     author: Amish Chadha
     change: "Open item 1 decided by Amish on 2026-10-03 (option a: tank post on the centre line, braced, 10 degree any-direction tip criterion); moved to decisions made"
+  - version: "0.8"
+    date: '2026-10-25'
+    author: Amish Chadha
+    change: "Kit 1.9.1 upgrade: fixes F1 to F6 made under Amish's standing instruction of 2026-10-23 (STEM check, independent review and detailed CAD); open decisions O1 (concept selection, GVS-DDR-004), O2 (containment band), O3 (tank sway), O4 (spindle supports) and O5 (fluidization flow) added, Proposed, awaiting Amish; items to confirm and value engineering updated (USD 594)"
 ---
 
 # GravitySort design decisions register
@@ -45,7 +49,28 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-None. Open item 1 (tank post position and tip criterion) was decided on 2026-10-03.
+Each is Proposed, awaiting Amish.
+
+| # | Decision | Options | Recommendation | Record |
+| --- | --- | --- | --- | --- |
+| O1 | Concept selection | (A) fluidized bowl and shaking table, the current design; (B) diaphragm jig and shaking table; (C) carpeted sluice and gold pans. Weighted scores: C 172, A 165, B 157; all three are within 10 % of the top score, so under STANDARDS section 21 all go to Amish without a pick | No pick (within 10 %). If UR-003, fine gold, is treated as a gate (a score of 3 or more), only A passes (B scores 2, C 1). Under section 21 the current design A stays in the repo unless Amish decides otherwise | GVS-OPT-001; GVS-DDR-004 |
+| O2 | Containment of a liner fragment (PR-016) | (a) keep the 6 mm HDPE tub and 10 mm lid, and make an impact test the first TRL 4 item, before any spin test; (b) fit a 3 mm steel band, about 200 mm tall, round the tub at the bowl's height now (about 6.4 kg, which takes the mass to about 106 kg, over PR-011's 100 kg) | (a). The calculation shows containment face first (57 J against 40 J at 1,200 rpm) but not edge first (14 J against 22 J at 900 rpm) nor for a quarter of the whole bowl group (125 J, the independent review's bounding case); Amish's rule of 2026-10-01 (band only if the check fails) cannot be applied cleanly because the result depends on how the fragment strikes, and (b) breaks a requirement he restated | GVS-CAL-001 section 10; GVS-STM-001 S10 |
+| O3 | Sway of a full tank near the table drive frequency (STEM S33) | (a) raise the brace node from 1.35 to 1.6 m (about 7.5 Hz instead of 3.5 Hz; braces about 0.25 m longer each, about +0.5 kg, which takes PR-011 to about 100.1 kg) and take one of the savings in Value engineering to stay under 100 kg; (b) a rule to run the table only with the drum drained, wash water from a bucket (no mass); (c) both | (a) with the bronze-bush saving on the table head, plus (b) as an interim rule. Both change a decided layout or a requirement margin, so they are Amish's | GVS-CAL-001 section 11; GVS-STM-001 S33 |
+| O4 | Spindle supports and the first critical speed (STEM S8) | (a) keep the frame and check the critical speed by a tap test on the first frame (TRL 4), stiffening the spindle supports only if it is under 1,500 rpm; (b) stiffen now with a cross member under each bearing plate (mass over PR-011) | (a): 1,274 to 1,976 rpm on paper, always above the 900 rpm limit | GVS-CAL-001 section 10 |
+| O5 | Fluidization flow and pressure at the low end of commercial practice (STEM S3) | (a) keep 8 to 15 L/min and sweep the flow in the TRL 4 recovery test; (b) design for more flow now (more head or a pump, against the 2026-10-02 decision; more water against PR-008) | (a) | GVS-CAL-001 section 6; GVS-STM-001 S3 |
+
+## Fixed under Amish's standing instruction of 2026-10-23
+
+Amish, 2026-10-23: when a STEM check row fails, propose and implement the best fix for the design and its constructability in the same session and record it here as decided under that instruction; a fix that changes the working principle, pitch or scope goes to Amish instead. Amish can reverse any of these.
+
+| # | Failed check | Options weighed | Fix made (2026-10-25) | Cost and mass | Record |
+| --- | --- | --- | --- | --- | --- |
+| F1 | STEM S20: the header drum was drawn 380 mm across and 400 mm tall, which holds 45 L, not the 60 L the design, the decision of 2026-10-02 and the CAL use | (a) draw the bought 60 L drum at its real height, 560 mm; (b) call it a 45 L drum and keep the geometry | (a): `tank_z` 1,700 to 2,260 mm. Mid-tank level rises 80 mm (+0.8 kPa at the union); the machine still stands on 13.1 degrees with a full tank (was 13.5; criterion 10); overall height 2.26 m (was 2.10 m) | None (same bought drum) | GVS-CAL-001 sections 6 and 11 |
+| F2 | STEM S24: the fluidization water reached the 1.0 mm holes unfiltered from a recirculating pond; commercial fluidized concentrators need clean fluidization water (Veiga and Gunson 2020) | (a) screen filter on the hose; (b) a settling drum before the header tank; (c) larger holes (changes the fluidization design) | (a): 3/4 in screen filter with a flush valve and a 120 mesh stainless screen, on the hose's drop below the rotameter. Loss 0.75 kPa clean, 1.49 kPa at the cleaning point; lowest net ring pressure stays positive (7.0 kPa with the climb to the rings counted) | +$14 (DIG P13-120, BOM line 13 now $55); +0.3 kg | GVS-CAL-001 section 6; BOM line 13 |
+| F3 | STEM S16: the BOM asked for a buffer rated 600 N, against a peak of 594 N at the 6 mm setting; GVS-CAL-001 section 9 had already chosen 800 N | (a) specify 800 N or more, as the CAL chose; (b) limit the setting range to 4 mm | (a): BOM line 22 now 800 N or more | None expected | BOM line 22 |
+| F4 | STEM S21: the gold balance used 8 h of feed (1.6 t, 8.0 g of gold) while the throughput restated by Amish on 2026-10-02 is 1.55 t with three flush stops | (a) use the feed time of 7.75 h | (a): 7.75 g in, 4.7 g smelted per shift on the reference ore; overall 60 % unchanged | None | GVS-CAL-001 section 13; `media/flow.png` |
+| F6 | STEM S4 (found by the independent review): the supply calculation left out the climb from the union to the rings (4.5 to 5.6 kPa); with it the lowest ring had 6.0 kPa net at 600 rpm against the proposed 10 kPa on which the 1.7 m post was decided | (a) 3/4 in bores for the ball valve and rotameter, cutting the fittings loss; (b) raise the post again (reverses part of the 2026-10-02 decision and worsens tipping); (c) a pump on the fluidization line (Amish decided against it) | (a): ball valve full bore and rotameter with 3/4 in ports; fittings loss 7.5 to 3.4 kPa; 12.6 kPa at the union and 10.0 kPa at the lowest ring at mid-tank, 7.0 kPa in the worst case | Rotameter price to confirm (BOM line 13 kept at $55) | GVS-CAL-001 section 6; BOM line 13 |
+| F5 | Detailed CAD (D3): the nuts of the head pillow block at y 40 struck the shelf gusset at y 50 | (a) move the gusset to y 59; (b) move the pillow block | (a): gusset centred at y 59, still under the shelf (which ends at y 65) | None | `cad/src/model.py`; GVS-DWG-116 |
 
 ## To confirm when parts are bought
 
@@ -61,13 +86,15 @@ None. Open item 1 (tank post position and tip criterion) was decided on 2026-10-
 | 8 | The used bicycle parts: a bottom bracket shell that can be cut from a scrap frame and welded, crank axle length, a 27.2 mm seat post | They set the outrigger's pedal post and seat tube | GVS-DDR-003, P8 |
 | 9 | The disc caliper's mount (post mount or the older standard) and the disc's 6-bolt pattern | They set the caliper bracket holes and the brake flange | GVS-DDR-003, P15 |
 | 10 | MotionCore: the reference hub motor's no-load speed (assumed 250 rpm), a sprocket on its disc mount, axle length for dropouts 76 mm apart inside, a speed limit that maps to 900 rpm at the spindle, a brake input for the lid switch | They set the 1.2:1 step-up, the cradle and the motor speed cap | GVS-DDR-002, item 14; review note 2026-09-25 |
-| 11 | The bump stop's rubber buffer: 40 mm across, 30 mm long, about 55 Shore A, M8 female thread, rated 800 N or more in compression | The stop's force, squeeze and setting range are sized for this buffer (GVS-CAL-001 section 9) | GVS-DDR-003, A2 |
+| 11 | The bump stop's rubber buffer: 40 mm across, 30 mm long, about 55 Shore A, M8 female thread, rated 800 N or more in compression | The stop's force, squeeze and setting range are sized for this buffer (GVS-CAL-001 section 9) | GVS-DDR-003, A2; F3 |
+| 12 | The 60 L header drum: about 380 mm across and 560 mm tall, with a bung that takes the 3/4 in valve near its bottom | The drum height sets the head at the union and the tipping check | F1 |
+| 13 | The 3/4 in screen filter: about 0.75 kPa loss at 12 L/min when clean, a flush valve, 120 mesh or coarser up to 0.3 mm | The supply has no pressure to spare at mid-tank for the proposed 10 kPa at every ring | F2 |
 
 ## Value engineering
 
-Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 580 (USD 125 over the target), excluding the MotionCore kit, reference motor and battery. Main cost drivers and savings worth trying:
+Value-engineering target: USD 455 (a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 594 (USD 139 over the target), excluding the MotionCore kit, reference motor and battery; the screen filter of F2 added $14 on 2026-10-25. Main cost drivers and savings worth trying:
 
-- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the table stand and head ($52); the frame ($47); the bowl ($46); the water supply ($41). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003); the table bump stop adds $11 more (bracket and striker $6, buffer and fixings $5); the decisions of 2026-10-02 add $11 (the braced 1.7 m tank post $4, the flush container with its hasp $7).
+- **Main cost drivers.** The jackshaft, gearbox, chains and pulleys ($60); the jacket, hub and rotary union ($55); the water supply ($55, with the filter); the table stand and head ($52); the frame ($47); the bowl ($46). Making the design buildable added $103, mostly the table head and tensioner, more frame tube and plate, and the tub fittings (GVS-DDR-003); the table bump stop adds $11 more (bracket and striker $6, buffer and fixings $5); the decisions of 2026-10-02 add $11 (the braced 1.7 m tank post $4, the flush container with its hasp $7).
 - **A quarter-turn belt instead of the bevel gearbox,** about $25 less (GVS-DDR-001, item 1). Worth a test, since a used gearbox is also the hardest part to find.
 - **Used bearing units and pillow blocks** from scrap farm or factory machinery, about $10 to $15 less across the six bearings.
 - **Run the table head shaft in two plain bronze bushes** in the head plate instead of two pillow blocks, about $8 less; the shaft turns slowly (about 300 rpm).
